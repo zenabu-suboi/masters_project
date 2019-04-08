@@ -21,5 +21,5 @@ ABC_seq1<-ABC_sequential(method="Lenormand", model=modelforABCmcmc2, prior=list(
 
 par(mfrow=c(1,1))
 plot(ABC_seq1$param[, 1], ABC_seq1$param[, 2], main ="#simul = 10000")
-
+ 
 ABC_seq1$computime
