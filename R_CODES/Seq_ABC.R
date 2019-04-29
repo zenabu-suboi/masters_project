@@ -1,6 +1,6 @@
 
 
-nrepseq=10000
+nrepseq=100000
 #alpha=0.5 by default
 set.seed(123)
 ABC_seq1<-ABC_sequential(method="Lenormand", model=modelforABCmcmc2, prior=list(c("unif",0,1), c("unif",0,0.5)), nb_simul=nrepseq,
