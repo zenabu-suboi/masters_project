@@ -48,7 +48,24 @@ run<-ode(times=times, y=start, func=sir,parms=parms)
 
 
 ##################################################################
+transitions <- c("S -> b*S*I/(S+I+R) -> I", "I -> g*I -> R")
+ compartments <- c("S", "I", "R")
 
+
+ m <- mparse(c("S -> b*S*I/(S+I+R) -> I + Icum", "I -> g*I -> R"),
+             + c("S", "I", "Icum", "R"), b = 0.16, g = 0.077)
+ model <- init(m, cbind(S = 99, I = 1, Icum = 0, R = 0), 1:180)
+ result <- run(model, threads = 1, seed = 22)
+ plot(stepfun(result@tspan[-1], diff(c(0, U(result)["Icum",]))),
+         + main = "", xlab = "Time", ylab = "Number of cases",
+         + do.points = FALSE)
+
+
+
+
+
+
+################################################################
 
 ### set.seed for reproducability
 set.seed(123)
