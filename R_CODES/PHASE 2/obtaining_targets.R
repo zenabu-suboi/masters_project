@@ -19,6 +19,35 @@ pop= numeric()
 ### try running it once, should return two population prevalence percentages
 modelforABCmcmc2(c(0.2,0.02))
 
+##############################################################
+library(deSolve)
+
+sir <- function(t, x, parms)  {
+  with(as.list(c(parms, x)), {
+    dS= -beta*I/1000*S
+    dI=beta*I/1000*S-gamma*I
+    # dE=beta*I/1000*S-sigma*E
+    dR=gamma*I
+    output <- c(dS, dI, dR)
+    list(output)
+  })
+}
+
+#the Initial values
+start<-c(S=999, I=1, R=0 )
+
+## The parameters 
+parms <- c(beta=0.8, gamma=0.1)
+
+## vector of timesteps
+times <- seq(0, 100, 1)
+
+run<-ode(times=times, y=start, func=sir,parms=parms)
+
+
+
+
+##################################################################
 
 
 ### set.seed for reproducability
