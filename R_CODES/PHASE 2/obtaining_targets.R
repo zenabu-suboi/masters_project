@@ -22,25 +22,53 @@ modelforABCmcmc2(c(0.2,0.02))
 ##############################################################
 library(deSolve)
 
-sir <- function(t, x, parms)  {
+modelABC <- function(t, x, parms)  {
   with(as.list(c(parms, x)), {
-    dS= -beta*I/1000*S
-    dI=beta*I/1000*S-gamma*I
-    # dE=beta*I/1000*S-sigma*E
-    dR=gamma*I
-    output <- c(dS, dI, dR)
+    N = S+I+R
+    dS = -beta * I/N * S
+    dI = beta * I/N * S - gamma * I
+    dR = gamma * I
+    dCumI = beta * I/N * S
+    output <- c(dS, dI, dR, dCumI)
     list(output)
   })
 }
 
 #the Initial values
-start<-c(S=999, I=1, R=0 )
+start<-c(S=990, I=10, R=0, CumI=0)
 
 ## The parameters 
+times <- seq(0, 75, 1)
+
+save_targets <- matrix(c(0,0,0),1000,3)
+for (i in 1:1000) {
+  parms = numeric()
+  parms[1] = rlnorm(1,0,1)
+  parms[2] = rlnorm(1,0,1)
+  run <- ode(times=times, y=start, func=modelABC,parms=parms)
+  save_targets[i,] = c(run[20,5],run[50,5], run[75,5])
+}
+
+
+plot(run[,2], col="red", ylim=c(0,1000), type="l", main="SEIR Model")
+# you can also use matplot toplot evert column
+lines(run[,3], col="blue")
+lines(run[,4], col="green")
+lines(run[,5], col="purple")
+legend("topright",legend=c("S","E" ,"I", "R"), col=c("red","black", "blue", "green"), lty=c(1,1,1))
+Sys.sleep(0.3)
+
+
+
+
+
+
+
+
 parms <- c(beta=0.8, gamma=0.1)
 
 ## vector of timesteps
-times <- seq(0, 100, 1)
+
 
 run<-ode(times=times, y=start, func=sir,parms=parms)
 

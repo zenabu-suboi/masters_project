@@ -16,8 +16,10 @@ y= 1 ## such that gamma is 0.02*0.1=0.02     # was:0.2598
 ### example
 # small example of how to pull the number infected from the output of a model run
 model <- SIR(u0, 1:75, beta= 0.2, gamma=0.02)
-result1 <- run(model, threads = 1)#, seed=sample.int(1000000000,1))
-plot(result)
+result<- run(model, threads = 1)#, seed=sample.int(1000000000,1))
+plot(result[,2],col="blue")
+lines(result[,3],col="red")
+lines(result[,3],col="red")
 abline(v=50)
 str(result)
 result@U[2,1] ### get number infected at time=1
