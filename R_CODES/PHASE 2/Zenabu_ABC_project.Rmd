@@ -1,15 +1,17 @@
-
+---
+title: "Masters project in ABC"
+author: "Zee"
+date: "6/20/2019"
+output: html_document
+---
+#
+#
+#
+#
+#### Plot of the SIR model under which ABC simulations will be performed
+```{r, warning=FALSE,message=FALSE}
 library(EasyABC)
-library(SimInf)
-
-##############################################################
-################################################################
-
 library(deSolve)
-
-##############################################################3
-
-# sir model to be used for ABC simulations
 
 sir <- function(t, x, parms)  {
   with(as.list(c(parms, x)), {
@@ -33,22 +35,24 @@ model_res_inc = cbind(run,Inc) # adds incidence column to the results from te od
 
 
 
-plot(model_res_inc[,2],col="red", type="l",ylim=c(0,1000),main="plot of the SIR model"
-     ,xlab="Time", ylab="model_ouputs")
-lines(model_res_inc[,3], col="green")
-lines(model_res_inc[,4],col="blue4")
-lines(model_res_inc[,5], col="purple")
-lines(model_res_inc[,6], col="orange")
+plot(model_res_inc[,2],col="blue4", type="l",ylim=c(0,1000),main="plot of the SIR model"
+     ,xlab="Time", ylab="model_ouputs") # S
+lines(model_res_inc[,3], col="orange")#I
+lines(model_res_inc[,4],col="green")#R
+lines(model_res_inc[,5], col="purple")#CUMI
+lines(model_res_inc[,6], col="red") #Inc
 
 lines(model_res_inc[,2]+model_res_inc[,3]+model_res_inc[,4])
-legend("topleft", legend=c("S", "I", "R","CumInc", "Inc"),col=c("red","green",
-       "blue","purple","orange"), pch = 19, cex = 0.65,bg=8 )
+legend("topleft", legend=c("S", "Prev", "R","CumInc", "Inc"),col=c("blue4","orange",
+       "green","purple","red"), pch = 19, cex = 0.65,bg=8 )
 
 
-##############################################################
-################################################################
-# create model to be used for ABC 
+```
 
+
+### Creating a function to be used in ABC methods
+
+```{r}
 modelABC <- function(parameters) {
 sir <- function(t, x, parms)  {
   with(as.list(c(parms, x)), {
@@ -76,12 +80,19 @@ targ[2] = model_res_inc[50,6]  # incidence at time 50
 targ[3] = model_res_inc[75,6] # incidence at time 75
 targ[4] = model_res_inc[75,5] # CumIncncmulatve incidence
 targ[5] = max(model_res_inc[,6])  #  peak incidence
-targ[6] = which.max(model_res_inc[,6]) - 1
+targ[6] = which.max(model_res_inc[,6]) - 1  # time at which peak prevalence occures
 return(targ)
 }
 
-modelABC(c( runif(1,0,1) ,runif(1,0,0.5))) # run model to obtain targets once
+#modelABC(c( runif(1,0,1) ,runif(1,0,0.5))) # run model to obtain targets once
 
+
+```
+
+
+### running model 1000 times to obtain targets and storing targets in a 1000x6 matrix
+
+```{r}
 #############################################################################
 # run model several times and save targets in a matrix
 
@@ -101,11 +112,14 @@ targets = c(round(mean(save_targets[,1]),4), round(mean(save_targets[,2]),4),
             round(mean(save_targets[,3]),4), round(mean(save_targets[,4]),4),
             round(mean(save_targets[,5]),4),round(mean(save_targets[,6]),4))
 
+
+```
+
+
+### Histograms of saved targets
+
+```{r}
 ######################################################################
-# plots of the targets after running the model 1000 times
-#?pretty
-
-
 my.breaks1 <- pretty(range(save_targets[,1]),76)
 my.breaks2 <- pretty(range(save_targets[,2]),76)
 my.breaks3 <- pretty(range(save_targets[,3]),76)
@@ -124,14 +138,5 @@ hist(save_targets[,6], breaks= my.breaks6, main="time for peak incidence")
 
 ########################################################################
 
-## rough work
+```
 
-tail(model_res_inc)
-head(model_res_inc)
-sum(Inc)== subset(run[,5],times==75)
-
-head(save_targets)
-dim(save_targets)
-
-
-##################################################################
