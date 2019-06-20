@@ -90,7 +90,7 @@ return(targ)
 ```
 
 
-### running model 1000 times to obtain targets and storing targets in a 1000x6 matrix
+### Running model 1000 times to obtain targets and storing targets in a 1000x6 matrix
 
 ```{r}
 #############################################################################
@@ -120,6 +120,23 @@ targets = c(round(mean(save_targets[,1]),4), round(mean(save_targets[,2]),4),
 
 ```{r}
 ######################################################################
+
+par(mfrow=c(3,2))
+hist(save_targets[,1], main="incidence at time 25")
+hist(save_targets[,2], main="incidence at time 50")
+hist(save_targets[,3],  main="incidence at time 75")
+hist(save_targets[,4],  main="cummulative incidence")
+hist(save_targets[,5],  main="peak incidence")
+hist(save_targets[,6], main="time for peak incidence")
+
+########################################################################
+
+```
+
+### Histograms of saved targets with breaks
+
+```{r}
+
 my.breaks1 <- pretty(range(save_targets[,1]),76)
 my.breaks2 <- pretty(range(save_targets[,2]),76)
 my.breaks3 <- pretty(range(save_targets[,3]),76)
@@ -129,7 +146,7 @@ my.breaks6 <- pretty(range(save_targets[,6]),76)
 
 
 par(mfrow=c(3,2))
-hist(save_targets[,1], breaks= my.breaks1, main="incidence at time 25")
+hist(save_targets[,1],  breaks= my.breaks1, main="incidence at time 25")
 hist(save_targets[,2],  breaks= my.breaks2, main="incidence at time 50")
 hist(save_targets[,3],  breaks= my.breaks3,  main="incidence at time 75")
 hist(save_targets[,4],  breaks= my.breaks4, main="cummulative incidence")
@@ -140,3 +157,4 @@ hist(save_targets[,6], breaks= my.breaks6, main="time for peak incidence")
 
 ```
 
+#### 
