@@ -63,13 +63,19 @@ ABC_seq1$computime
 
 set.seed(234)
 ABC_rej<-ABC_rejection(model=modelforABCmcmc2, prior=list(c("unif",0,1),c("unif",0,0.5)), 
-                       summary_stat_target=truepop.prev, nb_simul=1000,
+                       summary_stat_target=truepop.prev, nb_simul=10000,
                        tol=0.5, progress_bar = T)
 ABC_rej$computime
 R0<-ABC_rej$param[, 1]/ ABC_rej$param[, 2]
-plot(R0,ABC_rej$param[, 2], main = "nb_simul=10000")
-plot(ABC_rej$param[, 2],R0, main = "nb_simul=10000")
-plot(ABC_rej$param[, 1], ABC_rej$param[, 2], main ="#simul = 10000")
+plot(R0,ABC_rej$param[, 2], main = "nb_simul=10000+ peak prev")
+plot(ABC_rej$param[, 2],R0, main = "nb_simul=10000+ peak prev")
+plot(ABC_rej$param[, 1], ABC_rej$param[, 2], main ="#simul = 10000+ peak prev")
 
 
 head(cbind(ABC_rej$param[, 1], ABC_rej$param[, 2],R0))
+par(mfrow=c(2,2))
+hist(ABC_rej$param[, 1], xlab = "Parameter_beta_values", main = "Histogram of ABC_rej$param_beta")
+hist(ABC_rej$param[, 2], xlab = "Parameter_gamma_values", main = "Histogram of ABC_rej$param_gamma")
+hist(ABC_seq1$param[, 1], xlab = "Parameter_beta_values", main = "Histogram of ABC_seq$param_beta")
+hist(ABC_seq1$param[, 2], xlab = "Parameter_gamma_values", main = "Histogram of ABC_seq$param_gamma")
+
