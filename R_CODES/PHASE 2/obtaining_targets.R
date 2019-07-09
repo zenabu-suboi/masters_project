@@ -33,17 +33,16 @@ model_res_inc = cbind(run,Inc) # adds incidence column to the results from te od
 
 
 
-plot(model_res_inc[,2],col="red", type="l",ylim=c(0,1000),main="plot of the SIR model"
-     ,xlab="Time", ylab="model_ouputs")
-lines(model_res_inc[,3], col="green")
-lines(model_res_inc[,4],col="blue4")
-lines(model_res_inc[,5], col="purple")
-lines(model_res_inc[,6], col="orange")
+plot(model_res_inc[,2],col="blue4", type="l",ylim=c(0,1000),main="plot of the SIR model"
+     ,xlab="Time", ylab="model_ouputs") # S
+lines(model_res_inc[,3], col="orange")#I
+lines(model_res_inc[,4],col="green")#R
+lines(model_res_inc[,5], col="purple")#CUMI
+lines(model_res_inc[,6], col="red") #Inc
 
-lines(model_res_inc[,2]+model_res_inc[,3]+model_res_inc[,4])
-legend("topleft", legend=c("S", "I", "R","CumInc", "Inc"),col=c("red","green",
-       "blue","purple","orange"), pch = 19, cex = 0.65,bg=8 )
-
+lines(model_res_inc[,2]+model_res_inc[,3]+model_res_inc[,4],col="brown")
+legend("topleft", legend=c("S", "Prev", "R","CumInc", "Inc","Pop"),col=c("blue4","orange",
+                           "green","purple","red","brown"), pch = 19, cex = 0.65,bg=8 )
 
 ##############################################################
 ################################################################

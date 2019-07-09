@@ -8,7 +8,17 @@ output: html_document
 #
 #
 #
-#### Plot of the SIR model under which ABC simulations will be performed
+#### Plot of the SIR model under which ABC simulations will be performed. From this model, we obtain six target features as follows : 
+#
+#
+######## Incidence at time 25
+######## Incidence at time 50
+######## Incidence at time 75
+######## Cummulative Incidence
+######## Peak Incidence
+######## Time at which Peak Incidence occurs
+#
+#
 ```{r, warning=FALSE,message=FALSE}
 library(EasyABC)
 library(deSolve)
@@ -27,7 +37,7 @@ sir <- function(t, x, parms)  {
 start<-c(S=990, I=10, R=0, CumInc=0) #the Initial values
 
 times <- seq(0, 75, 1) # time period 
-parms <- c(beta=0.2, gamma= 0.02) ## The parameters 
+parms <- c(beta=runif(1,0,1), gamma= runif(1,0,0.5)) ## The parameters 
 
 run<-ode(times=times, y=start, func=sir,parms=parms) # ode solver
 Inc = c(0,diff(run[,5]))
@@ -42,9 +52,9 @@ lines(model_res_inc[,4],col="green")#R
 lines(model_res_inc[,5], col="purple")#CUMI
 lines(model_res_inc[,6], col="red") #Inc
 
-lines(model_res_inc[,2]+model_res_inc[,3]+model_res_inc[,4])
-legend("topleft", legend=c("S", "Prev", "R","CumInc", "Inc"),col=c("blue4","orange",
-       "green","purple","red"), pch = 19, cex = 0.65,bg=8 )
+lines(model_res_inc[,2]+model_res_inc[,3]+model_res_inc[,4],col="brown")
+legend("topleft", legend=c("S", "Prev", "R","CumInc", "Inc","Pop"),col=c("blue4","orange",
+       "green","purple","red","brown"), pch = 19, cex = 0.65,bg=8 )
 
 
 ```
@@ -66,12 +76,13 @@ sir <- function(t, x, parms)  {
   })
 }
 start<-c(S=990, I=10, R=0, CumInc=0) #the Initial values
+# cummulative incidence at time 0 = 0 -> incidence at time 0 = 0
 
 times <- seq(0, 75, 1) # time period 
 parms <- c(beta= parameters[1], gamma= parameters[2]) ## The parameters 
 
 model_result <-ode(times=times, y=start, func=sir,parms=parms) # ode solver
-Incidence = c(0,diff(model_result[,5]))
+Incidence = c(0,diff(model_result[,5])) # diff(cummulative incidence)
 model_res_inc = cbind(model_result,Incidence) # adds incidence column to the results from te ode solver
 
 targ = numeric() # create empty vector called targ
