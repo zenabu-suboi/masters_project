@@ -16,7 +16,7 @@ ABC_rej<-ABC_rejection(model=modelforABCmcmc2, prior=list(c("unif",0,1),c("unif"
                        tol=tolp, progress_bar = T)
 
 ABC_rej$computime/(60*60)
-  
+
 ### plot the posterior obtained by ABC rejection
 plot(ABC_rej$param[, 1], ABC_rej$param[, 2])
 
@@ -136,5 +136,3 @@ abc0.001ridge <- abc(target = c(truepop.prev),
 Tabc0.001ridge= proc.time()-Tabc0.001ridge
 Tabc0.001ridge
 
-
-?abc

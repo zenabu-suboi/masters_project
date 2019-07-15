@@ -16,7 +16,7 @@ y= 1 ## such that gamma is 0.02*0.1=0.02     # was:0.2598
 ### example
 # small example of how to pull the number infected from the output of a model run
 model <- SIR(u0, 1:75, beta= 0.2, gamma=0.02)
-result1 <- run(model, threads = 1)#, seed=sample.int(1000000000,1))
+result <- run(model, threads = 1, seed=sample.int(1000000000,1))
 plot(result)
 abline(v=50)
 str(result)
@@ -30,7 +30,7 @@ modelforABCmcmc2= function(parameters){
   u0= data.frame(S=c(990), I=c(10), R=c(0))
   
   model <- SIR(u0, 1:75, beta= parameters[1], gamma=parameters[2])
-  result <- run(model, threads = 1)#, seed=sample.int(1000000000,1)) 
+  result <- run(model, threads = 1, seed=sample.int(1000000000,1)) 
   pop[1]=result@U[2,50]
   pop[2]=result@U[2,75]
   return(pop/sum(u0))
@@ -48,8 +48,8 @@ modelforABCmcmc2(c(0.2,0.02))
 set.seed(123)
 
 ### save the results from 10000 runs, take the means as the targets
-saveres= matrix(c(0,0),100,2)
-for(i in 1:100){
+saveres= matrix(c(0,0),10000,2)
+for(i in 1:10000){
   saveres[i,]= modelforABCmcmc2(c(0.2,0.02))
 }
 hist(saveres[,1])
