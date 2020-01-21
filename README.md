@@ -5,4 +5,4 @@ This is my MSc project as SACEMA and we seek to compare model calibration method
 #The methods to be compared are 
   * Rejection Approximate Bayesian Computation (RABC)
   * Sequential Approximate Bayesian Computation (SABC)
-  * Mayesian Maximum Likelihood Estimation (BMLE)
+  * Bayesian Maximum Likelihood Estimation (BMLE)
