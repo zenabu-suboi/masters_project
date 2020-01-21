@@ -1,0 +1,253 @@
+\documentclass[11pt,twoside,openany,a4paper,%..... Layout
+               afrikaans, english,%.............. Global language selection
+               ]{memoir}
+
+ \usepackage[masters-t,%.......................... PhD thesis
+          a5block,%........................ A5 type block (ora5block a5block or wide)
+            ]{usthesis}%.......................... US thesis style with memoir
+\usepackage[T1]{fontenc}
+%\usepackage{babel}
+\usepackage{placeins}
+\usepackage{latexsym}
+\usepackage{float}
+\usepackage{amsthm}
+\usepackage[table]{xcolor} 
+\usepackage{xcolor,colortbl}
+\definecolor{gray(x11gray)}{rgb}{0.75, 0.75, 0.75}
+\definecolor{lavendergray}{rgb}{0.77, 0.76, 0.82}
+\usepackage[most]{tcolorbox}
+\usepackage{graphicx}
+\usepackage{graphics,epstopdf}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{amsfonts,amscd}
+%\usepackage{mathptmx} 
+\usepackage{mathpazo}
+\linespread{1.21} % Palatino needs more space between lines
+\usepackage{cite}
+\usepackage{adjustbox,lipsum}
+%\special{papersize=210mm,297mm}
+\usepackage{multirow,url}
+\checkandfixthelayout \setlength{\headwidth}{\textwidth}
+\usepackage{hyperref}
+\hypersetup{colorlinks,citecolor=blue,filecolor=red,linkcolor=red,urlcolor=blue}
+ \let\footruleskip\undefined
+ \usepackage{amssymb,fancyhdr}%............................ AMS Symbol fonts
+\let\cleardoublepage\clearpage
+\usepackage{amsmath}%............................ Advanced math (before fonts)
+\makeatletter
+\pagestyle{fancy}
+%\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase {\thechapter. #1} }{}}
+%%\newcommand*{\TitleParbox}[1]{\parbox[c]{2.75cm}{\raggedright #1}}%
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{con}[theorem]{Conjecture}
+\newtheorem{defn}[theorem]{Definition}
+\newtheorem{ex}[theorem]{{Example}}
+\newtheorem{exs}[theorem]{Example cont...}
+\newtheorem{cex}[theorem]{Counterexample}
+\newtheorem{rem}[theorem]{Remark}
+\newtheorem{prob}[theorem]{Problem}
+\newtheorem{observe}[theorem]{Observation}
+\fancyhf{} 
+\addtolength{\headheight}{20pt}
+%==== Language setup ================================================
+ %\usepackage[latin1]{inputenc}%................... Recognizes , , etc
+ \usepackage{babel}%.............................. Language setup
+%==== Math setup ====================================================
+ \usepackage{amsmath}%............................ Advanced math (before fonts)
+ \usepackage{textcomp}%........................... Additional text character
+ \usepackage{bm}%..................................... Bold math symbols (after fonts)
+\usepackage{tkz-graph} 
+\raggedbottom
+\usepackage{calc}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathreplacing}
+\tikzstyle{vertex}=[circle, draw, inner sep=0pt, minimum size=6pt]
+\newcommand{\vertex}{\node[vertex]}
+\newcounter{Angle}
+%==== Ref's, Bib's and Nomencl ======================================
+ \usepackage{usnomencl}%.......................... List of symbols (in usthesis pack)
+ \usepackage{usbib}%.............................. Bibliography    (in usthesis pack)
+    %\bibliographystyle{unsrt}%
+    %\renewcommand\bibfont{\small}
+
+    %% For usmeg-a, the bib is a list of references. If you
+    %% are using usmeg-n comment out the following lines
+    
+    
+    %\addto{\captionsafrikaans}{\renewcommand{\bibname}{Lys van Verwysings}}
+    \addto{\captionsenglish}{\renewcommand{\bibname}{List of references}}
+
+%==== Graphics and Color ============================================
+\usepackage{color}%.............................. Color setup
+\usepackage{eso-pic}%............................ Shipout commands for watermark
+    \newcommand*{\WaterMark}[2][0.2\paperwidth]{%
+        \AddToShipoutPicture*{\AtTextCenter{%
+                \parbox[c]{0pt}{\makebox[0pt][c]{%
+                    \includegraphics[width=#1]{#2}}}}}}
+
+%==== Local Defs ====================================================
+\makeatletter
+
+%
+% Please insert user defined commands here
+% and NOT in the document itself!
+%
+
+\makeatother
+
+%==== TITLE PAGE ====================================================
+\title{\bfseries
+       \AorE{%-- Afrikaans ------------------------------------------
+       Bla bla bla     \\[1ex]
+             \normalfont\small\itshape
+             (\textsf{``}Bla Bla Bla \textsf{''})
+            }{%-- English -------------------------------------------
+             {Bla Bla bla}
+            }}
+
+\author{Bla Bla}{Bla Bla}
+
+\degree{\AorE{MSc. (Wiskunde)}{MSc. (Mathematics) }}
+       {\AorE{Magister in die Natuurwetenskappe in Meganiese Ingenieurswese}
+             {Master of Science in Mathematics}}
+
+\address{\AorE{%-- Afrikaans ----------------------------------------
+        Departement Wiskundige Wetenskappe,\\
+        Universiteit van Stellenbosch,\\
+        Privaatsak X1, Matieland 7602, Suid Afrika.%
+             }{%-- English ------------------------------------------
+        Department of Mathematical Sciences,\\
+        University of Stellenbosch,\\
+        Private Bag X1, Matieland 7602, South Africa.
+             }}
+\faculty{\AorE{Fakulteit Ingenieurswese}%
+              {Faculty of Science}}
+\studyleader{Prof.\  Bla\ Bla}
+\supervisor{Prof. La. LA}
+%\costudyleader{Prof. Tra Tra}
+\setdate{12}{2018}
+
+%====================================================================
+%     MAIN DOCUMENT
+%====================================================================
+\maxsecnumdepth{subsubsection}
+\maxtocdepth{subsection}
+
+
+\AtBeginDocument{
+  \DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+  \DeclareSymbolFontAlphabet{\mathbb}{AMSb}}
+\newcommand*\enquote[1]{\textsf{`}#1\textsf{'}}
+\newcommand*\esquote[1]{\textsf{``}#1\textsf{''}}
+\fixpdflayout
+
+\begin{document}
+
+%==== Front matter ==================================================
+ \frontmatter
+ \WaterMark{UScrest-WM}
+ \TitlePage
+
+ \DeclarationSign{ }
+ \DeclarationDate{\today}
+ \DeclarationPage
+\pagenumbering{roman}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fancyhead{} % clear all fields
+\fancyhead[LE]{  Abstract}
+\fancyhead[RO]{  Abstract}
+\fancyhead[LO]{ \textbf{\thepage}}
+\fancyhead[RE]{ \textbf{\thepage}}
+\fancyfoot{}%[CE,CO]{\textbf{\thepage}}
+%\pagestyle{fancy}
+\include{frontmatter/Chap-Front}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %****************************************************
+
+\fancyhead[LE]{  Contents}
+\fancyhead[RO]{  Contents}
+\fancyhead[LO]{ \textbf{\thepage}}
+\fancyhead[RE]{ \textbf{\thepage}}
+\fancyfoot{}%[CE,CO]{\textbf{\thepage}}
+\begin{KeepFromToc}
+  \tableofcontents
+\end{KeepFromToc}           %
+\clearpage
+%********************************************
+\fancyhead[LE]{  List of figures}
+\fancyhead[RO]{   List of figures}
+\fancyhead[LO]{ \textbf{\thepage}}
+\fancyhead[RE]{ \textbf{\thepage}}
+\fancyfoot{}%[CE,CO]{\textbf{\thepage}}
+\listoffigures  
+\clearpage 
+\fancyhead[LE]{  List of tables}
+\fancyhead[RO]{   List of tables}
+\fancyhead[LO]{ \textbf{\thepage}}
+\fancyhead[RE]{ \textbf{\thepage}}
+\fancyfoot{}%[CE,CO]{\textbf{\thepage}}
+\listoftables
+\clearpage           %
+\pagenumbering{arabic}
+\mainmatter
+   \setsecnumdepth{subsubsection}
+   \numberwithin{equation}{section}
+   \numberwithin{figure}{chapter}
+   \numberwithin{table}{chapter}
+ %\include{frontmatter/Nomencl}
+
+\fancyhead{} % clear all fields
+\fancyhead[LE]{ \bfseries \nouppercase{\leftmark}}
+\fancyhead[RO]{  \nouppercase{\rightmark}}
+\fancyhead[LO]{ \textbf{\thepage}}
+\fancyhead[RE]{ \textbf{\thepage}}
+\fancyfoot{}%[CE,CO]{\textbf{\thepage}}
+%==== Main document =================================================
+\include{contents/chapter1}
+\clearpage 
+\include{contents/chapter2}
+\clearpage 
+\include{contents/chapter3}
+\clearpage 
+\include{contents/chapter4}
+\clearpage 
+\include{contents/chapter5}
+%\clearpage
+%\include{contents/chapter6}
+%%\clearpage 
+%%\include{contents/chapter8}
+%\clearpage 
+%\include{contents/chapter7}
+%\clearpage
+
+%\clearpage 
+%==== Appendices ====================================================
+%\appendix
+%\appendixpage\relax
+%\include{contents/Chap-3}
+\clearpage
+\appendix
+\addcontentsline{toc}{chapter}{Appendix}
+\lhead[]{Appendix A: Tables}
+%\input{appendix}
+%\pagenumbering{roman}
+\include{backmatter/appendix}
+%==== Bibliography acro's & Index ===================================
+\backmatter
+\clearpage  
+ \fancyhf{}  
+ \fancyfoot{}  
+\bibliographystyle{plain}
+\fancyhead[LE]{List of references}
+\fancyhead[RO]{ List of references}
+\fancyhead[LO]{ \textbf{\thepage}}
+\fancyhead[RE]{ \textbf{\thepage}}
+\bibliography{Msc}
+
+\end{document}

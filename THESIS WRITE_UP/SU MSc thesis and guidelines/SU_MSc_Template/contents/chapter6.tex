@@ -1,0 +1,1521 @@
+%\chapter{Pricing Exotic Options and Model Risk }
+%\label{C6}
+% This chapter focuses on exotic options, and model risk. Model risk arises when the "wrong" financial models are applied to price financial derivatives. The statistician GEP Box wrote "All models are wrong, but some are useful" (Box, \cite{Box}, pg. $424$). In finance the  models can be "wrong"  when the numerical methods are not stable, or when the  calibration methods are incorrect.  The model risk may occur when the model prices used to compute the financial derivatives are inappropriate, and  may also be because of an inexact (or a reasonable) method  for the hedging of the derivative. Even if there is a method, we may choose the wrong one. In this chapter, we focus on the risks involved when we price exotic options. We will pay limited attention to the risks that arise from calibration to  market prices, because we have already considered the risk-neutral parameters  obtained  with the calibration of "CGMY-world" data (see chapter \ref{cp} for more details). Here, we compute a measure of model risk of call options and exotic options using the new parameters.
+% 
+%This chapter is organised as follows: First, we discuss the procedure of pricing exotic options and the results. We then discuss the Monte Carlo method. Finally, we compute a measure of model risk of exotic options using an improvement of the model risk formula introduced by Cont \cite{CONT}.
+%
+%\section{Pricing Exotic options}
+%
+%Exotic options have prices that are not quoted on the open market. Therefore, risk-neutral parameters calibrated to the observed market prices are needed in order to compute exotic option prices. Exotic options may be  path-dependent options, which means that their terminal values (at expiration or exercise) depends on the values of the underlier, not only at that exact time, but also at   prior points to that \cite{Link3}. We note that the application of different models calibrated to market prices can lead to different values, which happens regularly in exotic options such as lookback and barrier options.
+%\subsection{Pricing Barrier Option}
+%The barrier option is one of the simplest types of path-dependent option  where the holder has the right to buy or sell the underlying asset at  any specific price when the  contract expires. The important  feature about a barrier option is that its payoff does not only depend on the last (final) price of underlying asset but also on  whether or not the underlying asset may reach some level of H  (the barrier level) during the lifetime of the option (Kyprianou, Schoutens and Wilmott \cite{KAW}). The barrier may consist  of more than two barriers,  but here we focus on those with one barrier with an option payoff, up-and-in, or up-and-out calls, which we discuss in the next section.
+%
+%% The attraction of barrier options is that they are cheaper than the corresponding vanilla option, and also the sum of the two barriers, the Up-and in call and Up-and out call, are always  equal to the vanilla option if there is no rebate (Andreas,Schoutens and Wilmott \cite{KAW}).
+%\subsubsection{ Up-and-in call}
+%Let $K$ be a strike price and $H$ a barrier level. The payoff of an up-and-in call with $K$ and $H$ is equal to the payoff of a standard European call, provided that if the maximum of the underlying asset reaches (or crosses) (between the time $t\in [0,T]$) the  barrier $H$ at time $t$, while otherwise it is zero. We define the price of an up-and-in call as an expectation under the risk neutral measure $Q$ of the discounted payoff:  
+%\begin{align}
+%C^{UI}= \mathbb{E}_{\mathbb{Q}}[e^{-rT}(S_T-K)^+ 1_{M_T \geq H}]
+%\end{align}
+%where $M_T$ represents the maximum of the underlying asset $(S_t)_{t \in [0,T]}$. i.e.
+%\begin{align*}
+%M_t =\sup \lbrace S_u; 0 \leq u \leq t  \rbrace,
+%\end{align*}
+% and $r$ is an interest rate.
+%%and 
+%%\begin{align*}
+%%(S_T-K)^+= \max(S_T-K,0).
+%%\end{align*}
+%We note that the value of the standard European call and the up-and-in call can be the same, if the  barrier level $H$ is lower than the strike price $K$ (i.e. $H \leq K$). If $S_T-K >0$, this means that the barrier $H \leq K$ has been crossed before the expiry time $T$.
+%
+%\subsubsection{Up-and-out call}  
+%
+%Like the price of an up-and-in call, the price of an up-and-out call is equal to the standard European call price with strike $K$, if the maximum of the underlying asset at time $t \in [0,T]$ stays below the barrier level $H$, while  otherwise it is zero. One can define the value of an up-and-out call:
+%\begin{align}
+%C^{UO}= \mathbb{E}_{\mathbb{Q}}[e^{-rT}(S_T-K)^+ 1_{M_T < H}].
+%\end{align}
+%
+%As mentioned previously, when we sum both barriers up-and-in call, and up-and-out call which is called in-out parity with the same maturity $T$ and strike $K$ for any given asset price, we obtain
+%
+%\begin{align}
+%C^{UO}+C^{UI} &= \mathbb{E}_{\mathbb{Q}}[e^{-rT}(S_T-K)^+ 1_{M_T < H}] +  \mathbb{E}_{\mathbb{Q}}[e^{-rT}(S_T-K)^+ 1_{M_T \geq H}] \nonumber \\
+%& =  e^{-rT}\mathbb{E}_{\mathbb{Q}}[(S_T-K)^+ 1_{M_T \geq H} + (S_T-K)^+ 1_{M_T < H}]  \nonumber \\
+%&= e^{-rT}\mathbb{E}_{\mathbb{Q}}[(S_T-K)^+ ].
+%\end{align}
+%Hence, this sum is equal to the standard European call option with the strike price  $K$ and maturity $T$.  In the next section  we discuss the pricing of the lookback fixed option. 
+%
+%%\subsubsection{A general formula for  Up- and In call, and,  Up- and out call with Black-Scholes model}
+%%Black-Scholes framework John Hull \cite{MRC} and Robert \cite{HJK} expressed the general formula of the Up-and in call and Up-and out call with strike $K$ and maturity $T$ in the following:
+%%For $H>K$
+%%\begin{align*}
+%%C^{UI}=& S_0 \Phi(z_1)e^{-qT} -Ke^{-rT}\Phi(z_1- \sigma \sqrt{T}) - S_0e^{-qT} \Big( \frac{H}{S_0}\Big)^{2 \lambda}(\Phi(-y)- \Phi(-y_1)) \\
+%%&+ Ke^{-rT} \Big( \frac{H}{S_0}\Big)^{2\lambda}(\Phi(-y_1+\sigma \sqrt{T})- \Phi(y_1+\sigma \sqrt{T}));
+%%\end{align*}
+%%and then the Up- and out call is the difference between the European call and Up-In call:
+%%\begin{align*}
+%%C^{UO}=e^{-rT}\mathbb{E}_{\mathbb{Q}}[(S_T-K)^+ ]-C^{UI}.
+%%\end{align*}
+%%with
+%% \begin{align*}
+%% \lambda &= \frac{1}{\sigma ^2} \Big(r-q +\frac{\sigma ^2}{2} \Big) \\ 
+%% y&= \frac{1}{\sigma \sqrt{T}} \log \Big( \frac{H^2}{S_0 K}\Big) + \lambda \sigma \sqrt{T},\\
+%% z_1&=\frac{1}{\sigma \sqrt{T}} \log \Big( \frac{S_0}{H}\Big) + \lambda \sigma \sqrt{T},\\
+%% y_1&=\frac{1}{\sigma \sqrt{T}} \log \Big( \frac{H}{S_0}\Big) + \lambda \sigma \sqrt{T}.
+%% \end{align*} 
+%% 
+%%When the barrier level $H$ lays below the strike $K$, i.e. $H \leq K$, then the above Up- and in call and Up- and out call is expressed by :
+%% \begin{align*}
+%% C^{UI}&=e^{-rT}\mathbb{E}_{\mathbb{Q}}[(S_T-K)^+ ] \\
+%% & \text{and}\\
+%% C^{UO}&=0;
+%% \end{align*}
+%
+% \subsection{Pricing the Lookback Fixed Option}
+%A lookback option is a path-dependent option where the payoff depends on the  minimum or maximum  price of the underlying asset during the life of an option.  The holder of the lookback  option  may  "look back" over the period to determine the payoff. More detail about lookback option can be found in the  literature of Kyprianou, Schoutens and Wilmott \cite{KAW},  Ngugen-Ngoc \cite{NEX} and E Shreve \cite{SCF}.  There are two types of lookback option, the floating strike lookback option and the fixed strike lookback options, but here we focus on the lookback fixed option only. 
+% \subsubsection{ Lookback fixed option}
+%The payoff of a lookback fixed option is only dependent on the maximum of underlying asset and the strike price (or the difference between the maximum of underlying asset and the strike price during the lifetime of the option). The lookback fixed option is a type of path-dependent option that is only settled in cash, with the strike only being predetermined at inception \cite{Link}. The lookback price formula is given by:
+%\begin{align}
+%C_{fixed}(S_T,K,T)=e^{-rT}\mathbb{E}_{\mathbb{Q}}[(\max_{0\leq t \leq T}S_t-K,0)]
+%\end{align}
+%where $(S_t)_{t\in [0,T]}$ is an underlying asset, $r$ an interest rate and $K$ the strike. The  lookback option is more expensive than the similar plain vanilla option.  
+%
+%Having discussed lookback fixed options, we need to find the distribution of the maximum of the underlying asset process for them. The  explicit form for the distribution of maximum of a general exponential L\'evy model is often unknown.  Thus, a numerical technique is needed, such as Monte Carlo simulation, to compute the value of an exotic option (Kyprianou \cite{KAW}), and we discuss this in the next section. 
+%\subsection{Monte Carlo Method}
+%%The main purpose for choosing the Monte Carlo method is that we can easily price the derivative security, particularly the  European and exotic options, without knowing their explicit form in relation to general L\'evy model.  The Monte Carlo method is a numerical method, which is used  to perform computations using the function of the random variable (Schoutens \cite{WS}). Thus, this method takes  the average value and runs a sequence experiment.  When writing an expectation of payoff under the integral form, we note that the dimension of its integral can be infinite, hence the importance of using the Monte Carlo method.  In order to calculate the derivative security, first ,you simulate the paths of the underlying asset price using the model calibrated. To obtain an accurate result from Monte Carlo method, we either need to simulate a large number of paths or use proposed technique such as the antithetic variable and control variable technique, which allows us to reduce  the variance of the simulation estimate. 
+%
+%Schoutens \cite{WS} highlighted that the  value of the standard error obtained by simulating a large  number of paths without using the variance reduction method may be similar to those obtained via the simulation of the paths of the underlying asset based on the variance reduction method for an exotic option. To check the accuracy of the Monte Carlo simulation we  price the European calls using $50\;000$ paths of the underlying asset for each model based on single parameters calibrated to S$\&$P 500 index option call. Figure \ref{F} shows that pricing the European call option using the CGMY, NIG, BS and VG models gives very satisfactory results. With respect to their analytic calibration values, prices values differed less than $0.2\%$ among the  pure jump models and $30\%$ using the Black-Scholes model. Thus, we computed the above lookback fixed option and barrier option using $50\;000$ paths of the underlying asset  for each model. We outline how to compute the Monte Carlo method for an exponential L\'evy model as follows (Glassernam \cite{MCM} and Hull \cite{HJK}):
+% \begin{itemize}
+% \item[1] Estimate  the risk-neutral parameters using  an optimization procedure (minimizing error between the observed plain vanilla  S$\&P$500 index data with model price ). This was done in chapter \ref{cp}. 
+% \item [2] Use the risk-neutral parameters obtained via procedure $(1)$ to simulate the $N$ paths (trajectories) of the underlying asset for each model price. This procedure is carried out in section \ref{S}.
+% \item[3] Compute the value of payoff $ ( P_j)_{1 \leq j \leq N} $  for each of the trajectories of the underlying asset.
+% \item[4] Estimate the expected payoff of $P$ by taking the mean of the payoff $P_j$, denoted: 
+% \begin{align*}
+% P =\frac{1}{N}\sum_{j=1}^N P_j
+% \end{align*}
+% \item[5] We discount:% with respect to the interest rate $r$ so that we obtain the price of derivative security:
+% \begin{align*}
+% D= e^{-rT}P.
+% \end{align*}
+% \end{itemize}
+% In Appendix we present methods for the simulation of  the trajectories of the pure jump L\'evy model using  Monte Carlo method.
+%\begin{figure}[h!]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%    \includegraphics[width=0.6 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/MC_C.png}    &
+%  \end{tabular}
+%  \caption{ The vanilla call prices computed with CGMY, NIG and VG models using the Monte Carlo method with the strike price $K=1130$, maturity $T = 0.67123$ and the stock price $S0 = 1124.47$.  } \label{F}
+%\end{figure}
+%
+%\section{Results and Discussion}
+%%Table shows the European call price computed via Monte Carlo method for each model prices. One can easily see that the European call price obtain with NIG model , VG model, CGMY model and Black Scholes model  are very  closed to the observed European call from $2002$. This means those the Monte Carlo method give a very aceptable result. 
+%%In this section, we want to compute the price of  the lookback fixed option and the barrier option for the  NIG model, VG model, CGMY model and  Black scholes model as well. The single model parameters use to price those several exotic options are obtained via the calibration of S\&P 500 indexed option described in chapter\ref{cp}. We first discuss the accuracy of the Monte Carlo method. Table1 displays the results of the European call price computed via Monte Carlo method for the single risk neutral parameters for our given model prices.  One can easily see that the European call price obtained from the NIG model, VG model, CGMY model and Black Scholes model are very closed to the observed European call from December $2002$ of S\&P 500 indexed option. Therefore, we can say that the Monte Carlo method give a very satisfactory results. We now turn our attention to the results of the exotic option. 
+%
+%%In this section, we want first to discuss the accuracy of Monte Carlo simulation and then next use this simulation technique in order to compute the price of  the lookback fixed option and the barrier option for those model prices such as the  NIG model, VG model, CGMY model and  Black scholes model as well. We use the model parameters obtained via the calibration of the S\&P 500 indexed option from December $2002$ described in Chapter\ref{cp}, in order to price a plain vanilla European call and the several exotic options. Table1 displays the results of the European call price computed via Monte Carlo method for each model prices.  One can easily see that the plain vanilla European call  obtained from the NIG model, VG model, CGMY model and Black Scholes model are very closed to the observed European call from December $2002$ of the S\&P 500 indexed option. Therefore, we can say that the Monte Carlo simulation give a very good results. We now turn our attention to the results of the exotic option. 
+%In this section, we compare the prices of the barrier and lookback options computed with all models (Black-Scholes model, NIG, VG and CGMY models) and discussed it. We consider the multiple parameters calibrated to the S$\&P$500 index data (see Chapter \ref{ch5}, Table \ref{AD1}) to value the exotic options.  We compute the exotic option prices using the Monte Carlo method discussed above. We use the maturity from December $2002$ ($T=0.6543$).  The  barrier level is a function of the stock price (ranging from $0.5(S_0)$  to $1.5(S_0)$). We simulate $50\;000$ underlying assets for each model.
+%\begin{table}[h!]
+%\begin{center}
+%   \caption{Here we report the results of the barrier and lookback fixed options for each model price. The barrier level ranges from $(0.5s_0 to 1.5S_0)$ and the strike price $K=1130$, maturity $T = 0.67123$ and the stock price $S_0 = 1124.47$.}
+%    \begin{tabular}{| l|l | l | l |p{3cm}|}
+%    \hline
+%   Exotic options &  CGMY model & NIG model & VG model &BS \\ \hline
+% Lookback fixed &  115.5749  & 100.0157 &    96.1811 &  129.5181 \\ \hline  
+% \hline
+% 
+% Barrier level&  Up-In \&  Up-out &Up-In \&  Up-out   &Up-In \& Up-out & Up-In \&  Up-out \\ \hline 
+%Up-out+Up-In&  61.8570  & 64.1673 &  64.0775  & 68.4472 \\ \hline  
+% \multirow{6}{*}{} &  & & & \\
+%  562.2&  61.8570 \& 0.000 &  64.1673 \& 0.000 &    64.0775\& 0.000  &68.4472 \& 0.000  \\
+% 618.5&  61.8570\& 0.000 &   64.1673 \& 0.000  &64.0775\& 0.000  &   68.4472 \& 0.000  \\
+%674.7&   61.8570 \& 0.000&  64.1673 \& 0.000   &64.0775\& 0.000 &   68.4472 \& 0.000  \\ 
+%   730.9 &  61.8570 \& 0.000 &  64.1673 \& 0.000  &64.0775\& 0.000  &  68.4472 \& 0.000  \\
+% 787.1 &  61.8570 \& 0.000 &   64.1673 \& 0.000  & 64.0775\& 0.000 &  68.4472 \& 0.000  \\
+% 843.4 &   61.8570 \& 0.000&  64.1673 \& 0.000  & 64.0775\& 0.000 &   68.4472 \& 0.000 \\ 
+% 899.6   &  61.8570 \& 0.000 &  64.1673 \& 0.000  & 64.0775\& 0.000  &  68.4472 \& 0.000  \\
+%955.8 &  61.8570 \& 0.000 &  64.1673 \& 0.000  & 64.0775\& 0.000  &   68.4472 \& 0.000  \\
+% 1012.0 &   61.8570 \& 0.000&  64.1673 \& 0.000  & 64.0775\& 0.000  &   68.4472 \& 0.000 \\
+%  1068.2   &  61.8570 \& 0.000 &  64.1673 \& 0.000  & 64.0775\& 0.000   &   68.4472 \& 0.000  \\
+% 1124.5 &  61.8570 \& 0.000 &  64.1673 \& 0.000  & 64.0775\& 0.000  &   68.4472 \& 0.000  \\
+% 1180.7 & 61.4715 \&  0.3855 & 62.6379 \& 1.5294   & 60.6112 \& 3.4663 & 68.1589 \&    0.2883 \\
+%   1236.9  & 57.3557 \&   4.5013  &   53.4172 \& 10.7501 &  48.5999 \& 15.4776 &   65.1845 \&    3.2627   \\
+%1293.1  &  47.7503 \& 14.1066& 37.0613 \& 27.1060    &   32.2969 \&   31.7806 &   57.4158 \&   11.0315 \\
+% 1349.4 & 34.9839 \& 26.8731 & 22.4209 \&    41.7464   &    19.2353 \& 44.8423 &    46.0650 \&  22.3822   \\ 
+%  1405.6   &22.8381   \&    39.0189 & 12.3669 \&  51.8004 &       11.3951 \& 52.6825 & 
+%33.2846 \&    35.1626  \\
+% 1461.8 &   13.7196   \&  48.1374    &   6.5848 \&    57.5825 & 6.6119 \& 57.4656 &
+%   22.2415  \& 46.2058 \\
+%  1518.0 &  7.4452   \& 54.4117 & 3.6124 \& 60.5549  &  3.8153  \&  60.2622  & 14.1877 \& 54.2595  \\ 
+%  1574.3   &3.7853      \& 58.0716 & 1.7984 \& 62.3689   &   2.1468  \&  61.9307 &   8.3660 \&   60.0812  \\
+%1630.5 & 1.8640\& 59.9930  &  0.9429 \&   63.2244 &  1.2145 \&  62.8630 &   4.7021
+% \& 63.7451   \\
+% 1686.5 &  0.9189   \& 60.9380 &  0.4400 \&    63.7273 &   0.8094 \&   63.2681  &  2.5324 \& 65.9148\\ \hline
+%    \end{tabular}\label{AD4}
+%\end{center}
+%\end{table}
+%\begin{figure}[h!]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/PR.png}    &
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/PR1.png}  & 
+%  \end{tabular}
+%  \caption{ The figures of up-and-in and up-and-out calls for NIG, VG, CGMY  and Black-Scholes models, with the strike price $K=1130$, maturity $T = 0.67123$ and the stock price $S0 = 1124.47$. The barrier level is range from $(0.5 S0$ to $1.5S0)$ } \label{ff1}
+%\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%In Table \ref{AD4} we present the results of the barrier and lookback fixed options computed with CGMY, NIG, VG and Black-Scholes models. We observe that the sum of the values of the up-and-in call and up-and-out call options substantiate the identity of the \textit{(Up-and-In)+ (Up-and-Out)= plain vanilla}. %This means that the simulation results are well converged \cite{APC}.
+%
+%
+%Table \ref{AD4}, as well as Figure \ref{ff1}  show that the values of the up-and-in and up-and-out call obtained with the NIG, and VG models are very similar but they differ from the values  obtained from the CGMY and Black-Scholes models. The up-and-in and up-and-out call computed using the Black-Scholes model are larger than those obtained using the NIG, VG and CGMY models. Since the "true" or "real" prices of the exotic options are unknown, it is difficult to judge which model gives the best price for the barrier option.
+%  %Thus, we can say that the Black-Scholes model overpriced the prices of the Up- and-In and up-and-out call compare to the VG, NIG and CGMY models. We also observe that the NIG and VG models give a better estimation of the prices of  up-and-in and up-and-out call compared to the  to the CGMY model. Despite the fact that the CGMY model fits well the observed markets (see table \ref{AD1}). 
+% 
+%Similarly, the prices of the lookback fixed option computed with the VG, NIG, CGMY and Black-Scholes models are  different to each other. Once again the price of a lookback option computed with the Black-Scholes model is larger than the prices of lookback option computed using the NIG, VG and CGMY models. In addition, the prices of the lookback option computed with the NIG and VG models differ slightly, while the price obtained with the CGMY model differs from those of the  NIG, VG and Black-Scholes models. Hence, the situation is comparable to that of the up-and-in and up-and-out calls, as it is difficult to tell which model prices the exotic option best as the "true" prices of the exotic options are unknown. Therefore, in next the section, we use the exotic prices computed with the CGMY model (using the varying parameters of CGMY model see Chapter \ref{ch5}, Section \ref{s}) as our "true" prices and compare the prices of the exotic options obtained from the VG, NIG and Black-Scholes models against these prices.  
+% 
+% %Up-and-In and up-and-out call obtained with the NIG, VG and CGMY models are very similar while  the one obtained with the Black-Scholes model are very different and larger. We can say that Black-Scholes model model overprice the value of the Up- and-In and up-and-out call.
+%
+%%In other hand we observed that the prices of the  lookback fixed option computed with those models (VG, NIG, CGMY and Black-Scholes models) are  different to each other.  Once again we found that  Black-Scholes model gives very large price of the  price for the lookback fixed option compare to the lookback fixed prices computed via NIG, VG and CGMY models. Based on these results we say that the  NIG, VG and CGMY models give the very similar values for the prices of  the Up-in and Up-Out call and different values for the lookback fixed option. While the  Black-Scholes model overprice both  Up-in and Up-Out call and the lookback fixed option compare to the NIG, VG and CGMY models. 
+%
+% %We can also  see that the values of Up-in and Up -out obtained with the NIG, VG and CGMY models are very similar, while  they differ a little bite with the  one obtained from Black-Schloes model. However, when  we look at the value of the lookback fixed option computed with those models (VG, NIG, CGMY and Black-Scholes models) are  different to each other. We can see that the value of lookback fixed option computed with the CGMY model is larger than the values obtained with the  NIG, VG and Black-Scholes models. Based on these results, we can say that the  NIG, VG and CGMY models give the similar values when we price the Up-in and Up-Out, and the different values for the case of the lookback fixed option. 
+%
+%%In next section, we will compute the model risk for the exotic options. 
+% 
+% %When we look at on this table1, one can easily that the results for the  Up-In call and Up-Out call computed via the CGMY model, NIG model and also VG model are very similar, while the one obtained from the Black-Scholes model differ a little bite. The same scenario repeats for the Lookback fixed option. This does not mean that the the Black-Scholes model (BSM ) still misprice the exotic option. However, it will be more important to compute the model risk for those exotic options. The reason that we are computing the model risk is that we are looking for a good model which can present less risk in pricing the exotic options.
+% 
+% 
+%% From Table 1 shows the results from CGMY process, NIG process , VG process and Black %Scholes model as well. We can see that the results for the barrier option verify well the identity $Up-In+Up-Out= plain Vanilla $. This means that the results are well converged. When we look at the table below, one can easily that the results for the  Up-In call and Up-Out call from CGMY process, NIG process and VG process are very similar, while the one from the Black Scholes model differ a little bite.  The same scenario repeats for the Lookback fixed option which is presented in same table. This means that the Black Scholes model (BSM ) still misprice the exotic option. But, it  does not mean that the Black-Scholes model present more risk  in pricing exotic than  the remain model such as NIG, VG and CGMY model as well.  It will be more useful to compute the model risk for those exotic options so that we can  know which amongst four models may present less risk in pricing exotic. This will be an object for the next section . 
+%\section{ Model risk}\label{MR}
+%
+%%Comparing the pricing of the exotic options obtain with CGMY model against the one obtain with the NIG, VG and Black-Scholes models and
+%In the previous section  we found it difficult to justify which of four models produced the best price for an exotic options, since the "true" prices were unknown. Here, we price both of exotic options (barrier and lookback options) with the CGMY model using its varying parameters (the parameters obtained by increasing and decreasing the multiple parameters of CGMY model as described in Section \ref{s}), and we consider those  prices as our "true" exotic prices. The aim here is to check which of the four models can price the exotic options best when we compare their prices to the "true" prices obtained with the CGMY model. To price the exotic options with NIG, VG and Black-Scholes models, we consider their risk-neutral parameters calibrated to "CGMY-world" data (i.e. the market prices computed with the CGMY model using its varying parameters). We use the Monte Carlo method to compute the price of the up-and-in, up-and-out calls and the lookback options. We simulate $50\;000$ paths of the underlying assets for each model. We consider  the strike price when the option is out-of-the-money and in-the-money $K = 110$  and $95$ respectively, the spot price $100$, the interest rate at $r=0.019$, the dividend yield at $q=0.012$ and one year of maturity $T=1$. We assume that a year consists of $250$ trading days. The barrier level is a function of the initial stock price (ranging from $1S0 $ to $1.5S0 $). Below we compare the prices of the barrier and lookback options both  when the option prices are in-the-money and out-the-money and computed with all models. We start by comparing the prices of the barrier and lookback option when the option is out-of-the-money, (i.e. $K=110>S_0=100$).
+%
+% %We recall that  the new parameters of the NIG, VG and Black-Scholes models  are calibrated from the  market data computed with the varying model model parameters of the CGMY model (see tables \ref{A1}, \ref{A1i} and \ref{A2}).
+%
+% 
+%
+%
+%Figures \ref{fji}, \ref{fj4}, \ref{fj1}, \ref{fj2}  and \ref{fj3}  show the results of the comparison for the barrier prices of the up-and-in call computed with the various sets of the new parameters of the CGMY, NIG, VG and BS models between the "true" prices of the up-and-in call (i.e. prices computed with CGMY model using its varying parameters sets) when the option is out-the-money.\\
+%\begin{figure}[!htbp]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FC5.png}    & 
+%        \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FC8.png}   & \\
+%            \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FC6.png}  & 
+%  \end{tabular}
+%  \caption{ We computed the prices of the  up-and-in and up-and-out for NIG, VG, CGMY and BS models obtained with the  model parameters calibrated  from the vanilla call computed with the  model parameters (C$^+$,G,M,Y$^-$), (C,G,M,Y$^-$) and (C$^+$, G, M, Y $^+$). The barrier level ranges from $1(S_0 )$ to $1.5(S_0 )$, the strike price is  $K = 110$, the spot price is equal $S0=100$, the risk-interest rate $r=19 \%$, dividend yield at $q=12\%$  and maturity $T=1$}\label{fji}
+%\end{figure}
+%\begin{figure}[!htbp]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%       \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FC7.png}  &
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FC2.png}   & 
+%%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/F_c4.png}   &
+%    
+%  \end{tabular}
+%  \caption{ We computed the prices of the up-and-in and up-and-out for NIG, VG, CGMY and BS models obtained with the model parameters calibrated  from the vanilla call computed with the  model parameters (C, G, M, Y$^+$) and (C$^+$, G, M, Y ). The barrier level ranges from $1S0 $ to $1.5S0 $, the strike price is  $K = 110$, the spot price is equal $S_0=100$, the riskless $r=19\%$, dividend yield  $q=12\%$  and maturity $T=1$} \label{fj4}
+%\end{figure}
+%
+%\begin{figure}[!htbp]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FC3.png}  &
+% %   \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/F_ou.png}   & 
+%  \end{tabular}
+%  \caption{ We computed the prices of the up-and-in and up-and-out NIG, VG, CGMY and BS models obtained with the  model parameters calibrated  from the vanilla call computed with the  model parameters. (C $^-$, G, M, Y $^-$).  The barrier level ranges from $1S0 $ to $1.5S0 $, the strike price is  $K = 110$, the spot price is equal $S_0=100$, the risk-interest rate $r=19\%$, dividend yield  $q=12 \%$  and maturity $T= 1$} \label{fj1}
+%\end{figure}
+%%
+%\begin{figure}[!htbp]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%    \includegraphics[width=0.5 \textwidth, natwidth=610,natheight=642]{../Pricing_Barrier/FC4.png}    &
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FC1.png}    & \\
+%%     \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/F_in3.png}   &
+%%   \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/F_ou3.png}   & 
+%    
+%  \end{tabular}
+%  \caption{ We computed the prices of the up-and-in and up-and-out for NIG, VG, CGMY and BS models obtained with the  model parameters calibrated  from the vanilla call computed with the  model parameters (C$^-$,G,M,Y$^+$) and  (C$^-$,G,M,Y ).  The barrier level ranges from $1S0 $ to $1.5S0 $, the strike price is  $K = 110$, the spot price is equal $S_0=100$, the risk-interest rate $r=19 \%$, dividend $q=12\%$  and maturity $T=1$} \label{fj2}
+%\end{figure}
+%
+%
+%\begin{figure}[!htbp]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FC.png} &
+%%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/F_ou4.png}   & \\
+%  \end{tabular}
+%  \caption{ We computed the prices of the up-and-in and up-and-out for NIG, VG, CGMY and BS models obtained with the  model parameters calibrated  from vanilla calls computed with the  model parameters (C,G,M,Y).  The barrier level ranges from $1S0 $ to $1.5S0 $, the strike price is  $K = 110$, the spot price is equal $S0=100$, the riskless $r=19 \%$, dividend yield $q=12 \%$  and maturity $T=1$} \label{fj3}
+%\end{figure}
+%
+%The aforementioned figures also show that the prices of barrier options computed with the various sets of the new parameters differ from each other. This is to be expected since different sets of the parameters may lead to the different exotic options prices. If the barrier level is equal to the spot price (i.e. the value of the up-and-in calls =vanilla calls), we see in the Figure \ref{fji}  that the prices of the up-and-in calls computed with the BS model are larger than our current "true" prices while the prices of the up-and-in calls obtained with the NIG and VG models are smaller than current "true" prices. In the paper of  Schoutens \cite{WSC}, he shows that the difference between barrier option prices computed across models may be as much as $200 \%$. Similarly, here we notice that the  percentage error between the values of the up-and-in calls  obtained between the BS prices and "true" prices  with new parameters calibrated to "CGMY-world" data obtained from the following varying sets ((C$^+$,G,M,Y$^-$), (C,G,M,Y$^-$), (C$^+$,G,M,Y$^+$)) are $40 \%,79 \%, 12 \%$  and the ones obtained with NIG and VG models are  $57 \%, 8 \%, 31 \%$ and $58 \%, 30 \%, 54 \%$. This suggests evidence of the model risk. For example. the BS model overprices the prices of the up-and-in call, as is illustrated by the percentage error between the BS and the "true" price of the up-and-in calls of $79 \% $, while the percentage error between the  prices of up-and-in call obtained with  VG and NIG models is up to $30 \% $ and $8 \% $. Here it is clear that BS model is an inappropriate model because of its poor calibration. In addition, the percentage error between the prices of the up-and-in calls computed with CGMY model  with all set of the new parameters and our current "true" prices are ($-2.81\%, 1.28\%, 5.7\%, -0.04\%, -2.62\%, -3.75\%, -0.02\%, -2.45\%, -26.44\%$) which differs from zero,  despite the fact that these new parameters are calibrated to "CGMY-world" data. We expected this since we observed a slight difference between the new parameters of CGMY model and its varying parameters (see Section \ref{Sub}).
+%
+% That means the prices of the up-and-in calls are very sensitive to calibration risk, and also that calibration risk can be seen as a cause of model risk.
+%
+%
+%
+%% since its prices are larger than our current "true" prices.
+%%Thus, if one wants to price the up-and-in call considered the BS model instead the VG and NIG models with the new parameters calibrated to "CGMY-world" data  obtained with the different varying parameters sets (C$+\Delta =20\%C$,G,M,Y^+), (C^+,G,M,Y$-\Delta =20\%C$ ) and (C,G,M,Y^-), can be exposed to model risk.
+% 
+%In Figures \ref{fj2}, \ref{fj3} and \ref{fj4}, we show that the prices of the up-and-in call computed with BS model with the new parameters calibrated to "CGMY-world" data obtained with  varying parameters set ((C$^-$,G,M,Y ), (C$^-$,G,M,Y$^+$),(C$^+$,G,M,Y$^-$), (C,G,M,Y$^+$) and (C,G,M,Y)) are similar to "true" prices while the ones obtained with the NIG and VG model are  different to current "true" prices. Thus by pricing up-and-in calls with NIG and VG models, we are exposed to model risk as there are huge differences between the "true" price of the up-and-in call and the ones obtained with NIG and VG models $(48 \%, 69 \%, 70\%, 68\%, 78\%$ and $55\%, 84\%, 85\%, 88\%, 92\%$ respectively), despite the fact that NIG and VG models fit the "CGMY-world" data better than BS model. In contrast, the percentage error between the "true" price of the up-and-in call and the ones obtained with BS model are only $0.35\%, 2\%, 9\%, 15\%, 25\%$.  %We  still observe that the difference between the CGMY prices and our the "true" price of the up-and-in calls $(111)$  are not close to zeros.  
+%Once again, we agree with Schoutens \cite{WSC} that the difference of the barrier between model may be up to $(200\%)$.
+%
+%Finally, in Figure \ref{fj1}, we show that the price of up-and-in call computed with the NIG model using the new parameters calibrated to "CGMY-world" data obtained with the varying parameters set (C$^-$,G,M,Y$^-$ ) are close to "true" prices while the ones obtained with the VG and BS models differ to current "true" prices, despite the fact that VG and NIG model have a same number of risk-neutral parameters and also fit the "CGMY-world" data better than BS model. The difference between the up-and-in call obtained with NIG model and "true" prices is up $(20\%)$ while the ones between the VG and BS models and "true" prices are $100\%$ and $94\%$. 
+%
+%Furthermore, we note that when the option is out-the-money, it is difficult to avoid model risk when we price the barrier (especially the up-and-in call) since any model carries model risk. We observed that the percentage error between the up-and-in calls obtained with NIG, VG and BS  models and our current "true" price may be as much as $100\%$.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{table}[!htbp]
+% \begin{center}
+%   \caption{The price values of the lookback options computed with all different model parameters. Strike price $K=110$, spot price  $S_0=100$, interest rate $r=19 \%$, dividend yield $q=12\%$ and $T=1$ }
+%        \setlength{\arrayrulewidth}{0.5mm}
+%\setlength{\tabcolsep}{8pt}
+%\renewcommand{\arraystretch}{1.5}
+%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%
+%\arrayrulecolor[HTML]{DB5800}
+%\begin{tabular}{|p{6cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|}
+%\hline 
+% CGMY, NIG, VG and BS  parameters calibrated to "CGMY-world" data obtained with  the following set of varying parameters  & "True" prices & CGMY prices & NIG prices & VG prices & BS prices \\ 
+%\hline 
+% (C, G, M, Y) &  6.5663 & 6.5332 &  5.2227 & 4.9078 &  7.8403 \\ 
+%\hline 
+%  (C$^-$, G, M, Y) & 4.9122 & 4.8593 & 3.9355 & 3.5030 &6.2116 \\ 
+%\hline                                 
+% (C$^+$, G, M, Y) & 7.7543 & 7.6380 & 6.5446 &  6.2431 &9.4155 \\ 
+%\hline 
+% (C$^-$, G, M, Y$^-$) &  1.2443 & 1.2608 & 1.3921 & 2.2502 &3.4343 \\ 
+%\hline 
+% (C$^-$, G, M, Y$^+$) & 5.0595 & 5.0886 & 4.0304  &3.7204 &6.3973 \\ 
+%\hline 
+% (C$^+$, G, M, Y$^-$) &  3.5190 & 3.5420 & 2.8348 & 2.6430  & 6.2116 \\ 
+%\hline 
+% (C$^+$, G, M, Y$^+$) & 7.8084 & 7.7701& 6.7779 &6.2489 &9.5461 \\ 
+%\hline 
+% (C, G, M, Y$^-$) &2.3022 & 2.3090 & 2.1477 &  1.7673 & 4.7501 \\ 
+%\hline 
+% (C, G, M, Y$^+$) & 6.6417 & 7.5967 & 5.3596 & 5.0049 &8.2665 \\ 
+%\hline
+%\end{tabular}\label{Ai1}
+%\end{center}
+%\end{table}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%\begin{table}[!htbp]
+%% \begin{center}
+%%   \caption{The price value of the lookback fixed computed with all different model parameters. Strike price $K=110$, spot price  $S_0=100$, interest rate $r=19 \%$, dividend $q=12\%$ and $T=1$ }
+%%     \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{1.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%%
+%% 
+%%\arrayrulecolor[HTML]{DB5800}
+%%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%%\begin{tabular}{|p{1cm}|p{1cm}|p{1cm}|p{1cm}|l}
+%%\cline{1-4}
+%%\multicolumn{4}{ |c| }{The lookback fixed computed with all model parameters far all models }  \\ \cline{1-4}
+%%%\rowcolor{green!80!yellow!50} 
+%%CGMY-lookback fixed & NIG-lookback fixed & VG-lookback fixed & BS-lookback fixed\\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.2882)$} \\ \cline{1-4}
+%%\multicolumn{1}{ |c  }{ 6.5663 }                        &
+%%\multicolumn{1}{ |c| }{  5.2227}&   4.9078 &    7.8403 &  \\ \cline{1-4}
+%%          \multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2882)$} \\      
+%%    \cline{1-4}
+%%\multicolumn{1}{ |c  }{ 4.9122} &
+%%\multicolumn{1}{ |c| }{  3.9355}&   3.5030&  6.2116&   \\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2882)$}  \\ \cline{1-4}
+%%\multicolumn{1}{ |c  }{ 7.7543 }                        &
+%%\multicolumn{1}{ |c| }{ 6.5446 }&  6.2431&    9.4155 &  \\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.0306)$}   \\ \cline{1-4}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{ |c  }{    1.2443}                        &
+%%\multicolumn{1}{ |c| }{  1.3921}&  2.2502 & 3.4343   &  \\ \cline{1-4}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2948)$}  \\ \cline{1-4}
+%% \multicolumn{1}{ |c  }{ 5.0595}                        &
+%%\multicolumn{1}{ |c| }{  4.0304 }&   3.7204 &  6.3973 &  \\ \cline{1-4}
+%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.0306)$}  \\ \cline{1-4}
+%%
+%%\multicolumn{1}{ |c  }{  3.5190}                        &
+%%\multicolumn{1}{ |c| }{ 2.8348 }&  2.6430 & 6.2116  &  \\ \cline{1-4}
+%%
+%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2948)$}    \\ \cline{1-4}
+%%\multicolumn{1}{ |c }{  7.8084 }                        &
+%%\multicolumn{1}{ |c| }{6.7779}&6.2489&    9.5461  & \\ \cline{1-4}
+%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.0306)$}   \\ \cline{1-4}
+%%
+%%\multicolumn{1}{ |c  }{   2.3022}                        &
+%%\multicolumn{1}{ |c| }{2.1477 }  & 1.7673& 4.7501 &   \\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.948)$}   \\ \cline{1-4}
+%%\multicolumn{1}{ |c  }{6.6417}                        &
+%%\multicolumn{1}{ |c| }{5.3596}  &5.0049& 8.2665 &  \\ \cline{1-4} 
+%%\end{tabular}\label{Ai}
+%%\end{center}
+%%\end{table}
+%
+%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\begin{table}[!htbp]
+%% \begin{center}
+%%   \caption{The price value of the lookback fixed computed with all different model parameters. Strike price $K=110$, spot price  $S_0=100$, interest rate $r=19 \%$, dividend $q=12\%$ and $T=1$ }
+%%     \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{1.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%%
+%% 
+%%\arrayrulecolor[HTML]{DB5800}
+%%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%%\begin{tabular}{|p{1cm}|p{1cm}|p{1cm}|p{1cm}|l}
+%%\cline{1-4}
+%%\multicolumn{4}{ |c| }{The lookback fixed computed with all model parameters far all models }  \\ \cline{1-4}
+%%%\rowcolor{green!80!yellow!50} 
+%%CGMY-lookback fixed & NIG-lookback fixed & VG-lookback fixed & BS-lookback fixed\\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.2882)$} \\ \cline{1-4}
+%%\multicolumn{1}{ |c  }{ 6.5663 }                        &
+%%\multicolumn{1}{ |c| }{  5.2227}&   4.9078 &    7.8403 &  \\ \cline{1-4}
+%%          \multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2882)$} \\      
+%%    \cline{1-4}
+%%\multicolumn{1}{ |c  }{ 4.9122} &
+%%\multicolumn{1}{ |c| }{  3.9355}&   3.5030&  6.2116&   \\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2882)$}  \\ \cline{1-4}
+%%\multicolumn{1}{ |c  }{ 7.7543 }                        &
+%%\multicolumn{1}{ |c| }{ 6.5446 }&  6.2431&    9.4155 &  \\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.0306)$}   \\ \cline{1-4}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{ |c  }{    1.2443}                        &
+%%\multicolumn{1}{ |c| }{  1.3921}&  2.2502 & 3.4343   &  \\ \cline{1-4}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2948)$}  \\ \cline{1-4}
+%% \multicolumn{1}{ |c  }{ 5.0595}                        &
+%%\multicolumn{1}{ |c| }{  4.0304 }&   3.7204 &  6.3973 &  \\ \cline{1-4}
+%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.0306)$}  \\ \cline{1-4}
+%%
+%%\multicolumn{1}{ |c  }{  3.5190}                        &
+%%\multicolumn{1}{ |c| }{ 2.8348 }&  2.6430 & 6.2116  &  \\ \cline{1-4}
+%%
+%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2948)$}    \\ \cline{1-4}
+%%\multicolumn{1}{ |c }{  7.8084 }                        &
+%%\multicolumn{1}{ |c| }{6.7779}&6.2489&    9.5461  & \\ \cline{1-4}
+%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.0306)$}   \\ \cline{1-4}
+%%
+%%\multicolumn{1}{ |c  }{   2.3022}                        &
+%%\multicolumn{1}{ |c| }{2.1477 }  & 1.7673& 4.7501 &   \\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.948)$}   \\ \cline{1-4}
+%%\multicolumn{1}{ |c  }{6.6417}                        &
+%%\multicolumn{1}{ |c| }{5.3596}  &5.0049& 8.2665 &  \\ \cline{1-4} 
+%%\end{tabular}\label{Ai}
+%%\end{center}
+%%\end{table}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Tables \ref{Ai1} and \ref{Ai2} display the results of the lookback option and the percentage relative error between the "true" prices of the lookback options (the prices of the lookback options computed with the CGMY model using the varying parameters) and the lookback prices compute with CGMY, NIG, VG and BS models using their new parameters sets. In table \ref{Ai1}, we observe that the values of the  lookback prices computed with the NIG and VG models  for all  new parameters set are small and close to "true" prices  while those obtained  with BS model are larger than the values of our  "true" prices. Tables \ref{Ai1} and \ref{Ai2} show the percentage relative error between the prices of the lookback options obtained with  CGMY, NIG, BS and VG models computed with all new parameters sets and "true" prices. The positive values for the percentage relative error indicate that the prices of the lookback options are small compare to "true" prices while negative values indicates large prices compared to "true" prices. Here, the BS model overprices the lookback options since their values are large than our "true" prices of lookback options. The prices of lookback options computed with NIG and VG model are similar in each case. As well as differences between the prices of lookback option computed with NIG, VG and BS models and "true" prices,  it is important to note difference in magnitude (Schoutens \cite{WSC}). We also note that the percentage relative error between the "true" prices of the lookback options and those computed with CGMY model for all new parameters sets are very small, and different to zero, i.e. differences are slight despite the new parameters of CGMY model beign calibrated to "CGMY-world" data. We expected this because of the slight difference between the new parameters of CGMY model and its varying parameters (see Section \ref{Sub}). Thus, the set of the risk-neutral parameters is not unique and the price of the exotic options may not be unique either. Moreover, the prices of the exotic options are difficult to prices because of of the presence of model risk. Schoutens \cite{WSC} showed that the difference in prices of lookback options amongst models may vary over $15\%$ and this is comparable to this study when pricing lookback options using NIG, VG, CGMY and BS models where "true" prices may vary by $15\%$, particularly when the option is out-of-the-money.
+%
+%
+%
+%
+%%We also observe that for each set of the new parameters,  the error between  "true" prices of the lookback options and the prices of the lookback options obtained with NIG and VG models are close. This means the prices of the looback options obtained with NIG and VG models are similar and also small to our current "true" prices. 
+%
+%
+% %If we use the BS model to price the lookback option we can expose to model risk since their lookback prices are large than our  "true" prices, particularly in this case whit the option is out of the money. Thus, we can say that the VG and NIG models are more suitable than BS model when we price the lookback option, especially in this case where the option is out of the money.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{table}[!htbp]
+% \begin{center}
+%   \caption{Percentage relative error between the "true" prices of the lookback fixed and the prices obtained with CGMY, NIG, VG and BS models. The strike price $K=110$, spot price  $S_0=100$, interest rate $r=19 \%$ and dividend $q=12\%$ and maturity of one year $T=1$ }
+%        \setlength{\arrayrulewidth}{0.5mm}
+%\setlength{\tabcolsep}{8pt}
+%\renewcommand{\arraystretch}{1.5}
+%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%
+%\arrayrulecolor[HTML]{DB5800}
+%\begin{tabular}{|p{3.8cm}|p{2.3cm}|p{1.7cm}|p{1.6cm}|p{2.5cm}|}
+%\hline 
+% CGMY, NIG, VG and BS  parameters calibrated to "CGMY-world" data obtained with the following  set of varying parameters  & $ \dfrac{\text{True-CGMY}}{\text{True}}*100$ & $\dfrac{\text{True-NIG}}{\text{True}}*100$ & $\dfrac{\text{True-VG}}{\text{True}}*100$ &$ \dfrac{\text{True-BS}}{\text{True}}*100$  \\ 
+%\hline 
+% (C, G, M, Y) & $0.5\%$ & $20.46\%$ &  $25.25\%$ & $-19.40\%$  \\ 
+%\hline 
+%  (C$^-$, G, M, Y) & $1.076\%$ & $19.88\%$ & $28.68\%$ & $-26.45\%$  \\ 
+%\hline                                 
+% (C$^+$, G, M, Y) & $1.49\%$ & $15.6\%$ & $19.48\%$ & $-21.42\%$ \\ 
+%\hline 
+% (C$^-$, G, M, Y$^-$) & $-1.285\%$ & $-11.87\%$ & $-80.84\%$ & $-176\%$ \\ 
+%\hline 
+% (C$^-$, G, M, Y$^+$) & $-0.57\%$ & $20.33\%$ & $26.46\%$  &$-26.44\%$ \\ 
+%\hline 
+% (C$^+$, G, M, Y$^-$) & $-0.653\%$ & $19.44\%$ & $24.89\%$ & $-76.51\%$   \\ 
+%\hline 
+% (C$^+$, G, M, Y$^+$) & $0.49\%$ & $13.19\%$ & $19.97\%$ & $-22.25\%$  \\ 
+%\hline 
+% (C, G, M, Y$^-$) & $6.691\%$ & $6.71\%$ & $23.23\%$ &  $-106.32\%$  \\ 
+%\hline 
+% (C, G, M, Y$^+$) & $-14.378\%$ & $19.3\%$ & $24.64\%$ & $-24.46\%$  \\ 
+%\hline
+%\end{tabular}\label{Ai2}
+%\end{center}
+%\end{table} 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%In this study we also wish to compare "true" prices of  barrier and lookback options with those computed with NIG, VG, CGMY and BS models when the option prices are in-the-money (i.e. strike  $K=95 < S_0=100$), and this is discussed below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%Figures \ref{fj5},\ref{fj6},\ref{fj7}, \ref{fj8} and \ref{fj9} show the results of the comparison of the barrier prices of the up-and-in, up-and-out call computed with all models when the options are in-the-money .\\
+%\begin{figure}[!htbp]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FI7.png}  &
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FI8.png} & 
+%  \end{tabular}
+%  \caption{ We  computed the prices of the  Up-In and Up-Out for NIG, VG, CGMY and BS models obtain with the  model parameters calibrated  from the vanilla call computed with the  model parameters (C,G,M,Y$^+$) and  (C,G,M,Y$^-$).  The barrier level is ranging from $1S0 $ to $1.5S0$, the strike price is  $K = 95$, the spot price is equal $S0=100$, the risk-interest rate $r=19\%$, dividend yield $q=12\%$  and maturity $T=1$} \label{fj5}
+%\end{figure}
+%\begin{figure}[!htbp]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FI3.png} &
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FI5.png} & 
+%  \end{tabular}
+%  \caption{ We computed the prices of the up-and-in and up-and-out calls for NIG, VG, CGMY and BS models obtained with the  model parameters calibrated  from the vanilla call computed with the model parameters (C$^-$,G,M,Y$^+$) and  (C$^-$,G,M,Y$^-$). The barrier level ranges from $1S0$ to $1.5S0$, the strike price is  $K = 95$, the spot price is equal $S0=100$, the risk-interest rate $r=19\%$, dividend $q=12\%$  and maturity $T=1$} \label{fj6}
+%\end{figure}
+%
+%\begin{figure}[!htbp]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FI6.png}   &
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FI4.png}   & \\
+%     \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FI2.png}   &
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FI1.png}  & 
+%    
+%  \end{tabular}
+%  \caption{ We computed the prices of the up-and-in and up-and-out calls  for NIG, VG, CGMY and BS models obtained with the  model parameters calibrated  from the vanilla call computed with the  model parameters (C$^+$,G,M,Y$^+$) and  (C$^+$,G,M,Y$^-$ ), (C$^+$,G,M,Y) and  (C$^-$,G,M,Y ). The barrier level is ranging from $1S0$ to $1.5S0$, the strike price is  $K = 95$, the spot price is equal $S_0=100$, the risk-interest rate $r=19\%$, dividend $q=12\%$  and maturity $T=1$} \label{fj7}
+%\end{figure}
+%
+%\begin{figure}[!htbp]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/FI.png}
+% %   \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/Fe_ou2.png}   & \\
+%%     \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/Fe_in3.png}   &
+% %   \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/Fe_ou3.png}   & 
+%    
+%  \end{tabular}
+%  \caption{ We  computed the prices of the up-and-in and up-and-out calls for NIG, VG, CGMY and BS models obtained with the  model parameters calibrated  from the vanilla call computed with the model parameters (C,G,M,Y). The barrier level ranges from $1S0$ to $1.5S0$, the strike price is  $K = 95$, the spot price is equal $S0=100$, the risk-interest rate $r=19\%$, dividend $q=12\%$  and maturity $T=1$} \label{fj8}
+%\end{figure}
+%%
+%%
+%%\begin{figure}[!htbp]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/F_in4.png}   &
+%%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../Pricing_Barrier/F_ou4.png}   & \\
+%%  \end{tabular}
+%%  \caption{ We  computed the prices of the  Up-In and Up-Out for NIG, VG, CGMY and BS models obtain with the  model parameters calibrated  from the vanilla call computed with the  model parameters (C,G,M,Y).  The barrier level is ranging from $1S0$ to $1.5S0$, the strike price is  $K = 95$, the spot price is equal $S0=100$, the risk-interest rate $r=19\%$, dividend $q=12\%$  and maturity $T=1$} \label{fj9}
+%%\end{figure}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Figures \ref{fj5},\ref{fj6},\ref{fj7}, and \ref{fj8}, show that the prices of the up-and-in and up-and-out calls computed with the NIG and VG models at barrier level equals the spot price (i.e. the value of up-and-in call = vanilla option), and are close to the "true" prices while those computed with the BS model are very small. Hence, while the  the BS model prices up-and-in call prices poorly, the VG and NIG models give a more accurate value of these prices especially when the options are in the money. 
+%
+%In addition, Tables \ref{Aii} and \ref{Ai3}  show the results of the error between the "true" prices of the lookback option and the lookback prices computed with the NIG, VG and BS models.
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{table}[!htbp]
+% \begin{center}
+%   \caption{The price values of the lookback options computed with all different model parameters. Strike price $K=95$, spot price  $S_0=100$, interest rate $r=19 \%$, dividend yield $q=12\%$ and $T=1$ }
+%        \setlength{\arrayrulewidth}{0.5mm}
+%\setlength{\tabcolsep}{8pt}
+%\renewcommand{\arraystretch}{1.5}
+%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%
+%\arrayrulecolor[HTML]{DB5800}
+%\begin{tabular}{|p{6cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|}
+%\hline 
+% CGMY, NIG, VG and BS  parameters calibrated to "CGMY-world" data obtained with  the following set of varying parameters  & "True" prices & CGMY prices & NIG prices & VG prices & BS prices \\ 
+%\hline 
+% (C, G, M, Y) &  19.3186 & 19.2833 & 17.2853 &  15.5371 & 20.2785  \\ 
+%\hline 
+%  (C$^-$, G, M, Y) & 17.7087 & 17.6267 & 15.7756 & 3.5030 & 18.4481 \\ 
+%\hline                                 
+% (C$^+$, G, M, Y) & 20.5368 & 20.4713 & 18.7955&     18.5782 & 21.9712\\ 
+%\hline 
+% (C$^-$, G, M, Y$^-$) &  13.3410 & 13.3975 & 12.3247& 12.0539 & 15.0100 \\ 
+%\hline 
+% (C$^-$, G, M, Y$^+$) &  17.8323 & 17.8385 & 15.8989&  15.6499 &  18.5737 \\ 
+%\hline 
+% (C$^+$, G, M, Y$^-$) &  16.5764 & 16.6595 & 14.7683 & 14.4092 &  18.4481 \\ 
+%\hline 
+% (C$^+$, G, M, Y$^+$) &  20.5391 & 20.4113 & 19.0091& 18.7191 & 22.1502 \\ 
+%\hline 
+% (C, G, M, Y$^-$) & 14.9739& 15.0316 & 13.6113  &  13.3162 &16.5350 \\ 
+%\hline 
+% (C, G, M, Y$^+$) & 19.4104 & 20.2889 & 17.4585  & 17.2769 &    20.6723 \\ 
+%\hline
+%\end{tabular}\label{Aii}
+%\end{center}
+%\end{table}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{table}[!htbp]
+% \begin{center}
+%   \caption{Percentage relative error between the "true" prices of the lookback fixed and the prices obtained with CGMY, NIG, VG and BS models. The strike price $K=110$, spot price  $S_0=100$, interest rate $r=19 \%$ and dividend $q=12\%$ and maturity of one year $T=1$ }
+%        \setlength{\arrayrulewidth}{0.5mm}
+%\setlength{\tabcolsep}{8pt}
+%\renewcommand{\arraystretch}{1.5}
+%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%
+%\arrayrulecolor[HTML]{DB5800}
+%\begin{tabular}{|p{3.8cm}|p{2.3cm}|p{1.7cm}|p{1.6cm}|p{2.5cm}|}
+%\hline 
+% CGMY, NIG, VG and BS  parameters calibrated to "CGMY-world" data obtained with the following  set of varying parameters  & $ \dfrac{\text{True-CGMY}}{\text{True}}*100$ & $\dfrac{\text{True-NIG}}{\text{True}}*100$ & $\dfrac{\text{True-VG}}{\text{True}}*100$ &$ \dfrac{\text{True-BS}}{\text{True}}*100$  \\ 
+%\hline 
+% (C, G, M, Y) & $0.182\%$ & $10.52\%$ &  $11.24\%$ & $-4.96\%$  \\ 
+%\hline 
+%  (C$^-$, G, M, Y) & $0.46\%$ & $10.91\%$ & $12.26\%$ & $-4.17\%$  \\ 
+%\hline                                 
+% (C$^+$, G, M, Y) & $0.318\%$ & $8.47\%$ & $9.53\%$ & $-6.98\%$ \\ 
+%\hline 
+% (C$^-$, G, M, Y$^-$) & $-0.423\%$ & $7.61\%$ & $9.64\%$ & $-12.51\%$ \\ 
+%\hline 
+% (C$^-$, G, M, Y$^+$) & $-0.0347\%$ & $10.84\%$ & $12.23\%$  &$-4.15\%$ \\ 
+%\hline 
+% (C$^+$, G, M, Y$^-$) &  $-0.501\%$ & $10.90\%$ & $13.07\%$ & $-11.29\%$   \\ 
+%\hline 
+% (C$^+$, G, M, Y$^+$) & $0.622\%$ & $7.44\%$ & $8.86\%$ & $-7.84\%$  \\ 
+%\hline 
+% (C, G, M, Y$^-$) & $-0.385\%$ & $9.09\%$ & $11.07\%$ &  $-10.42\%$  \\ 
+%\hline 
+% (C, G, M, Y$^+$) & $-4,525\%$ & $10.05\%$ & $10.99\%$ & $-6.5\%$  \\ 
+%\hline
+%\end{tabular}\label{Ai3}
+%\end{center}
+%\end{table} 
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Table  \ref{Ai3}   shows that for all new parameters sets, the error between "true" prices of the lookback options  and the lookback prices computed are positive with the NIG and VG models but are negative when computed the BS models. Thus, BS model overprices the lookback options as their prices are larger than the "true" prices. As it was for the out-of-the-money options, the BS model performs poorly and the NIG and VG model perform well when the options are in-the-money. 
+%
+%
+%%Now, if we want to consider the BS model to price the lookback option, we can expose  to the model risk since their prices are larger compared to the "true " prices, particularly when the options are in the money. Thus, if we use the VG model or NIG models to price the lookback options we may have less risk since the error between the "true" prices of the lookback options and the lookback options obtained with the NIG and VG model are small compared to the one obtained with the BS model. 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%%  For example, if we consider the barrier level at $1124.5$ we observed that the difference between the highest  and lowest  price of the  Up- and In call compute with all different sets of the  model parameters of the NIG model is $31.5151$. We also observe a same scenario for the VG model ( we can see it in the figure \ref{fj1}). When we compute the difference between the highest  and lowest of the price of the  Up- and In call compute with all different sets of the  model parameters  with the barrier level ($1124.5$) is $31.5017$.  In the case of the  Black-Scholes model ( see the figure \ref{fi1}) we can also see that  the difference between the highest  and lowest  price of up-and-in call compute with all different sets of the  model parameters  with a same barrier level ($1124.5$) is equal to $30.3229$.
+%%
+%% When we consider the case of CGMY model. We  notice that the prices of the Up- and-In, and Up- and-out call compute with the varying model parameters of its  model are also different as we observed with the others models (see figure \ref{fi} ). However, we remark  that the value of the difference between the highest  and lowest for the prices of up-and-in call compute with all different sets of the varying model parameters at  barrier level ($1124.5$) which is equal to $17.5397$. It is very small compared to others one  computed with the NIG, VG, and Black-Scholes models. This means the prices of the up-and-in and up-and-out call compute with the CGMY model for all varying model parameters at barrier level ($1124.5$) are a bit close compared to others one. 
+%
+%
+%
+% 
+%%
+%%\begin{figure}[!htbp]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%  \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par.png}  &
+%%   \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par_1.png}  & 
+%%  \end{tabular}
+%%  \caption{ We computed the prices of the  Up-In and Up-Out for the NIG, VG and Black Scholes models with the  model parameters calibrated  from the vanilla call computed with the  model parameters (C,G,M,Y) and  (C$-\Delta$,G,M,Y). We also price the  Up-In and Up-OUt for the CGMY model  with the vary model parameters (C,G,M,Y) and  (C$-\Delta$,G,M,Y).  The barrier $1(S0 )$ to $1.5(S0 )$, the strike price is  $K = 1130$, the spot price is equal $S0=1124.46$, the risk-interest rate $r=19\%$, dividend $q=12\%$ and dividend $q=12\%$  } \label{fj3}
+%%\end{figure}
+%%
+%%\begin{figure}[!htbp]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%     \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par1_2.png}&
+%%      \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par1_4.png}  &
+%%  \end{tabular}
+%%  \caption{ We computed the prices of the  Up-In and Up-Out for the NIG, VG and Black Scholes models with the  model parameters calibrated  from the vanilla call computed with the  model parameters  (C$+\Delta$,G,M,Y) and  (C$-\Delta$,G,M,Y$-\Delta$). We also price the  Up-In and Up-Out for the CGMY model  with the vary model parameters  (C$+\Delta$,G,M,Y) and  (C$-\Delta$,G,M,Y$-\Delta$). The barrier $1(S0 )$ to $1.5(S0 )$, the strike price is  $K = 1130$, the szpot price is equal $S0=1124.46$, the risk-interest rate $r=19\%$ ,dividend $q=12\%$ and maturity $T=0.67123$ } \label{fj4}
+%%\end{figure}
+%%\begin{figure}[!htbp]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%     \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par_5.png} &
+%%     % \includegraphics[width=0.5 \textwidth]{Pricing_Barrier/Par_5.png}   &
+%%  \end{tabular}
+%%  \caption{ We computed the prices of the  Up-In and Up-Out for the NIG, VG and Black Scholes models with the  model parameters calibrated  from the vanilla call computed with the  model parameters (C$-\Delta$,G,M,Y$+\Delta$). We also price the  Up-In and Up-Out for the CGMY model  with the vary model parameters (C$-\Delta$,G,M,Y$+\Delta$). The barrier $1(S0 )$ to $1.5(S0 )$, the strike price is  $K = 1130$, the spot price is equal $S0=1124.46$, the risk-interest rate $r=19\%$ ,dividend $q=12\%$ and maturity $T=0.67123$ } \label{fj5}
+%%\end{figure}
+%%
+%%\begin{figure}[!htbp]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%     \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par_6_in.png}  &
+%%      \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par_6_out.png}   &
+%%  \end{tabular}
+%%  \caption{We computed the prices of the  Up-In and Up-Out for the NIG, VG and Black Scholes models with the  model parameters calibrated  from the vanilla call computed with the  model parameters  (C$+\Delta$,G,M,Y$-\Delta$). We also price the  Up-In and Up-Out for the CGMY model  with the vary model parameters (C$+\Delta$,G,M,Y$-\Delta$). The barrier $1(S0 )$ to $1.5(S0 )$, the strike price is  $K = 1130$, the spot price is equal $S0=1124.46$, the risk-interest rate $r=19\%$ ,dividend $q=12\%$ and maturity $T=0.67123$ } \label{fj6}
+%%\end{figure}
+%%
+%%\begin{figure}[!htbp]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%     \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par_7_in.png}  &
+%%      \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par_7_out.png}&
+%%  \end{tabular}
+%%  \caption{We computed the prices of the  Up-In and Up-Out for the NIG, VG and Black Scholes models with the  model parameters calibrated  from the vanilla call computed with the  model parameters  (C$+\Delta$,G,M,Y$+\Delta$). We also price the  Up-In and Up-Out for the CGMY model  with the vary model parameters (C$+\Delta$,G,M,Y$+\Delta$). The barrier $1(S0 )$ to $1.5(S0 )$, the strike price is  $K = 1130$, the spot price is equal $S0=1124.46$, the risk-interest rate $r=19\%$ ,dividend $q=12\%$ and maturity $T=0.67123$} \label{fj7}
+%%\end{figure}
+%%
+%%\begin{figure}[!htbp]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%     \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par_in_8.png}  &
+%%      \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par_out_8.png} &
+%%  \end{tabular}
+%%  \caption{We computed the prices of the  Up-In and Up-Out for the NIG, VG and Black Scholes models with the  model parameters calibrated  from the vanilla call computed with the  model parameters  (C,G,M,Y$-\Delta$). We also price the  Up-In and Up-Out for the CGMY model  with the vary model parameters (C,G,M,Y$-\Delta$).  The barrier $1(S0 )$ to $1.5(S0 )$, the strike price is  $K = 1130$, the spot price is equal $S0=1124.46$, the risk-interest rate $r=19\%$ ,dividend $q=12\%$ and maturity $T=0.67123$ } \label{fj8}
+%%\end{figure}
+%%
+%%\begin{figure}[!htbp]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%     \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par_9_in.png}   &
+%%      \includegraphics[width=0.5 \textwidth]{../Pricing_Barrier/Par_9_out.png}  &
+%%  \end{tabular}
+%%  \caption{We computed the prices of the  Up-In and Up-Out for the NIG, VG and Black Scholes models with the  model parameters calibrated  from the vanilla call computed with the  model parameters  (C,G,M,Y$+\Delta$). We also price the  Up-In and Up-Out for the CGMY model  with the vary model parameters (C,G,M,Y$+\Delta$). The barrier $1(S0 )$ to $1.5(S0 )$, the strike price is  $K = 1130$, the spot price is equal $S0=1124.46$, the risk-interest rate $r=19\%$ ,dividend $q=12\%$ and maturity $T=0.67123$ } \label{fj9}
+%%\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%
+%%In other part  when we look at the  figures \ref{fj3},\ref{fj4},\ref{fj5},\ref{fj6},\ref{fj7},\ref{fj8} and \ref{fj9} and the  tables \ref{A3}, \ref{Ai} and \ref{A5}. We observe that  the prices of the up-and-in  and Up- and-out call compute with the  NIG and VG models are very similar while they differ with those one obtain with the Black-Scholes model and CGMY model for some model parameters. For instance, we notice there are similarity between the up-and-in and up-and-out call compute with  the model parameters of the  NIG, VG and Black-Scholes models using these sets of the model parameters calibrated to the plain vanilla obtained with  $(C-\Delta,G,M,Y)$ and $(C-\Delta,G,M,Y+\Delta)$. Whereas those one obtain with the rest sets of the model parameters are different.
+%%
+%%In general, when we consider the prices of the up-and-in and up-and-out call  compute with some sets of model parameters. We see that the Black-Scholes model still mispriced the prices the barrier compared to the prices obtained with the  NIG, VG and CGMY  models. Since the Up-and In and Up- and-out call prices obtained with the Black-Scholes model are largerr than the ones obtained with the NIG and VG models. And also larger than the ones obtained with CGMY  model at some sets of model parameter. We also observe that the up-and-out and up-and-in call prices obtained with CGMY model are different to the ones obtained with NIG, and VG  model. 
+%%
+%%This is may be due to the  presence of the small jumps occur during the simulation of
+%%the path of CGMY model (computational problem) since it is not easy to quantify \citep{CM}. We can also see that  the same scenario repeats for the case of the  lookback options  ( \ref{A7}). Once again, we can see that the poor fit of the Black-Scholes model is further emphasized again. This is important because it is in step with the tendency we hope to. 
+%%
+%%
+%%
+%%
+%%
+%%\begin{table}[!htbp]
+%% \begin{center}
+%%   \caption{The price of the Up-In and Up-out for all model price}
+%%   
+%%     \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{1.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%%
+%%\arrayrulecolor[HTML]{DB5800}
+%%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%%\begin{tabular}{|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|l}
+%%\cline{1-9}
+%%\multicolumn{9}{|p{16cm}| }{  The results of the price of the Up-In and Up-out  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.2882)$ }   \\ \cline{1-9}
+%%%\rowcolor{green!80!yellow!50} 
+%%Barrier level & CGMY-In & CGMY-Out & NIG-IN & NIG-Out & VG-IN & VG-out & BS-IN & BS-Out\\ \cline{1-9}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{ |c  }{1124.5} &
+%%\multicolumn{1}{ |c| }{61.6065 }& 0.000 &   66.6927 & 0.000 &66.8189 &0.000& 68.5098 & 0.000&   \\ \cline{1-9}             
+%%
+%%\multicolumn{1}{ |c  }{1180.7}                        &
+%%\multicolumn{1}{ |c| }{ 61.1887 }  &  0.4178 & 65.4664  &1.2263 & 65.6167 & 1.2022 &68.2606 &0.2492       &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1293.1}                        &
+%%\multicolumn{1}{ |c| }{46.7336}  & 14.8730 & 40.6262  & 26.0665   & 35.7135  &31.1053 & 58.9271 &9.5828   &    \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1405.6}                        &
+%%\multicolumn{1}{ |c| }{21.4613}  & 40.1453  & 15.5690 &51.1238 & 10.9387 & 55.8802&36.9545  & 31.5553 &    \\ \cline{1-9}
+%%\multicolumn{1}{ |c }{1518.0}                        &
+%%\multicolumn{1}{ |c| }{6.7053}  &  54.9012& 5.4555 &   61.2372 & 2.9284  & 63.8905   &17.3879 &  51.1219   &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1574.3}                        &
+%%\multicolumn{1}{ |c| }{ 3.4673}  &  58.1393 &  3.3555   & 63.3372& 1.4637 &65.3552 &  10.6947 &57.8152   &  \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1630.5}                        &
+%%\multicolumn{1}{ |c| }{1.5561  }  & 60.0504   & 2.1561 & 64.5366 & 0.8423& 65.9766 & 6.4316& 62.0782  &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1686.7}                        &
+%%\multicolumn{1}{ |c| }{0.6108}  & 60.9957 & 1.5150 & 65.1778 &  0.3944 & 66.4245 &3.9088  &  64.6010&   \\ \cline{1-9}
+%%          \multicolumn{9}{|p{16cm}| }{  The results of the price of the Up-In and Up-out  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2882)$ } \\      
+%%    \cline{1-9}
+%%\multicolumn{1}{ |c  }{1124.5} &
+%%\multicolumn{1}{ |c| }{60.2622}& 0.000  &   59.3668 & 0.000 &  58.5774 &0.000& 60.2873  &0.000 &   \\ \cline{1-9}             
+%%
+%%\multicolumn{1}{ |c  }{1180.7}                        &
+%%\multicolumn{1}{ |c| }{59.5281}  & 0.7341 &  57.7095 & 1.6573 &56.9393&  0.16382&  59.9604 &0.3269  &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1293.1}                        &
+%%\multicolumn{1}{ |c| }{38.0759}  & 22.1863 &  29.0619& 30.3049   & 21.9704  & 36.6070&48.2268 &   12.0605   &    \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1405.6}                        &
+%%\multicolumn{1}{ |c| }{11.6157}  &  48.6464 & 8.2134 & 51.1534 &  4.2624 & 54.3151&  25.1050 &35.1823    &    \\ \cline{1-9}
+%%\multicolumn{1}{ |c }{1518.0}                        &
+%%\multicolumn{1}{ |c| }{0.7312}  & 58.1298 &  2.3673 & 56.9995   & 0.9584  & 57.6191&9.4585 &   50.8288 &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1574.3}                        &
+%%\multicolumn{1}{ |c| }{ 0.2486 }  &  59.5310  & 1.2593  & 58.1075 & 0.4841 & 58.0933&5.2344 &55.0529   &  \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1630.5}                        &
+%%\multicolumn{1}{ |c| }{0.0515 }  & 60.0136   & 0.7181    &  58.6487  &   0.2570 & 58.3205&  2.7610 &57.5263  &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1686.7}                        &
+%%\multicolumn{1}{ |c| }{ 1.0072}  & 60.2106 &  0.4808 & 58.8860 & 0.1596  & 58.4178 &1.2863 & 59.0010 &   \\ \cline{1-9}
+%%          \multicolumn{9}{|p{16cm}| }{  The results of the price of the Up-In and Up-out  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2882)$ }
+%%          \\  \cline{1-9}      
+%%   \multicolumn{1}{ |c  }{1124.5} &
+%%\multicolumn{1}{ |c| }{58.6117}& 0.000 & 74.5319  & 0.000 & 75.2706 & 0.000&75.8933  &0.000&   \\ \cline{1-9}             
+%%
+%%\multicolumn{1}{ |c  }{1180.7}                        &
+%%\multicolumn{1}{ |c| }{ 58.3565}  & 0.2552 &  73.6812 &0.8507  &  74.2287 &   1.0418 &75.7136 & 0.1797      &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1293.1}                        &
+%%\multicolumn{1}{ |c| }{49.0585}  & 9.5532 & 51.9136 & 22.6183 &  48.9960  &26.2746 & 68.1165 &7.7768   &    \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1405.6}                        &
+%%\multicolumn{1}{ |c| }{28.5143}  & 30.0974 & 21.0727 & 53.4592 & 19.6734 & 55.5971 &47.6105 & 28.2828&    \\ \cline{1-9}
+%%\multicolumn{1}{ |c }{1518.0}                        &
+%%\multicolumn{1}{ |c| }{12.0576}  & 46.5541 &    6.9613&   67.5706 &  7.3842 &  67.8864 &26.8487 &49.0446   &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1574.3}                        &
+%%\multicolumn{1}{ |c| }{7.2821}  &  51.3296  & 3.9490   & 70.5829  & 4.6595 & 70.6111 &18.9968  &56.8965   &  \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1630.5}                        &
+%%\multicolumn{1}{ |c| }{  4.1500 }  & 54.4617 &  2.2518 & 72.2801   & 2.9807& 72.2899&13.1834 &62.7099   &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1686.7}                        &
+%%\multicolumn{1}{ |c| }{2.3158}  & 56.2959 & 1.2114 & 73.3205 &   1.8723 & 73.3982&8.7682 &67.1251 &   \\ \cline{1-9}
+%% \end{tabular}\label{A3}
+%%\end{center}
+%%\end{table}
+%%\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%\begin{table}[!htbp]
+%% \begin{center}
+%%   \caption{The price of the Up-In and Up-out for all model price}
+%%   
+%%     \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{1.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%%
+%%\arrayrulecolor[HTML]{DB5800}
+%%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%%\begin{tabular}{|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1cm}|p{1cm}|p{1cm}|l}
+%%\cline{1-9}
+%%\multicolumn{9}{|p{15cm}| }{  The results of the price of the Up-In and Up-out  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.0306)$} \\ \cline{1-9}
+%%%\rowcolor{green!80!yellow!50} 
+%%Barrier level & CGMY-In & CGMY-Out& NIG-IN & NIG-Out & VG-IN & VG-out & BS-IN & BS-Out\\ \cline{1-9}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{ |c  }{1124.5} &
+%%\multicolumn{1}{ |c| }{ 46.9271  }& 0.000 &  43.0196   & 0.000 & 43.7689 &0.000&45.5704 &0.000&   \\ \cline{1-9}             
+%%
+%%\multicolumn{1}{ |c  }{1180.7}                        &
+%%\multicolumn{1}{ |c| }{42.6867}  & 4.2404  &  37.1769 &  5.8426 & 33.7679 & 10.0011 &44.9241& 0.6463      &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1293.1}                        &
+%%\multicolumn{1}{ |c| }{4.7095}  & 42.2176 & 8.1502  &34.8694   &  19.3386  &   24.4303  &   27.2395&18.3309   &    \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1405.6}                        &
+%%\multicolumn{1}{ |c| }{0.4231}  &  46.5040    &   2.0725 &  40.9470  & 11.2407 &32.5282 &   7.3919&38.1785&    \\ \cline{1-9}
+%%\multicolumn{1}{ |c }{1518.0}                        &
+%%\multicolumn{1}{ |c| }{0.0986}  & 46.8285 &   0.7141 &  42.3054 &  6.7502 &  37.0188 &1.1914  &  44.3790&   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1574.3}                        &
+%%\multicolumn{1}{ |c| }{0.0555}  & 46.8716 &   0.4312   & 42.5883   &  5.3172 & 38.4518       & 0.4028  &45.1676&  \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1630.5}                        &
+%%\multicolumn{1}{ |c| }{0.0396}  & 46.8875 & 0.2100     & 42.8096 &  4.1859   &39.5830  & 0.1274 &   45.4430   &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1686.7}                        &
+%%\multicolumn{1}{ |c| }{ 0.000}  & 46.9271 &   0.1395 & 42.8801 &  3.4294  &40.3395 &0.000 &45.5704&   \\ \cline{1-9}
+%%          \multicolumn{9}{|p{16cm}| }{  The results of the price of the Up-In and Up-out  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2948)$}  \\      
+%%    \cline{1-9}
+%%\multicolumn{1}{ |c  }{1124.5} &
+%%\multicolumn{1}{ |c| }{60.7496 }& 0.000 &  60.0212 & 0.000 & 59.6999 &0.000& 60.1975 &0.000&   \\ \cline{1-9}             
+%%
+%%\multicolumn{1}{ |c  }{1180.7}                        &
+%%\multicolumn{1}{ |c| }{60.0301  }  &  0.7195 &58.4200 &1.6012 & 58.0074&   1.6925 &59.8759 & 0.3217    &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1293.1}                        &
+%%\multicolumn{1}{ |c| }{39.1016}  & 21.6480 & 30.5585 & 29.4628   &  26.0091   &  33.6909& 47.9215 & 12.2761   &    \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1405.6}                        &
+%%\multicolumn{1}{ |c| }{12.2582}  & 48.4914 & 9.4926 & 50.5286 &7.6788  & 52.0212 &   24.2665 &35.9310&    \\ \cline{1-9}
+%%\multicolumn{1}{ |c }{1518.0}                        &
+%%\multicolumn{1}{ |c| }{2.0503}  & 58.6993 &   2.9449 & 57.0764 &   2.1197  &  57.5803& 8.7149 &51.4826 &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1574.3}                        &
+%%\multicolumn{1}{ |c| }{ 0.6209}  & 60.1287 & 1.7118 & 58.3095 &  1.1780& 58.5219 &4.6255  &55.5720  &  \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1630.5}                        &
+%%\multicolumn{1}{ |c| }{ 0.2256}  & 60.5240 & 0.8881  & 59.1332 &  0.6812 &  59.0187  &2.4634 & 57.7341   &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1686.7}                        &
+%%\multicolumn{1}{ |c| }{   0.0687}  & 60.6809 &   0.5473 & 59.4739& 0.2893 &  59.4107 &1.2415 &58.9561&   \\ \cline{1-9}
+%%          \multicolumn{9}{|p{16cm}| }{  The results of the price of the Up-In and Up-out  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.0306)$}
+%%          \\  \cline{1-9}      
+%%   \multicolumn{1}{ |c  }{1124.5} &
+%%\multicolumn{1}{ |c| }{64.4668 }& 0.000 & 56.7967 & 0.000 & 56.3711 &0.000& 58.5702 & 0.3351   &   \\ \cline{1-9}             
+%%
+%%\multicolumn{1}{ |c  }{1180.7}                        &
+%%\multicolumn{1}{ |c| }{62.5049 }  &1.9619  & 54.1075 & 2.6892  &  53.5656 &   2.8055 & 58.2351& 0.000 &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1293.1}                        &
+%%\multicolumn{1}{ |c| }{23.0008}  & 41.4660 & 17.6378 &  39.1589  & 16.6310  & 39.7401&46.0667 &12.5036 &    \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1405.6}                        &
+%%\multicolumn{1}{ |c| }{2.1880}  & 62.2788  & 4.0166  & 52.7801 & 5.9922 & 50.3789 &22.6272  &35.9430 &    \\ \cline{1-9}
+%%\multicolumn{1}{ |c }{1518.0}                        &
+%%\multicolumn{1}{ |c| }{0.2538}  &64.2130   & 0.9776   & 55.8191 &   2.1992 &  54.1719  &7.8192&   50.7510  &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1574.3}                        &
+%%\multicolumn{1}{ |c| }{0.1126}  &     64.3542& 0.5287   & 56.2680  &  1.4243  & 54.9468   & 4.1535  &54.4167 &  \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1630.5}                        &
+%%\multicolumn{1}{ |c| }{  0.0658}  & 64.4010  & 0.2855 & 56.5112 & 0.8863  &  55.4848&2.0551 &56.5151   &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1686.7}                        &
+%%\multicolumn{1}{ |c| }{ 0.0402}  &64.4265 & 0.1752 & 56.6215 &  0.5269  &55.8442 &1.1046 &57.4657&   \\ \cline{1-9}
+%% \end{tabular}\label{A3i}
+%%\end{center}
+%%\end{table}
+%%\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  +
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\begin{table}[!htbp]
+%% \begin{center}
+%%   \caption{The price of the Up-In and Up-out for all model price}
+%%   
+%%     \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{1.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%%
+%%\arrayrulecolor[HTML]{DB5800}
+%%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%%\begin{tabular}{|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|l}
+%%\cline{1-9}
+%%\multicolumn{9}{|p{16cm}| }{  The results of the price of the Up-In and Up-out  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2948)$}   \\ \cline{1-9}
+%%%\rowcolor{green!80!yellow!50} 
+%%Barrier level & CGMY-In & CGMY-Out & NIG-IN & NIG-Out & VG-IN & VG-out & BS-IN & BS-Out\\ \cline{1-9}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{ |c  }{1124.5} &
+%%\multicolumn{1}{ |c| }{  57.8942 }& 0.000 &   74.5347 & 0.000 & 74.7820 &0.000& 76.2206 &0.000&   \\ \cline{1-9}             
+%%
+%%\multicolumn{1}{ |c  }{1180.7}                        &
+%%\multicolumn{1}{ |c| }{ 57.6448}  & 0.2493  & 73.6277 & 0.9070 & 73.8778  & 0.9043   &76.0428&0.1778      &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1293.1}                        &
+%%\multicolumn{1}{ |c| }{48.8135}  & 9.0807  & 52.6093 & 21.9253    &  49.1074 &  25.6746   &68.6090&7.6116  &    \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1405.6}                        &
+%%\multicolumn{1}{ |c| }{28.6675}  & 29.2267 &  23.7261 & 50.8086 & 17.6458 &  57.1362 &48.5258&27.6948&    \\ \cline{1-9}
+%%\multicolumn{1}{ |c }{1518.0}                        &
+%%\multicolumn{1}{ |c| }{ 12.7659}  & 45.1282& 8.9613 &    65.5733    &5.7043 &  69.0777   &27.1008 &49.1198 &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1574.3}                        &
+%%\multicolumn{1}{ |c| }{  7.8815}  & 50.0127 & 5.3498   & 69.1848   &  3.1277 & 71.6543    &19.0599  &57.1607&  \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1630.5}                        &
+%%\multicolumn{1}{ |c| }{ 4.7318  }  &53.1623&3.3755     & 71.1592 & 1.7588 & 73.0233   & 12.4561 &63.7645&   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1686.7}                        &
+%%\multicolumn{1}{ |c| }{ 2.4434}  &55.4507& 2.0345 & 72.5001 & 0.9411  &73.8409&8.3022 &67.9184&   \\ \cline{1-9}
+%%          \multicolumn{9}{|p{16cm}| }{  The results of the price of the Up-In and Up-out  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.2882)$}  \\      
+%%    \cline{1-9}
+%%\multicolumn{1}{ |c  }{1124.5} &
+%%\multicolumn{1}{ |c| }{55.7326 }& 0.000 & 49.8042 & 0.000 & 50.5045 &0.000&51.8719 &0.000&   \\ \cline{1-9}             
+%%\multicolumn{1}{ |c  }{1180.7}                        &
+%%\multicolumn{1}{ |c| }{52.9540}  & 2.7786 & 45.8284  & 3.9758 & 46.8220 &  3.6825 &51.3874 &  0.4844 &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1293.1}                        &
+%%\multicolumn{1}{ |c| }{12.0221}  & 43.7106   & 12.7590 &37.0452 &   10.8019 & 39.7025&36.7722  &15.0997&    \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1405.6}                        &
+%%\multicolumn{1}{ |c| }{0.8161 }  & 54.9165  & 3.2870 & 46.5172& 3.2527 & 47.2518 & 14.6522  & 37.2196&    \\ \cline{1-9}
+%%\multicolumn{1}{ |c }{1518.0}                        &
+%%\multicolumn{1}{ |c| }{0.2079}  & 55.5247 &  1.1194 &  48.6848    & 1.0140  &   49.4904   &3.7713  &48.1006&   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1574.3}                        &
+%%\multicolumn{1}{ |c| }{0.1339}  &    55.5988  & 0.5681 &49.2361   & 0.6047 & 49.8997     &1.8170  &50.0548&  \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1630.5}                        &
+%%\multicolumn{1}{ |c| }{0.1022}  & 55.6304  & 0.4065     & 49.3978  & 0.4371 & 50.0674    &0.8267 &51.0451  &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1686.7}                        &
+%%\multicolumn{1}{ |c| }{0.0463}  & 55.6863&  0.2070 & 49.5972 &  0.2315 & 50.2730&0.3521 & 51.5198&   \\ \cline{1-9}
+%%          \multicolumn{9}{|p{16cm}| }{  The results of the price of the Up-In and Up-out  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.29487)$}
+%%          \\  \cline{1-9}      
+%%   \multicolumn{1}{ |c  }{1124.5} &
+%%\multicolumn{1}{ |c| }{60.8387}& 0.000 &   68.2036  & 0.000 &   67.3485  &0.000 &69.4918 &0.000&   \\ \cline{1-9}             
+%%
+%%\multicolumn{1}{ |c  }{1180.7}                        &
+%%\multicolumn{1}{ |c| }{60.4517}  &  0.3870 & 66.9827 &1.2209 & 66.1097  &  1.2388 &69.2495&0.2424    &   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1293.1}                        &
+%%\multicolumn{1}{ |c| }{46.7511}  & 14.0875&  42.8934 & 25.3103    & 36.5672   &   30.7813 & 60.1476&9.3443&    \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1405.6}                        &
+%%\multicolumn{1}{ |c| }{22.2159}  & 38.6227  & 17.1437 & 51.0599 & 11.0470  & 56.3015& 37.6942 &31.7976&    \\ \cline{1-9}
+%%\multicolumn{1}{ |c }{1518.0}                        &
+%%\multicolumn{1}{ |c| }{7.1282}  & 53.7105 & 6.1700 &   62.0336   & 3.2291  &64.1194    &17.8156 & 51.6762&   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1574.3}                        &
+%%\multicolumn{1}{ |c| }{3.6782}  & 57.1605  & 3.7221 &  64.4815  & 1.5474 & 65.8011    &11.4142  &58.0776&  \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1630.5}                        &
+%%\multicolumn{1}{ |c| }{1.6841}  &59.1546&  2.2364   &   65.9673  & 0.8016 & 66.5469  &6.8878 &62.6041&   \\ \cline{1-9}
+%%\multicolumn{1}{ |c  }{1686.7}                        &
+%%\multicolumn{1}{ |c| }{ 0.7559}  & 60.0828 & 1.2528 & 66.9508 &   0.4030 & 66.9455&4.2633 &65.2285&   \\ \cline{1-9}
+%% \end{tabular}\label{A3ii}
+%%\end{center}
+%%\end{table}
+%%\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  +
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%\begin{table}[!htbp]
+%% \begin{center}
+%%   \caption{The price value of the lookback fixed computed with all different model parameters}
+%%     \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{1.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%%
+%% 
+%%\arrayrulecolor[HTML]{DB5800}
+%%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%%\begin{tabular}{|p{1cm}|p{1cm}|p{1cm}|p{1cm}|l}
+%%\cline{1-4}
+%%\multicolumn{4}{ |c| }{The lookback fixed computed with all model parameters far all models }  \\ \cline{1-4}
+%%%\rowcolor{green!80!yellow!50} 
+%%CGMY-lookback fixed & NIG-lookback fixed & VG-lookback fixed & BS-lookback fixed\\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.2882)$} \\ \cline{1-4}
+%%\multicolumn{1}{ |c  }{ 113.4766}                        &
+%%\multicolumn{1}{ |c| }{ 101.1575}& 99.1843&134.5473  &  \\ \cline{1-4}
+%%          \multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2882)$} \\      
+%%    \cline{1-4}
+%%\multicolumn{1}{ |c  }{  100.8374} &
+%%\multicolumn{1}{ |c| }{ 88.5690}& 85.4200& 117.6921 &   \\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2882)$}  \\ \cline{1-4}
+%%\multicolumn{1}{ |c  }{ 122.1205}                        &
+%%\multicolumn{1}{ |c| }{ 115.2333}&112.2128&150.0651 &  \\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.0306)$}   \\ \cline{1-4}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{ |c  }{  65.0561}                        &
+%%\multicolumn{1}{ |c| }{ 56.8793}& 52.3772&   87.2563 &  \\ \cline{1-4}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2948)$}  \\ \cline{1-4}
+%% \multicolumn{1}{ |c  }{102.7870}                        &
+%%\multicolumn{1}{ |c| }{89.4158}& 86.9768&116.9098  &  \\ \cline{1-4}
+%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.0306)$}  \\ \cline{1-4}
+%%
+%%\multicolumn{1}{ |c  }{  89.4191}                        &
+%%\multicolumn{1}{ |c| }{ 77.9965}&73.6404& 114.5504  &  \\ \cline{1-4}
+%%
+%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2948)$}    \\ \cline{1-4}
+%%\multicolumn{1}{ |c }{ 121.8618}                        &
+%%\multicolumn{1}{ |c| }{115.6091}&112.8394&151.6934   & \\ \cline{1-4}
+%%
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.0306)$}   \\ \cline{1-4}
+%%
+%%\multicolumn{1}{ |c  }{ 77.2682}                        &
+%%\multicolumn{1}{ |c| }{  67.2413}  &64.9091& 100.6625&   \\ \cline{1-4}
+%%\multicolumn{4}{|p{16cm}| }{  The results of the price of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.948)$}   \\ \cline{1-4}
+%%\multicolumn{1}{ |c  }{ 114.2171}                        &
+%%\multicolumn{1}{ |c| }{103.3590}  &100.4695&  136.1129 &  \\ \cline{1-4} 
+%%\end{tabular}\label{A5}
+%%\end{center}
+%%\end{table}
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
+%
+%Further to the above, we noted that the barrier options (Up-and-In calls) are more sensitive to the model risk than lookback options especially when the options are out-of-the-money. We also observed that models driven by the L\'evy dynamics (CGMY, NIG and  VG models) are more suitable for the pricing of barrier and lookback option than Black-Scholes models are, especially when the options are in-the-money.
+%
+% 
+% 
+%This study shows that the prices of exotic  options are model sensitive to the model risk. In the next section we  discuss quantifying model risk.
+%
+%% We also noted that the VG and NIG models gave  better results when we computed the barrier and lookback options than the BS model, despite the fact that their new parameters are calibrated to "CGMY-world" data.  
+%%Another important observation is that the wrong parameters may cause the risk when pricing the exotic options  as we saw in the above section. This means, the models can be said inappropriate or inaccurate to the exotic options if the wrong risk-neutral parameters are used to price the exotic options. 
+% %\section{ Model risk and Exotic option}
+% 
+%\section{Quantifying Model Risk }
+%Having discussed how the model risk can arise when we price exotic options, we now attempt to quantify this model risk. We limit our discussion of details of concerning quantifying model uncertainty measures, which are discussed in detail by Cont \citep{CONT} and Gupta, Reisingner and Whitley \cite{AKA}. However, quantification of model risk does requires a review of how the model uncertainty measure is quantified.
+%
+%\subsection{Quantifying Model Uncertainty Measure (Cont \cite{CONT})}
+%In this section, we review quantifying  model uncertainty measure as introduced by Cont \cite{CONT}. Uncertainty can be considered radically distinct from the familiar  concept of risk, although they have never been properly separated (Cont \cite{CONT}).  Whereas "risk" can be taken in some cases as a quantity susceptible to measurement, at other times it is not (Frank Knight \cite{KRI}).
+%%Before going through the discussion on how to quantify the model uncertainty measure we may start by defining the model uncertainty measure
+%Let $(\Omega, F)$ be a set of the market scenario and we also assume that there is no reference probability measure on the set $\Omega$. Consider the trajectories of the prices in the market scenario ($S(\omega), \omega \in \Omega$) and denote by: $S : \Omega \mapsto D([0,T])$ where $D([0,T])$ represents the space which allows the jumps in the prices (or the space of right continuous functions with let limit) (Cont \cite{CONT}). Let $H$ be a contingent claim identifies at terminal value at $T$ of its payoff. We also assume that all asset values and payoffs are of discounted value. Cont \cite{CONT} states that in order to describe the method for quantifying the model uncertainty he needs the following ingredients:
+%\begin{itemize}
+%\item The options prices must be observed on the markets (Benchmark instruments). The observed market prices are denoted by $(C^*_j)_{j\in J}$ and payoffs by $(H_j)_{ j\in J}$. The range of the observed prices are given by $ C^*_J \in [C^{bid}_J, C^{ask}_j]$ since there is not a unique prices.
+%\item The discount asset prices $(S_t)_{t \in [0,T]}$ must be a martingale under each $\mathbb{Q} \in \mathcal{Q}$ with respect to the filtration $F_t$ : a set of arbitrage-free pricing  measure $\mathcal{Q}$ must consist with the market prices of the benchmark instruments and 
+%\begin{align}\label{BD}
+%\mathbb{E}_{\mathbb{Q}}[|H_j|]< \infty \quad \mathbb{E}_{\mathbb{Q}}[H_j]=C^*_j \quad \forall \mathbb{Q} \in \mathcal{Q}, \quad \forall j\in J.
+%\end{align}
+%Cont \citep{CONT} highlights that market prices $C^*_j$ is only defined up to the bid-ask spread so one needs to modify the above condition \ref{BD} to:
+% \begin{align}\label{BD1}
+%\mathbb{E}_{\mathbb{Q}}[|H_j|]< \infty \quad \mathbb{E}_{\mathbb{Q}}[H_j] \in [C^{bid}_J, C^{ask}_j] \quad \forall \mathbb{Q} \in \mathcal{Q}, \quad \forall j\in J.
+%\end{align}
+%\end{itemize}
+%\subsubsection{Remark}
+% Kerkhof, Melenberg, and Schumacher \citep{KMS} highlight the distinction between the "model uncertainty" and "parameters uncertainty". However, Cont \citep{CONT} said this distinction was irrelevant, on the basis that the family of the parameters of the pricing model $(\mathbb{Q}_\theta)_{\theta \in E}$, and different value $(\theta_j)_{j \in A}$ of the parameter will define probability measures $\mathbb{Q}_{\theta_j}$, which is the only component (ingredient) needed to construct the methodology for quantifying model uncertainty. He also states that the parametric family being integrated into a "one" (or "single")  parametric family is purely conventional and that it depends on the arbitrary definition of a "parametric family". In fact by integrating all models in a set $\mathcal{Q}$ into a single super-model, the model uncertainty can always be represented as "parameter uncertainty" (Cont \citep{CONT}).
+%
+%Let $\mathcal{C}$ be set of the contingent claim with a well-defined price in all L\'evy models, and denotes by:
+%\begin{align}
+%\mathcal{C} = \Bigg \lbrace H\in F_T, \sup_{\mathbb{Q}\in \mathcal{Q}} \mathbb{E}_{\mathbb{Q}}[|H|]<\infty \Bigg \rbrace .
+%\end{align}
+%We can now consider  a mapping $\mu :\mathcal{C} \mapsto [0, \infty $  as the model uncertainty  on the value of the contingent claim $X$. Cont \citep{CONT} enumerated the following properties:
+%\begin{itemize}
+%\item[a)] The model uncertainty of the benchmark instruments can be reduced to the uncertainty on market value:
+%\begin{align}\label{Pro}
+%\mu(H_j) \leq \vert C^{ask}_j-C^{bid}_j \vert \quad \forall j \in J
+%\end{align}
+%\item[b)] Effect of hedging with the underlying asset:
+%\begin{align}
+%\mu \Bigg(X+ \int_{0}^T\phi_t.dS_t \Bigg)=\mu (X) \quad \forall \phi \in S
+%\end{align}
+%Particularly, the value of the contingent claim that may be replicated in a model free way by trading in the underlying has no model uncertainty:
+%\begin{align}
+%\Bigg[\exists x_0 \in \mathbb{R}, \exists \phi \in S, \forall \mathbb{Q} \in \mathcal{Q}, \quad \mathbb{Q} \Bigg( X=x_0 + \int_{0}^T\phi_t.dS_t  \Bigg)=1 \Bigg]\Rightarrow \mu (X) =0
+%\end{align}
+%\item[c)]Convexity: model uncertainty may not be increased through diversification.
+%\begin{align}
+%\forall X_1, X_2 \in \mathcal{C}, \forall \lambda \in [0,1] \quad \mu(\lambda X_1+ (1-\lambda)X_2) \leq \lambda \mu(X_1)+(1-\lambda)\mu(X_2)
+%\end{align}
+%\end{itemize} 
+%The above property \ref{Pro} defines a scale for $\mu$: When $\mu$ verifies the property \ref{Pro} then $\lambda \mu$ may also verifies this property for  $0<\lambda \leq 1$, but not necessary for $\lambda >1$.This may allow one to construct a maximal element among all mapping proportional to $\mu$ which can be defined as the one that saturates  the range constraint \ref{Pro} (Cont \citep{CONT}):
+%\begin{align}
+%\mu _{\max}= \lambda_{\max}\mu \quad \lambda _{\max}=\sup\{\lambda>0, \lambda \mu\quad \text{verifies} \quad \ref{Pro} \}
+%\end{align} 
+%\subsection{A Coherent Measure of Model Uncertainty (Cont \cite{CONT})}\label{CM}
+%Using the above ingredient, Cont \citep{CONT} constructs a measure of model uncertainty which verifies the above properties. Let $X \in \mathcal{C}$ be a payoff which has a well-defined value in all the pricing models $\mathbb{Q} \in \mathcal{Q}$. Cont \citep{CONT} defines the  upper and lower price bounds as follows:
+%\begin{align*}
+% \pi_{hi}(X)=\sup_{\mathbb{Q}\in \mathcal{Q}}\mathbb{E}_{\mathbb{Q}}[X] \quad  \pi_{lo}(X)=\inf_{\mathbb{Q}\in \mathcal{Q}} \mathbb{E}_{\mathbb{Q}}[X]=- \pi_{hi}(-X) .
+%\end{align*}
+%A coherent risk measure is defined when  $X \mapsto \pi_{hi}(-X)$. 	Any of the pricing models $\mathbb{Q} \in \mathcal{Q}$, will give a value of $X$ which will fall in the interval $[\pi_{lo}, \pi_{hi}]$.  If the value of the payoff $X$ is not influenced by the model uncertainty then we have $\pi_{hi}(X)=\pi_{lo}(X)$. Hence, Cont \cite{CONT} derives a model uncertainty formula by taking the difference between the highest price $ \pi_{hi} $ and lowest price $ \pi_{lo}$ for a payoff $X$ under a set of risk neutral measures $\mathbb{Q}$
+%\begin{align}
+%\label{A1}
+%\mu_{\mathbb{Q}}(X)=\pi_{hi}(X)-  \pi_{lo}(X).
+%\end{align}
+%When one computes the market value of the derivative using the pricing of L\'evy models $(\mathbb{E}_{\mathbb{Q}}[X])$, the margin for model uncertainty is given by $\pi_{hi}- \mathbb{E}_{\mathbb{Q}}[X] \leq \mu_{\mathbb{Q}}(X).\mu_{\mathbb{Q}}(X) $ which represents an upper bound on the margin for "model risk" (Cont \cite{CONT}). 
+%
+%In fact, the only problem with the model risk formula \ref{A1} is that the both  prices $ \pi_{hi} $ and $\pi_{lo}$  contain the fitting  RMSE error described in chapter \ref{cp}.  In order to remove this bias from the barrier and lookback fixed options, one needs to normalize the above \ref{A1} model risk formula. To do this, we modify the model risk formula obtained by Cont \cite{CONT} by dividing the expression $\mu_{\mathbb{Q}}$ by sum of $ \pi_{hi} $ and $\pi_{lo}$ (model risk ratio ) which follows:
+%\begin{align}
+%\label{A2}
+% \bar{\mu}_{\mathbb{Q}}(X)= \frac{\pi_{hi}(X)-  \pi_{lo}(X)}{\pi_{hi}(X)+\pi_{lo}(X)}.
+%\end{align}
+%Note that if the model risk ratio $\bar{\mu}_{\mathbb{Q}}(X)$ is high, this indicates that the model risk is a large component of the risk of the portfolio and that ratio can be used like a tool for model validation (model validation takes the models and methods developed by modeling quantitative analyst and determines if these models and methods are valid and correct \cite{Link12})(\cite{CONT}). We summary that the model risk ratio helps verify that the models and methods developed by the modeling quantitative analyst are valid and correct (\cite{Link12}).
+%\subsubsection{Remark}
+%To compute the value of $\pi_{hi}$ and $ \pi_{lo}$, one can use an approach similar to that introduced by El Karoui and Quenez \cite{KQ} (the superhedging approach). When using complete market models, all models in $\mathcal{Q}$ correspond to the complete market models, and $\pi_{lo}$ is interpreted as the cost of the cheapest strategy dominating $X$ in the worst-case model (Cont \cite{CONT}). However, if using superhedging approach, the value of $\mathcal{Q}$ is considered as the set of all martingale measure equivalent to a given probability measure $\mathbb{P}$ (Cont \cite{CONT}). Thus, price intervals produced by  the superhedging approach have  tendency to be quite large and can sometime coincide with the maximal arbitrage bounds (Eberlein and Jacod \cite{EA}) which renders them useless when comparing them with market prices (\cite{CONT}). Cont \cite{CONT} states that by using the above approach when $X$ is that terminal payoff of a trade option, the construction of the interval $[\pi_{hi}(X), \pi_{lo}(X)]$ is compatible with bid-ask interval for this option. The above remark shows that the calibration condition \ref{CM} is essential for ensuring that the model uncertainty measure is useful and nontrivial (Cont \cite{CONT}). 
+%
+%\section{The Results of Model Risk Ratio}
+%In this section, we discuss the results of the model risk ratio obtained using the model risk ratio \ref{A2}. Below we report the results for the model risk of the exotic options computed with  NIG, VG, CGMY and Black-Scholes models using their risk-neutral parameters calibrated to "real world" data obtained with  the varying parameters of the CGMY model. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{table}[!htbp]
+% \begin{center}
+%   \caption{We measure the model risk for exotic option with model price computed for all set of model estimated from $9$ different call vanilla from CGMY model}
+%   
+%     \setlength{\arrayrulewidth}{0.5mm}
+%\setlength{\tabcolsep}{8pt}
+%\renewcommand{\arraystretch}{2.5}
+%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%
+%\arrayrulecolor[HTML]{DB5800}
+%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%\begin{tabular}{|p{1cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|l}
+%\cline{1-5}
+%\multicolumn{5}{ |p{16cm}| }{The results of model risk $\bar{\mu}_{\mathbb{Q}}$  of the up-and-in  call computed with the  NIG, VG, CGMY and BS models using their new parameters calibrated to different sets of the "real world" data obtained with the set of the varying parameters of CGMY model. Strike price $K=110$, spot price  $S0=100$, interest rate $r=19 \%$, dividend $q=12\%$ and $T=1$  }  \\ \cline{1-5}
+%%\rowcolor{green!80!yellow!50} 
+%Barrier level & up-and-in with (C, G, M, Y)  &  up-and-in with (C$^-$, G, M, Y) & up-and-in with (C$^+$, G, M, Y) & up-and-in with (C$^-$, G, M, Y$^-$)  &  \\ \cline{1-5}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\multicolumn{1}{ |c  }{100}                        &
+%\multicolumn{1}{ |c| }{0.1196}  & 0.1496 & 0.0614 & 0.3578 &    \\ \cline{1-5} 
+%
+% \end{tabular}\label{A7}
+%\end{center} 
+%\begin{center}
+%     \setlength{\arrayrulewidth}{0.5mm}
+%\setlength{\tabcolsep}{8pt}
+%\renewcommand{\arraystretch}{2.5}
+%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%
+%\arrayrulecolor[HTML]{DB5800}
+%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%\begin{tabular}{|p{1cm}|p{2cm}|p{2cm}|p{1.8cm}|p{3cm}|p{3cm}|l}
+%\cline{1-6}
+%\multicolumn{6}{ |p{16cm}|  }{The results of model risk $\bar{\mu}_{\mathbb{Q}}$  of the up-and-in  call computed with the  NIG, VG, CGMY and BS models using their new parameters calibrated to different sets of the "real world" data obtained with the set of the varying parameters of CGMY model. Strike price $K=110$, spot price  $S0=100$, interest rate $r=19 \%$, dividend $q=12\%$ and $T=1$   }  \\ \cline{1-6}
+%%\rowcolor{green!80!yellow!50} 
+%Barrier level & up-and-in with (C$^-$, G, M, Y$^+$) &  up-and-in with (C$^+$, G, M, Y$^-$) & up-and-in with (C$^+$, G, M, Y$^+$)  & up-and-in with (C, G, M, Y$^-)$  & up-and-in with (C, G, M, Y$^+)$  & \\ \cline{1-6}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\multicolumn{1}{ |c  }{100}                        &
+%\multicolumn{1}{ |c| }{0.0834}  &0.1890 & 0.0732 &  0.2758 & 0.1093&   \\ \cline{1-6}                 
+% \end{tabular}\label{A11i}
+%\end{center}
+%\end{table}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{table}[!htbp]
+% \begin{center}
+%   \caption{We measure the model risk for exotic option with model price computed for all set of model estimated from $9$ different call vanilla from CGMY model}
+%   
+%     \setlength{\arrayrulewidth}{0.5mm}
+%\setlength{\tabcolsep}{8pt}
+%\renewcommand{\arraystretch}{2.5}
+%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%
+%\arrayrulecolor[HTML]{DB5800}
+%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%\begin{tabular}{|p{1cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|l}
+%\cline{1-5}
+%\multicolumn{5}{ |p{16cm}| }{The results of model risk $\bar{\mu}_{\mathbb{Q}}$  of the up-and-in  call computed with the  NIG, VG, CGMY and BS models using their new parameters calibrated to different sets of the  "real world" data obtained with the set of the varying parameters of CGMY model. Strike price $K=95$, spot price  $S_0=100$, interest rate $r=19 \%$, dividend $q=12\%$ and $T=1$  }  \\ \cline{1-5}
+%%\rowcolor{green!80!yellow!50} 
+%Barrier level & up-and-in with (C, G, M, Y)  &  up-and-in with (C$^-$, G, M, Y) & up-and-in with (C$^+$, G, M, Y) & up-and-in with (C$^-$, G, M, Y$^-$)  &   \\ \cline{1-5}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\multicolumn{1}{ |c  }{100}                        &
+%\multicolumn{1}{ |c| }{0.1295 }  & 0.1619 &0.0844& 0.1741&    \\ \cline{1-5} 
+% \end{tabular}
+%\end{center} 
+%
+%\begin{center}
+%     \setlength{\arrayrulewidth}{0.5mm}
+%\setlength{\tabcolsep}{8pt}
+%\renewcommand{\arraystretch}{2.5}
+%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%
+%\arrayrulecolor[HTML]{DB5800}
+%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%\begin{tabular}{|p{1cm}|p{2cm}|p{2cm}|p{1.8cm}|p{3cm}|p{3cm}|l}
+%\cline{1-6}
+%\multicolumn{6}{ |p{16cm}|  }{The results of model risk $\bar{\mu}_{\mathbb{Q}}$  of the up-and-in  call computed with the  NIG, VG, CGMY and BS models using their new parameters calibrated to different sets of the  "real world" data obtained with the set of the varying parameters of CGMY model. Strike price $K=95$, spot price  $S0=100$, interest rate $r=19 \%$, dividend $q=12\%$ and $T=1$   }  \\ \cline{1-6}
+%%\rowcolor{green!80!yellow!50} 
+%Barrier level & up-and-in with (C$^-$, G, M, Y$^+$) &  up-and-in with (C$^+$, G, M, Y$^-$) & up-and-in with (C$^+$, G, M, Y$^+$)  & up-and-in with (C, G, M, Y$^-)$  & up-and-in with (C, G, M, Y$^+)$    & \\ \cline{1-6}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\multicolumn{1}{ |c  }{100}                        &
+%\multicolumn{1}{ |c| }{0.1562}  &0.2019 & 0.0739 &0.1936 &0.1170&   \\ \cline{1-6}               
+% \end{tabular}\label{A12} 
+%\end{center}
+%\end{table}
+%
+% \begin{table}[!htbp]
+% \begin{center}
+%   \caption{The results of model risk ratio $\mu_{\mathbb{Q}}$ for the lookback call computed with the  NIG, VG, CGMY and BS models using their new parameters calibrated to different sets of the  "real world" data obtained with the set of the varying parameters of CGMY model. Strike price $K=95$, spot price  $S_0=100$, interest rate $r=19 \%$, dividend $q=12\%$ and $T=1$}
+%        \setlength{\arrayrulewidth}{0.5mm}
+%\setlength{\tabcolsep}{8pt}
+%\renewcommand{\arraystretch}{1.5}
+%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%
+%\arrayrulecolor[HTML]{DB5800}
+%\begin{tabular}{|p{6cm}|p{5cm}|}
+%\hline 
+% CGMY, NIG, VG and BS  parameters calibrated to "CGMY-world" data obtained with the following  set of varying parameters  & $\bar{\mu}_{\mathbb{Q}}$   \\ 
+%\hline 
+% (C, G, M, Y) & 0.0836   \\ 
+%\hline 
+%  (C$^-$, G, M, Y) & 0.0856  \\ 
+%\hline                                 
+% (C$^+$, G, M, Y) & 0.0836   \\ 
+%\hline 
+% (C$^-$, G, M, Y$^-$) & 0.1274  \\ 
+%\hline 
+% (C$^-$, G, M, Y$^+$) & 0.0854  \\ 
+%\hline 
+% (C$^+$, G, M, Y$^-$) &  0.1229    \\ 
+%\hline 
+% (C$^+$, G, M, Y$^+$) & 0.0839 \\ 
+%\hline 
+% (C, G, M, Y$^-$) &0.1078     \\ 
+%\hline 
+% (C, G, M, Y$^+$) & 0.1137   \\ 
+%\hline
+%\end{tabular}\label{A9} \\
+%
+%\caption{The results of model risk ratio $\mu_{\mathbb{Q}}$ for the lookback  calls obtained  with the NIG, VG, CGMY and BS models using their new parameters calibrated to different sets of the  "real world" data obtained with the set of the varying parameters of CGMY model. Strike price $K=110$, spot price  $S_0=100$, interest rate $r=19 \%$, dividend $q=12\%$ and $T=1$}
+%        \setlength{\arrayrulewidth}{0.5mm}
+%\begin{tabular}{|p{6cm}|p{5cm}|}
+%\hline 
+% CGMY, NIG, VG and BS  parameters calibrated to "CGMY-world" data obtained with the following  set of varying parameters  & $\bar{\mu}_{\mathbb{Q}}$   \\ 
+%\hline 
+% (C, G, M, Y) & 0.3738   \\ 
+%\hline 
+%  (C$^-$, G, M, Y) & 0.2788  \\ 
+%\hline                                 
+% (C$^+$, G, M, Y) & 0.2025  \\ 
+%\hline 
+% (C$^-$, G, M, Y$^-$) & 0.4679 \\ 
+%\hline 
+% (C$^-$, G, M, Y$^+$) & 0.2645 \\ 
+%\hline 
+% (C$^+$, G, M, Y$^-$) &  0.4030    \\ 
+%\hline 
+% (C$^+$, G, M, Y$^+$) & 0.2087   \\ 
+%\hline 
+% (C, G, M, Y$^-$) &0.4576    \\ 
+%\hline 
+% (C, G, M, Y$^+$) & 0.2457   \\ 
+%\hline
+%\end{tabular}\label{A10}
+%\end{center}
+%\end{table} 
+%
+%Tables \ref{A11i}, \ref{A12}, \ref{A9} and \ref{A10} show the results of the model risk ratio for the up-and-in calls, and lookback  calls computed with all models. The values of the model risk ratio differ to zero, indicating model risk is present in the pricing of exotic options (see section \ref{MR}). In table \ref{A12}, the values of the model risk ratio for the up-and-in call when the options are in-the-money  are large than those that are out-the-money for certain sets of the  new parameters. This means, the up-and-in calls are more sensitive to model risk when these options are in-the-money. But, for the lookback options (see the table \ref{A9}), the the values of model risk ratio are small when the options are in-the-money while they are high for the options out-the-money (table \ref{A10}) for certain sets of the  new parameters. This implies that the lookback options are more sensitive to model risk when these options are out the money. These results show that even for the common derivative, the model risk ratio is a major risk factor as much as market risk, since it does not represent a small price correction (Cont \cite{CONT}). When the model risk ratio is high for the lookback call and the option is out-the-money ($0.4679$), that means the variation of the lookback prices across the models are high. It is important for financial institutions such as the banks to conside which model is uses, given the relevant criteria, to price its lookback option so as to avoid exposure to the risk of using an incorrect or inappropriate model. Thus, knowing the value of the model risk ratio, f mau assist financial institutions such as the banks choose the correct model to use for valuing exotic options, thereby avoiding financial loss or minimizing risk, since the model risk ratio can be used as a  tool for model validation.  %e validation of the models in the banks to know which model is valid and correct. 
+%% 
+%%\begin{table}[!htbp]
+%% \begin{center}
+%%   \caption{The results of quantifying  model risk $\mu_{\mathbb{Q}}$  of the lookback  call computed with the  NIG, VG, CGMY and BS models using their new parameters calibrated to different sets of the  "real world" data obtain with the set of the varying parameters of CGMY model. Strike price $K=110$, spot price  $S_0=100$, interest rate $r=19 \%$, dividend $q=12\%$ and $T=1$}
+%%        \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{1.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%%
+%%\arrayrulecolor[HTML]{DB5800}
+%%\begin{tabular}{|p{6cm}|p{5cm}|}
+%%\hline 
+%% CGMY, NIG, VG and BS  parameters calibrated to "CGMY-world" data obtained with the following  set of varying parameters  & $\bar{\mu}_{\mathbb{Q}}$   \\ 
+%%\hline 
+%% (C, G, M, Y) & 0.3738   \\ 
+%%\hline 
+%%  (C$^-$, G, M, Y) & 0.2788  \\ 
+%%\hline                                 
+%% (C$^+$, G, M, Y) & 0.2025  \\ 
+%%\hline 
+%% (C$^-$, G, M, Y$^-$) & 0.4679 \\ 
+%%\hline 
+%% (C$^-$, G, M, Y$^+$) & 0.2645 \\ 
+%%\hline 
+%% (C$^+$, G, M, Y$^-$) &  0.4030    \\ 
+%%\hline 
+%% (C$^+$, G, M, Y$^+$) & 0.2087   \\ 
+%%\hline 
+%% (C, G, M, Y$^-$) &0.4576    \\ 
+%%\hline 
+%% (C, G, M, Y$^+$) & 0.2457   \\ 
+%%\hline
+%%\end{tabular}\label{A10}
+%%\end{center}
+%%\end{table} 
+%%%%%%%%%%%%
+% In conclusion, lookback options are more sensitive to the model risk than  barrier options are (especially up-and-in calls), particularly when the options are out-the-of- money. Therefore, when pricing lookback fixed options instead of up-and-in call when the options are out the money, one is exposed to more risk.%\cite{MRI}
+%
+%%
+%%\newpage
+%%\begin{table}[!htbp]
+%% \begin{center}
+%%   \caption{We measure the model risk for exotic option with model price computed for all set of model estimated from $9$ different call vanilla from CGMY model. Strike price $K=110$, spot price  $S0=100$, interest rate $r=19 \%$, dividend $q=12\%$ and $T=1$ }
+%%   
+%%    \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{1.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{2cm}}
+%% 
+%%\arrayrulecolor[HTML]{DB5800}
+%%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%%\begin{tabular}{|p{1cm}|l}
+%%\cline{1-1}
+%%\multicolumn{1}{ |p{12cm}| }{ We compute the model risk $\mu_{\mathbb{Q}}$ of the lookback when the options are out-of-the-money }  \\ \cline{1-1}
+%%%\rowcolor{green!80!yellow!50} 
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.2882)$}  \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{37.38 \%}&   \\ \cline{1-1}
+%% \multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2882)$}  \\   \cline{1-1}
+%%\multicolumn{1}{ |c|  }{27.88 \%} &\\   \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2882)$}  \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{ 20.25 \%}&   \\ \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.0306)$}  \\ \cline{1-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{ |c| }{46.79 \%}&   \\ \cline{1-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2948)$}   \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{ 26.45 \%}&   \\ \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.0306)$}  \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{40.30\%}&   \\ \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2948$}   \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{ 20.87 \%}&   \\ \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.0306)$}   \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{45.76 \%}&   \\ \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.948)$}   \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{24.57 \%}&   \\ \cline{1-1}
+%%\end{tabular}\label{A10}
+%%\end{center}
+%%\end{table}
+%
+%
+%%\begin{table}[h!]
+%%\begin{center}
+%%   \caption{Table reports the result of model risk for exotic option computed using the formula \ref{A2} }
+%%\begin{tabular}{|c|c|}
+%%\hline 
+%%Exotic option & Model risk $ (\bar{\mu}_{\mathbb{Q}} )$ \\ 
+%%\hline 
+%%Up-In& 0.02885607 \\ 
+%%\hline 
+%%Up-out& 0.032334515 \\ 
+%%\hline 
+%%Lookback option & 0.163653518 \\ 
+%%\hline 
+%%\end{tabular}  \label{AD5}
+%%\end{center}
+%%\end{table}
+%%
+%% Looking at the value of lookback fixed and barrier options present in the above table, we can see that it is difficult or practically impossible to say which amongst those models discussed in this project, present less risk when we price the exotic options. Therefore, it will be  useful to compute the \_error for those models so that we can be able to say which amongst those models  can hegde well the exotic options. This is the subject for next section.  
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%%In this section, we will simply referring to different L\'evy models and its  different risk-neutral parameters instead referring to different models in order  to emphasises that the measures presented below can be applied very generally to different model types and different risk-neutral parameters.   
+%
+%
+%
+%% Gupta, Reisingner and Whitley \cite{AKA} state that the risk measures can be used in practice in order to determine the amount of capital to be held in reserve to make a risk position acceptable. The value-at-risk (VAR) or market risk measure are build on the implicit assumption that a model for the market was identified, and a risk measure for future net worth (or contract) can be computed within this model (Gupta, Reisingner and Whitley \cite{AKA}). For examples, Frittelli and Gianin \cite{FP},  F\"ollmer and Schied \cite{FC} and Artzner et al \cite{ARF} introduced the convex and coherent measures. 
+%%
+%
+%
+% 
+% 
+%  
+%% 
+%%In this section, we compute the model risk for the exotic options. It well know that the investor has the right to decide on the model and the prices  for the barrier option ( or lookback option) in which he/her wants to use so that can guarantee the model risk. However, we well known that the model risk can be  presented at any given models include the NIG, VG, CGMY  and Black-Scholes models. Since  the trajectories  follows by the  pure jumps models ( CGMY, NIG and VG models )  are discontinuous ( posses the large number of small jumps), which may lead to the existence of many martingale measure. This  means that the prices computed with the CGMY, NIG and VG models are not unique since the calibration of those models to the observed markets data lead to many different martingale measure. We also note that the another factor which can cause the existence of model risk in the  CGMY, NIG and VG models is due to the computational method for simulating the random variable for those models. Since there exist almost in all programming software the function to compute gamma random variables, and therefore the VG model is considered as easiest model to compute. The NIG model can be computed using the algorithm for Inverse Gaussian random variable. While the CGMY model is considered as the most complicated model to simulate because there is no exact simulation  of its increment  and also because of the  confluent hyper-geometric function (which is difficult to find in programming software see(\cite{CM}).
+%%
+%%In the above section We shown that the model driven by L\'evy dynamics especially the NIG, CGMY and VG models  can give a better estimation of the prices of the barrier and lookback options  compared to the Black-Scholes model. Now, if we assume that an investor wants to price its exotic option like Barrier and lookback options considering one of our  model between VG, CGMY and  NIG models. However, the problem arises  is that which price should he/her considers in favour of one of these prices? In order to avoid to take  the model risk since it is presented in all three models (CGMY,  VG and NIG models). In this research we may find it difficult to attempt to respond to this question. But, we will just show how to quantify the model risk of exotic option.
+%%%In other part in order to deal with the derivative security which involves some number of risk types. One needs to know all kinds of risk types. We well known that there exist a different types of the risks.  The most common is the market risk which leads by the volatility risk and interest rate risk. Which also has a direct influence on the option price \cite{MRI}. There also exist the additional risks which are the liquidity risk and operational risk.  Indeed, the liquidity risk is due to fact that a trader may not able to buy his optimal hedging portfolio because of incompleteness in the market, while the operational risk appears if the IT fails in their system  \cite{MRI}. 
+%%%
+%%%
+%%%However, if one wants to use the financial model in order to simplify assumption of the reality, then the model risk will always contain in all kinds of the risks. 
+%%
+%%
+%%%\cite{MRI} defined the model risk as a risk component that still dwell in model price even if each part of option price is hedging, programming and computing with some precision.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\begin{table}[!htbp]
+%% \begin{center}
+%%   \caption{Error between the "true" prices of the lookback fixed and the prices obtained with NIG, VG and BS models. The strike price $K=110$, spot price  $S_0=100$, interest rate $r=19 \%$ and dividend $q=12\%$ and maturity of one year $T=1$}
+%%     \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{1.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%%
+%% 
+%%\arrayrulecolor[HTML]{DB5800}
+%%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%%\begin{tabular}{|p{4cm}|p{4cm}|p{4cm}|l}
+%%\cline{1-3}
+%%\multicolumn{3}{ |p{15cm}| }{Error between the "true" prices of the lookback fixed and the prices obtained with NIG, VG and BS models}  \\ \cline{1-3}
+%%%\rowcolor{green!80!yellow!50} 
+%%(CGMY-lookback)- (NIG-lookback)  & (CGMY-lookback)- (VG-lookback)& (CGMY-lookback)- (BS-lookback) & \\ \cline{1-3}
+%%\multicolumn{3}{|p{15cm}| }{  Error between the "true"  prices of the lookback and the prices computed with NIG, VG and BS models computed with the new parameters ( NIG, VG and BS models)  calibrated to the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.2882)$} \\ \cline{1-3}
+%%\multicolumn{1}{ |c  }{1.3436}                        &
+%%\multicolumn{1}{ |c| }{ 1.6585}& -1.274&   \\ \cline{1-3}
+%%          \multicolumn{3}{|p{15cm}| }{  Error between the "true"  prices of the lookback and the prices computed with NIG, VG and BS models computed with the new parameters ( NIG, VG and BS models)  calibrated to the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2882)$} \\      
+%%    \cline{1-3}
+%%\multicolumn{1}{ |c  }{0.9767 } &
+%%\multicolumn{1}{ |c| }{1.4092}&-1.2994& \\ \cline{1-3}
+%%\multicolumn{3}{|p{15cm}| }{  Error between the "true"  prices of the lookback and the prices computed with NIG, VG and BS models computed with the new parameters ( NIG, VG and BS models)  calibrated to the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2882)$}  \\ \cline{1-3}
+%%\multicolumn{1}{ |c  }{ 1.2097 }                        &
+%%\multicolumn{1}{ |c| }{ 1.5112}& -1.6612 &  \\\cline{1-3}
+%%\multicolumn{3}{|p{15cm}| }{  Error between the "true"  prices of the lookback and the prices computed with NIG, VG and BS models computed with the new parameters ( NIG, VG and BS models)  calibrated to the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.0306)$}   \\ \cline{1-3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{ |c  }{ -0.1478  }                        &
+%%\multicolumn{1}{ |c| }{ -1.0059 }& -2.19 &  \\ \cline{1-3}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{3}{|p{15cm}| }{  Error between the "true"  prices of the lookback and the prices computed with NIG, VG and BS models computed with the new parameters ( NIG, VG and BS models)  calibrated to the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2948)$}  \\ \cline{1-3}
+%% \multicolumn{1}{ |c  }{1.0291 }                        &
+%%\multicolumn{1}{ |c| }{ 1.3391  }& -1.3378  & \\ \cline{1-3}
+%%
+%%\end{tabular}\label{Ai1}
+%%\end{center}
+%%\end{table}
+%
+%
+%
+%%
+%%\begin{table}[!htbp]
+%% \begin{center}
+%%   \caption{Error between the "true" prices of the lookback fixed and the prices obtained with NIG, VG and BS models. Strike price $K=110$, spot price  $S_0=100$, interest rate $r=19 \%$ and dividend $q=12\%$ and $T=1$}
+%%     \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{1.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%%
+%% 
+%%\arrayrulecolor[HTML]{DB5800}
+%%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%%\begin{tabular}{|p{4cm}|p{4cm}|p{4cm}|l}
+%%\cline{1-3}
+%%\multicolumn{3}{ |p{15cm}| }{Error between the "true" prices of the lookback fixed and the prices obtained with NIG, VG and BS models}  \\ \cline{1-3}
+%%%\rowcolor{green!80!yellow!50} 
+%%(CGMY-lookback)- (NIG-lookback)  & (CGMY-lookback)- (VG-lookback)& (CGMY-lookback)- (BS-lookback ) & \\ \cline{1-3}
+%%
+%% \multicolumn{3}{|p{15cm}| }{ Error between the "true"  prices of the lookback and the prices computed with NIG, VG and BS models computed with the new parameters (NIG, VG and BS models)  calibrated to the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.0306)$}  \\ \cline{1-3}
+%%
+%%\multicolumn{1}{ |c  }{ 0.6842 }                        &
+%%\multicolumn{1}{ |c| }{ 0.876 }& -2.6926 &   \\ \cline{1-3}
+%%
+%%
+%%\multicolumn{3}{|p{15cm}| }{  Error between the "true"  prices of the lookback and the prices computed with NIG, VG and BS models computed with the new parameters ( NIG, VG and BS models)  calibrated to the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2948)$}    \\ \cline{1-3}
+%%\multicolumn{1}{ |c }{ 1.0305  }                        &
+%%\multicolumn{1}{ |c| }{1.5595}& -1.7377 &  \\ \cline{1-3}
+%%
+%%\multicolumn{3}{|p{15cm}| }{  Error between the "true"  prices of the lookback and the prices computed with NIG, VG and BS models computed with the new parameters ( NIG, VG and BS models)  calibrated to the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.0306)$}   \\ \cline{1-3}
+%%
+%%\multicolumn{1}{ |c  }{0.1545 }                        &
+%%\multicolumn{1}{ |c| }{0.5349}  &-2.4479  &  \\ \cline{1-3}
+%%\multicolumn{3}{|p{15cm}| }{ Error between the "true"  prices of the lookback and the prices computed with NIG, VG and BS models computed with the new parameters ( NIG, VG and BS models)  calibrated to the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.948)$}   \\ \cline{1-3}
+%%\multicolumn{1}{ |c  }{1.2821}                        &
+%%\multicolumn{1}{ |c| }{1.6368}  & -1.6248 &  \\ \cline{1-3}
+%%\end{tabular}\label{Ai2}
+%%\end{center}
+%%\end{table}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\begin{table}[h!]
+%% \begin{center}
+%%   \caption{The results of model risk $\mu_{\mathbb{Q}}$ computed  of price of the Up-In and Up-out  presented below are computed with  different sets of the new parameters ( NIG, VG and BS models)  calibrated  with different sets the "CGMY-world" data computed via the set of the varying parameters of CGMY model l}
+%%   
+%%     \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{2.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{3cm}}
+%%
+%%\arrayrulecolor[HTML]{DB5800}
+%%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%%\begin{tabular}{|p{1cm}|p{2cm}|p{2cm}|p{1.8cm}|p{3cm}|p{3cm}|l}
+%%\cline{1-6}
+%%\multicolumn{6}{ |c| }{Model risk $\mu_{\mathbb{Q}}$ computed   }  \\ \cline{1-6}
+%%%\rowcolor{green!80!yellow!50} 
+%%Barrier level & up-and-in with $(C=0.0266, G=0.4614, M=15.6995, Y=1.2948)$ &  up-and-in with $(C=0.0398, G=0.4614, M=15.6995, Y=1.0306)$ & up-and-in with $(C=0.0398, G=0.4614, M=15.6995, Y=1.2948)$  & up-and-in with $(C=0.0332, G=0.4614, M=15.6995, Y=1.0306)$  & up-and-in with $(C=0.0332, G=0.4614, M=15.6995, Y=1.2948)$  & \\ \cline{1-6}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{ |c  }{1124.5}                        &
+%%\multicolumn{1}{ |c| }{ 0.066393515}  &0.04301266  & 0.104387886 & 0.108098162 & 0.056610601&   \\ \cline{1-6}          
+%%%\multicolumn{1}{ |c  }{1180.7}                        &
+%%%\multicolumn{1}{ |c| }{ 0.067831292}  & 0.06482841 &  0.106649329& 0.145505871 & 0.058191801 &  \\ \cline{1-6}
+%%%\multicolumn{1}{ |c  }{1293.1}                        &
+%%%\multicolumn{1}{ |c| }{0.296391481 }  & 0.476526143  & 0.186008662 & 0.626167804    &0.24381377   & \\ \cline{1-6}
+%%%\multicolumn{1}{ |c  }{1405.6}                        &
+%%%\multicolumn{1}{ |c| }{0.519253223}  & 0.698496461   & 0.466665458 & 0.738351211 &0.546707919   & \\ \cline{1-6}
+%%%\multicolumn{1}{ |c }{1518.0}                        &
+%%%\multicolumn{1}{ |c| }{0.608716519 }  &  0.777737359 & 0.652230903 & 0.736937685 & 0.693119883   &  \\ \cline{1-6}
+%%%\multicolumn{1}{ |c  }{1574.3}                        &
+%%%\multicolumn{1}{ |c| }{0.459769934}  &  0.77416599 & 0.71806775  & 0.699862637  &0.761233181 & \\ \cline{1-6}
+%%%\multicolumn{1}{ |c  }{1630.5}                        &
+%%%\multicolumn{1}{ |c| }{ 0.566749348 }  & 0.756045458& 0.759684118   & 0.575124118& 0.791505189  & \\ \cline{1-6}
+%%%\multicolumn{1}{ |c  }{1686.7}                        &
+%%%\multicolumn{1}{ |c| }{ 0.622027698}  & 0.72620722 & 0.81750914& 0.581225926 & 0.827272143  & \\ \cline{1-6}
+%%         
+%% \end{tabular}\label{A8} 
+%% 
+%%\end{center}
+%%
+%%
+%%\end{table}
+%%\newpage
+%
+%
+%
+%%Look at on this table \ref{A7} we see  that the  value of the model risk for Up-In  computed with each set of model parameters is larger than the value of the  model risk  for a lookback fixed option.  The same scenario will  also repeat if we measure the model risk for those exotic option  computed with the remain set of model parameters of (NIG, VG and Black-Scholes models ) estimated from the other "CGMY-world" data.  In this situation we can say that the price of Up-In is sensitive to the model risk  more  than the lookback option. That means if the investor prices the Up-In without taking into consideration the factor of model risk, he/her will be more exposed to the risk of losing the derivatives.   
+%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%
+%%\begin{table}[!htbp]
+%% \begin{center}
+%%   \caption{We measure the model risk for exotic option with model price computed for all set of model estimated from $9$ different call vanilla from CGMY model. Strike price $K=95$, spot price  $S0=100$, interest rate $r=19 \%$, dividend $q=12\%$ and $T=1$ }
+%%   
+%%    \setlength{\arrayrulewidth}{0.5mm}
+%%\setlength{\tabcolsep}{8pt}
+%%\renewcommand{\arraystretch}{1.5}
+%%\newcolumntype{s}{>{\columncolor[HTML]{AAACED}} p{2cm}}
+%% 
+%%\arrayrulecolor[HTML]{DB5800}
+%%%{\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+%%\begin{tabular}{|p{1cm}|l}
+%%\cline{1-1}
+%%\multicolumn{1}{ |p{12cm}| }{ We compute the model risk $\mu_{\mathbb{Q}}$ of the lookback when the options are at the money   }  \\ \cline{1-1}
+%%%\rowcolor{green!80!yellow!50} 
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.2882)$}  \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{8.36 \%}&   \\ \cline{1-1}
+%% \multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2882)$}  \\   \cline{1-1}
+%%\multicolumn{1}{ |c|  }{8.56 \%} &\\   \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2882)$}  \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{ 8.36 \%}&   \\ \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.0306)$}  \\ \cline{1-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{ |c| }{12.74 \%}&   \\ \cline{1-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0266, G=0.4614, M=15.6995, Y=1.2948)$}   \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{ 8.54 \%}&   \\ \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.0306)$}  \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{12.29 \%}&   \\ \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0398, G=0.4614, M=15.6995, Y=1.2948$}   \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{ 8.39 \%}&   \\ \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.0306)$}   \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{10.78 \%}&   \\ \cline{1-1}
+%%\multicolumn{1}{|p{16cm}| }{  The results of  model risk $\mu_{\mathbb{Q}}$  of the lookback  presented below are computed with the new parameters ( NIG, VG and BS models)  calibrated  with the "CGMY-world" data computed via the set of the varying parameters $(C=0.0332, G=0.4614, M=15.6995, Y=1.948)$}   \\ \cline{1-1}
+%%\multicolumn{1}{ |c| }{11.37 \%}&   \\ \cline{1-1}
+%%\end{tabular}\label{A9}
+%%\end{center}
+%%\end{table} 
+%

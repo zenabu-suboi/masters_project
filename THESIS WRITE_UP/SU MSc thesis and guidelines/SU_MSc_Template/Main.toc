@@ -1,0 +1,19 @@
+\babel@toc {english}{}
+\contentsline {chapter}{Declaration}{i}{section*.2}%
+\contentsline {chapter}{Abstract}{ii}{section*.4}%
+\babel@toc {afrikaans}{}
+\contentsline {chapter}{Opsomming}{iii}{section*.6}%
+\babel@toc {english}{}
+\contentsline {chapter}{Publications}{vi}{chapter*.9}%
+\contentsline {chapter}{List of Figures}{viii}{section*.11}%
+\contentsline {chapter}{List of Tables}{ix}{section*.12}%
+\contentsline {chapter}{\chapternumberline {1}Chapter 1}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Background to Bla}{1}{section.1.1}%
+\contentsline {chapter}{\chapternumberline {2}Chapter 2}{2}{chapter.2}%
+\contentsline {chapter}{\chapternumberline {3}Chapter 3}{3}{chapter.3}%
+\contentsline {chapter}{\chapternumberline {4}Chapter 4}{4}{chapter.4}%
+\contentsline {chapter}{\chapternumberline {5}Chapter 5}{5}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Discussion}{5}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Conclusion}{5}{section.5.2}%
+\contentsline {chapter}{Appendix}{6}{section.5.2}%
+\contentsline {chapter}{List of references}{6}{appendix*.13}%

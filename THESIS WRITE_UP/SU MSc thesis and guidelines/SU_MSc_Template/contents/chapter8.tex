@@ -1,0 +1,325 @@
+%
+%\chapter{ Hedging Vanilla Option with Pure Jump Model }
+%\label{cp1}
+%
+%In this chapter we compare the hedging performance of the  NIG, VG, CGMY and Black-Scholes models. This is carried out by using the hedge\_ratio formula \eqref{fo}. Here, we will focus on comparing the hedging  performance for our model when we hedge the vanilla call option. We will not discuss the procedure of hedging the exotic option in this chapter but it may be considered in the future research. Here we consider the model parameters of the NIG, VG and Black-Scholes models obtained by calibrating these models to the real market data ( the markets prices computed with the varying model parameters of the CGMY model see section ). We first discuss the hedging strategy procedure  and present the method of computing the delta hedge. We also describe the classical formula of the hedge\_ratio. We end the chapter by discussing the results.
+%
+%
+%%
+%%In this chapter we compare the hedging performance for NIG, VG, CGMY and Black-Scholes models using the hedeg\_ratio formula \eqref{fo}.  We only compute the delta hedge of a lookback fixed option because delta hedging of the barrier option is more tricky to compute. Here we consider the model parameters for the CGMY, NIG, VG and Black-Scholes models obtained via the calibration of the market prices from the CGMY model. We first discuss about the hedging strategy and then the procedure of computing the delta hedge. We also describe the classical formula of hedge\_ratio . We end the chapter by discussing the obtained results.
+% 
+%\section{Theory and Importance of Hedging Strategy}
+%When computing a model option price, it is necessary to evaluate its  performance  when hedging this model  to an option price, and also evaluate its capacity to fit the observed market prices. In fact, an option contract may contain different sources of risk which may modify its value. For example, changes in the volatility, changes in the interest rate and movement in the underlying asset price may also be the sources of risks Amadeo \cite{ES1}. Thus, one needs to construct a strategy or a portfolio which, in theory, limits risk. To achieve this, we need to refer to the Greeks who defined the sensitivities of option prices in relation to the different sources of risk Amadeo \cite{ES1}, and we can use these to take up positions in other underlying assets so we can construct the portfolio.    
+%
+%
+% %we need to consider the Greeks which is known as the sensitivities of the price of an option to the different sources of risk see \cite{ES1}. Which can be use the Greeks in order to take position in other underlying assets so that we can construct the portfolio which in theory, does not contain (or it is neutral to) the sources risks  \cite{ES1}.
+%%This is called the  shot position in a call option  
+%
+%The amount of  the price of an option which is expected to move based on the change of the price in the underlying asset is known as delta of the option, and the method for minimizing or hedging this source of the risk is known as delta hedging  Amadeo \cite{ES1}. For example, if one wants to buy units of underlying asset price when the price of an option goes up, then him/her has to sell them when the price of an option goes down to achieve a delta neutral portfolio. If one assumes that the price of underlying asset follows Brownian motion ( continuous paths), and the markets are complete ( as in the case of  Black-Scholes framework), then  he/her also  assumes that  the position on the underlying asset price can be rebalanced continuously. Thus,  all the sources of the risks can be completely eliminated. However, in the reality of financial markets,  all these sources of the risks cannot be completely eliminated, and the rebalancing cannot be continuous. Therefore, we need to rebalance the hedging position at discrete intervals. For instance, we can rebalance daily if there is a large change in the delta that justifies the transaction cost associated with the adjustment of the position in the underlying asset [  Amadeo \cite{ES1},pg.69]. T Clifton and Stephen \cite{GMF} highlighted that many financial institutions such as the investment banks, need the hedging option contracts as part of their service so that they can sell option to their customers. For instance, to protect his portfolio from the  downward price movements, the portfolio manager needs to purchase a put option contract  Amadeo \cite{ES1}.
+%
+%Although there is many forms of the hedging strategy, the simplest one is delta hedging. There is also delta neutral hedging which can be used for others derivatives, to reduce the sensitivities of a portfolio to changes in the asset (T Clifton and Stephen \cite{GMF}). We can use a hedging strategy to construct a portfolio of options (derivatives) with counterbalancing negative and positive deltas, so that our  strategy or portfolio has a zero delta value (Amadeo \cite{ES1}).  The importance of a hedging strategy, is emphasised when the trading of the underlying asset becomes more difficult. An example would be when the underlying asset is stock that is difficult to borrow, rendering short selling practically impossible (see T Clifton and Stephen \cite{GMF}). Other hedging strategies exist, like delta-vega hedging which consists of hedging the volatility risk and price of the underlying asset. This type of strategy involves hedging multiple risks simultaneously ( Amadeo \cite{ES1}). Other types of hedging strategy include dynamic and static hedging. Dynamic hedging is model dependent and consists of adjusting the holding of the hedging instrument at discrete intervals  (Amadeo \cite{ES1}), while static hedging is an variation of dynamic hedging. Static hedging was proposed by Carr and Wu \cite{CAW}, in order to hedge the short contract in holding a strategy ( or portfolio) of shorter-term contracts with a range of different strikes. The importance of using static hedging is that it can eliminate or reduce the model risk (Amadeo \cite{ES1}). Another important reason for using the static hedging is that, it can be used in order to reduce trading, monitoring cost, and  to deal with jumps in the prices process as the position or contract can not be readjusted (Amadeo \cite{ES1}). 
+%
+%The hedging derivative is not only used for risk management purposes, but also to value the option  and to verify  models  (see Amadeo \cite{ES1}), illustrated  by the following authors: Gurdip, Charles, and Zhiwu \citep{BASK} compared the performance of different stochastic model using the hedging performance; Bernard, Jeff, and Robert \citep{DAL1} examined the deterministic volatility function of option valuation model using the hedging performance, and Robert \citep{SAV1} used the hedging performance to compare the hedging effectiveness of Gamma, Black-Scholes model and Weibull. 
+%
+%In this chapter we concentrate on the delta hedging to compare the hedge performance of NIG, VG, CGMY and Black-Scholes models based on the hedge\_ratio formula \eqref{fo}. 
+%\subsection{ Delta Formula for the  pure jump model using FFT}
+%Let $\Delta$ be a delta of an option and $C(S_T,K,T)$ be an European call option price with S\_T the underlying asset given at maturity time $T$. The delta of an option consists to measure the sensitivity of an option price changes to the asset S\_T, and is given as follows:
+%\begin{align}
+%\label{Del}
+%\Delta =\frac{\partial C(S_T,K,T)}{\partial S}.
+%\end{align}
+%The delta can provide the number of stocks, as in case of Black-Scholes setting, that we need to hold in order to obtain the perfect hedge. However, in reality  the perfect hedge is not possible, therefore we need to consider  more realistic hedging strategy. Hence, we consider the delta hedging strategy which is simple to apply. %We must note that the fact that the movements of the underlying asset is continuous, thus we must consider the partial derivative of European call option price is a local operator. As we work the pure jump model which means that the movement of our underlying asset is not continuous, thus the local operator may not tell the whole story see \cite{WVG}.
+%
+%The movements of the underlying asset is continuous, which must be taken into account since the partial derivative of the sensitivity is a locale operator. If one works with pure jump models as, we do here, where the paths of the underlying asset prices are discounted,  this kind of a local operator cover everything Schoutens  \cite{WVG}.
+% 
+%In the case of the European call price formula  \eqref{INV} obtained with FFT method, we can determine the delta of a vanilla call option  by taking the partial derivative of the \eqref{INV} with respect to the initial price $S_0$, it follows:
+%\begin{align}
+%\label{E}
+%\Delta &= \frac{\partial }{\partial S_0}\Bigg [\frac{\exp(-\alpha k)}{\pi} \int_{0}^{\infty}e^{-ivk} \dfrac{e^{-r(T-t)} \phi((t,T);(v-i(\alpha +1)))}{(\alpha +iv)(1+\alpha +iv)}dv \Bigg] \nonumber \\
+%&=\frac{\exp(-\alpha k)}{\pi} \int_{0}^{\infty}e^{-ivk} \dfrac{e^{-r(T-t)}\frac{\partial \phi((t,T);(v-i(\alpha +1)))}{\partial S_0}}{(\alpha +iv)(1+\alpha +iv)}dv.
+%\end{align}
+%Let assume that the underlying asset $S_T$ is a function of two independent variables  ( $S_0$ and $\hat{S}_T$), i.e. $S_T = S_0\hat{S}_T$. Taking the logarithm of $S_T$ we have  $\log (S_T)= \log(S_0) + \log(\hat{S}_T)$. Now, we can compute above form :
+%\begin{align}
+%\label{E1}
+%\frac{\partial \phi((t,T);(v-i(\alpha +1)))}{\partial S_0} &=\frac{\partial}{\partial S_0}\mathbb{E}[\exp{(v-i(\alpha +1))}(\log(S_0) + \log(\hat{S}_T))] \nonumber \\
+%& =\frac{\phi((t,T);(v-i(\alpha +1))(vi+\alpha +1)}{S_0}.
+%\end{align}
+%When we substitute the equation \eqref{E1} in \eqref{E},  we obtain the classical formula for a delta  of European call option via FFT technique: 
+%\begin{align*}
+%\Delta & =\frac{\exp(-\alpha k)}{\pi} \int_{0}^{\infty}e^{-ivk} \dfrac{e^{-r(T-t)} \phi((t,T);(v-i(\alpha +1))(vi+\alpha +1)}{{ S_0} (\alpha +iv)(1+\alpha +iv)}{}dv \\
+%&=\frac{\exp(-\alpha k)}{\pi} \int_{0}^{\infty}e^{-ivk} \dfrac{e^{-r(T-t)} \phi((t,T);(v-i(\alpha +1))}{{ S_0} (\alpha +iv)}{}dv
+%\end{align*}
+%The delta formula discussed above cannot be used  to compute the delta of the exotic option, as it can with the lookback option, because the classical formula of the lookback  option for the pure jump model is more difficult to obtain. As we only want to hedge the vanilla option here, we will limit our focus to this method to compute the delta for a European call. 
+%
+%%The delta formula discussed above can not be used  to compute the delta of the exotic option like for lookback option because the classical formula of lookback  option for pure jump model is more difficult to obtain. 
+%
+%%Therefore we need consider an other method which can help to compute the delta of Lookback option.
+%
+%%\subsubsection{Finite Difference Method}
+%%The finite fifference method consists to approximate the partial derivative of equation \eqref{Del} by a difference estimator.  It well known from real analysis that a differentiable function can be approximated by a linear function ( see{\cite{FND}}.  Thus,  we can use this concept in  order to apply the finite difference estimator to option value. 
+%%
+%%Let h be a payoff function which depends on the value of underlying asset $S=\{S_i, i=1,\dots N\}$ at $Nt$ times and on n  model parameters, $\phi = \{\phi_i, i=1 \dots N \}$.
+%%The payoff h maps  $\mathbb{R}^{n\times Nt} \ \rightarrow \mathbb{R}; (S_1^1,\dots S_N^1,\phi) \mapsto h_{\phi(S_1,\dots S_N)}$.
+%%
+%%We can approximate the delta of equation \eqref{Del} using the difference estimator:\\
+%%for some $\epsilon >0$,
+%%\begin{align}
+%%\label{Del1}
+%%\Delta = \frac{E[h_{(\phi (S_1,\dots S_N)+ \epsilon)}]-E[h_{(\phi (S_1,\dots S_N)- \epsilon})]}{2\epsilon}.
+%%\end{align}
+%%We can call the above equation \eqref{Del1} as the \textit{central difference estimator}. We wish also to apply  other difference such as the backward or forward estimator which can apply in order to determine delta: For example, for some $\epsilon > 0$ we may have the different form of  equations for the different estimator:
+%%\begin{itemize}
+%%\item The backward diffrence estimator $\dfrac{g(x)-g(x-\epsilon)}{\epsilon}$
+%%
+%%\item The forward diffrence estimator $\dfrac{g(x+\epsilon)-g(x)}{\epsilon}$
+%%\item The central diffrence estimator $\dfrac{g(x+\epsilon)-g(x-\epsilon)}{2\epsilon}$.
+%%\end{itemize}
+%%Let $\lbrace S^i(\phi),i=1\dots N \rbrace $ be a set of simulated paths which depends on the risk neutral parameter $\phi$, and the corresponding equation \eqref{Del1} can be written by :
+%%\begin{align}
+%%\label{Del2}
+%%\Delta = \sum _{i=1}^N \frac{h{(S_i(\phi + \epsilon))}-h(S_i(\phi - \epsilon))}{2N\epsilon }.
+%%\end{align}
+%%The application of the finite difference method does not need any other or further information from model price,  model parameters $\phi $ or also simulation scheme (see \cite{FND}). 
+%
+%\subsection{ Procedure  of  Hedging the Vanilla call options }
+%\label{S6}
+%We follow a similar method to that used by John Hull \citep{HK} in order to compare the hedging performance for each model price in terms of the hedging error. First, we construct the self-financing delta hedging portfolio based on the methodology of John Hull \citep{HK}. This method consists of tracking the costs of hedging an option from the initial hedge ( initial date) up to the  maturity, while considering the final lost or profit value from the bank or other financial institution for any given position.  
+%
+%The hedge can be initiated at time $t=0$  for any given  hedging horizon $T$, by writing an option. First, the  option holder needs to pay the initial amount $C_0$ to the option writer so that option writer can construct the hedging strategy or the self-financing delta-neutral portfolio by considering the position of  $\Delta _0$ units in the asset price, and  a position  of initial value of $B_0$ units of risk-free bond. It is important to note that the  bond position may be either short or long,  it which  allows for the purchasing of units of the asset price using risk-free borrowing Amadeo \cite{ES1}.  We can define the value of the hedging strategy for a given time $t$ before the expire time $T$ as follows:
+%\begin{align}
+%\Pi = \Delta_tS_t+B_t
+%\end{align}
+%We assume that at initial time $t=0$, the value of hedging strategy is equal to the initial price i.e. $\Pi _0=C_0$, therefore the initial value  of bond must be given by  $B_0= C_0 -\Delta_0S_0$.
+%
+%The fact that the hedge position is rebalancing by day, thus, when we rebalance to the next time $t=1$, our new delta  must be computed  and  also adjusted by the underlying asset. Thus, we obtain the new bond given by:
+%\begin{align}
+%B_t = \exp(r\tau)B_{t-1} +S_t(\Delta_{t-1} - \Delta_t),
+%\end{align}
+%
+%where $\tau$ present the annual time between $t$ and $t-1$, and $r$ the risk free interest rate. This rebalancing may be repeated until the expiry time $t=T$ (or until the option price expires). When the call option expires  worthless, then the option writer may not own the shares for this asset price, while, when it expires in-the-money, the  option writer may own one share for these asset prices, which is then sold to option holder at the  price $K$ Amadeo \cite{ES1}.  Thus, that amount (or cash)received from this sale can compensate all. Hence, we can express the portfolio value at expire time $T$ as follows :
+%\begin{align}
+%\Pi_T= \Delta _T S_T + B_T
+%\end{align}
+% After obtaining the portfolio value, we now compute the standard deviation error between the portfolio value and a call option, given by :
+%\begin{align}
+%Standard\_ error= \sqrt{\mathbb{E}[(\Pi_T-C_T)^2]}.
+%\end{align}
+%
+%We now compute the hedge\_ratio  between the standard error value  and the value of call option at expire time $T$:
+%\begin{align}
+%\label{fo}
+%Hedging\_ratio = \frac{Standard\_ error}{C_T}
+%\end{align}
+%%For the exotic option the hedging methodology will remains a same, but one just needs to compute the delta for such exotic option.
+%
+%\subsection{Empirical Results}
+%
+%In this section we compare the hedging performance for each model price in term of the  hedge\_ratio \eqref{fo}. We generated $10000$ underlying assets of the CGMY model for each set of the varying model parameters using the Monte Carlo method. We considered one year of the maturity $T=1$, the  stop price is set at $S_0=100$ and strike $K=110$. The risk free interest rate is set at $r=1.9\%$ and dividend $q=1.2\%$.  In order to test the hedge performance of our models, we used the hedging strategy methodology discussed in the above section. We used the new model parameters obtained from each model price calibrated to the real world data ( market prices obtained from the varying parameters of the CGMY mode). The hedging  performance for each model was compared using the  hedging ratio formula \eqref{fo}. Here, we will only compare the hedging performance for each models in relation to the European  call option. For the rest of the calculation we will only  consider the underlying asset price at expiry time obtained from the CGMY model. 
+%
+%%In this section, we compare the hedging performance for each model price in term hedge\_ratio . We consider  the different underlying asset computed with CGMY model. We take one year the  maturity $T=1$, the  stop price is setted at $S_0=100$ and strike $K=110$. The risk free interest rate is setted at $r=1.9\%$ and dividend $q=1.2\%$.  We use hedging strategy methodology discussed above in order to test the hedge performance for our models. We analyse the hedging performance for each model price  with each data. We consider the model parameters obtained with the calibration for each model price to the market prices from CGMY mode. We compare the hedge performance for each model price using  hedging ratio formula \eqref{fo}. We compare the hedge performance for each model price in two cases: We compare in the case of   European  call option and the lookback option. We simulate the different sample  paths of CGMY model with different CGMY model parameters using Monte Carlo method. We  set  each sample paths for CGMY model as  an unique underlying asset price  for each model price when we compute the hedging strategy for those four models. 
+%
+%\subsubsection{Hedging Performance for an European call option}
+%%In this section, we consider the delta computed via FFT method.  We generate two underlying assets prices with two model parameters of CGMY model. We set those underlying asset pricess as the unique paths for all four model prices as I said previously. We compute hedging ratio for each model price with the hedge\_ratio  formula \eqref{fo}, using model parameters obtained with the calibrations of makert prices from CGMY model. We report the results in table \eqref{T1} below. Here we consider the case where the option is expire out-the-money
+%Here we compare the  hedge performance of our models (NIG, VG, CGMY and BS models) in the case of vanilla call option. We compute the delta using the FFT method.  We generate $10000$ underlying assets of the CGMY model for each set of the varying parameters (the model parameters of CGMY model obtained by increasing and decreasing the global parameters, see Chapter \eqref{ab} )  using the Monte Carlo method. We take strike price $K=110$, spot price $S_0 = 100$, interest rate $r=0.019$, dividend  $ q=0.012$ and one year of maturity.  We set the underlying asset price at expiry time  as a unique underlying  asset price with all  models when compute the delta hedging. We computed the delta hedging for the NIG, VG and BS  models using their new model parameters  ( the parameters calibrated to the real world data) and for CGMY model using  his varying parameters. For each set of the parameters, we hedge our four models in same time, which take three days with a computer samsung (Int(R) Cor(TM) i5 CPU 760@2.80GHz). That's shown the difficult of hedging the Vanilla call. We computed the hedging ratio for all models using the  hedge\_ratio  formula \eqref{fo}. We report the results in the tables \eqref{T2i}, \eqref{T2ii} and \eqref{T2iii}. We present their graphics in appendix \eqref{Ch}. Here we consider the case where the option expires out-the-money.
+%
+%
+%%\begin{table}[h!]
+%%\begin{center}
+%%   \caption{Table compare the performance for model price in term of hedging ratio }
+%%\begin{tabular}{ |l|l| }
+%%\hline
+%%\multicolumn{2}{ |c| }{The underlying asset price generate with the first CGMY model parameter} \\
+%%\hline
+%% Model price & hedging ratio with delta out of money   \\ \hline
+%%\multirow{1}{*}{CGMY model} & $0.048325$  \\ \hline
+%%\multirow{1}{*}{ VG model} & $0.04190184$  \\ \hline
+%%\multirow{1}{*}{NIG model} & $0.043140906$ \\ \hline
+%%\multirow{1}{*}{ BS model}& $0.047451317$  \\ \hline
+%%\end{tabular}\label{T1}
+%%\end{center}
+%%\end{table}
+%\begin{table}[h!]
+%\begin{center}
+%   \caption{Table compare the performance of the model prices in term of hedging ratio }
+%\begin{tabular}{ |l|l| }
+%\hline
+%\multicolumn{2}{ |p{10cm}| }{ Hedge ratio  obtained with NIG, VG,CGMY and BS models for the sets of (C,G,M,Y) } \\
+%\hline
+% Model price & hedging ratio with delta out of money  \\ \hline
+%\multirow{1}{*}{CGMY model} & $4.22\%$  \\ \hline
+%\multirow{1}{*}{ VG model} & $4.3\%$  \\ \hline
+%\multirow{1}{*}{NIG model} & $4.11\%$  \\ \hline
+%\multirow{1}{*}{ BS model}& $4.86\%$ \\ 
+%\hline
+%\multicolumn{2}{ |p{10cm}| }{Hedge ratio  obtained with NIG, VG,CGMY and BS models for the sets of (C$-\Delta$,G,M,Y) } \\ \hline
+%\multirow{1}{*}{CGMY model} & $1.8\%$  \\ \hline
+%\multirow{1}{*}{ VG model} & $1.26\%$  \\ \hline
+%\multirow{1}{*}{NIG model} & $1.86\%$ \\ \hline
+%\multirow{1}{*}{ BS model}& $2.97\%$  \\ 
+%\hline
+%\multicolumn{2}{ |p{10cm}| }{Hedge ratio  obtained with NIG, VG,CGMY and BS models for the sets of (C$+\Delta$,G,M,Y) } \\  \hline
+%\multirow{1}{*}{CGMY model} & $4.36\%$  \\ \hline
+%\multirow{1}{*}{ VG model} & $4.99\%$  \\ \hline
+%\multirow{1}{*}{NIG model} & $4.61\%$ \\ \hline
+%\multirow{1}{*}{ BS model}& $3.32\%$  \\ \hline
+%\end{tabular}\label{T2i}
+%\end{center}
+%\end{table}
+%
+%
+%
+%
+%\begin{table}[h!]
+%\begin{center}
+%   \caption{Table compare the performance for model price in term of hedging ratio }
+%\begin{tabular}{ |l|l| }
+%\hline
+%\multicolumn{2}{ |p{10cm}| }{Hedge ratio  obtained with NIG, VG,CGMY and BS models for the sets of (C$-\Delta$,G,M,Y$-\Delta$)} \\
+%\hline
+% Model price & hedging ratio with delta out of money  \\ \hline
+%\multirow{1}{*}{CGMY model} & $13.04 \%$  \\ \hline
+%\multirow{1}{*}{ VG model} & $10.63 \%$  \\ \hline
+%\multirow{1}{*}{NIG model} & $12.37\%$  \\ \hline
+%\multirow{1}{*}{ BS model}& $10.57 \%$ \\ 
+%\hline
+%\multicolumn{2}{ |p{10cm}| }{ Hedge ratio  obtained with NIG, VG,CGMY and BS models for the sets of   (C$+\Delta$,G,M,Y$-\Delta$) } \\ \hline
+%\multirow{1}{*}{CGMY model} & $ 6.661\%$  \\ \hline
+%\multirow{1}{*}{ VG model} & $6.77 \%$  \\ \hline
+%\multirow{1}{*}{NIG model} & $6.53 \%$ \\ \hline
+%\multirow{1}{*}{ BS model}& $7.64 \%$  \\ 
+%\hline
+%\multicolumn{2}{ |p{10cm}| }{Hedge ratio  obtained with NIG, VG,CGMY and BS models for the sets of (C$-\Delta$,G,M,Y$+\Delta$) } \\  \hline
+%\multirow{1}{*}{CGMY model} & $2.98 \%$  \\ \hline
+%\multirow{1}{*}{ VG model} & $ 2.27 \%$  \\ \hline
+%\multirow{1}{*}{NIG model} & $2.73 \%$ \\ \hline
+%\multirow{1}{*}{ BS model}& $4.7 \%$  \\ \hline
+%\end{tabular}\label{T2ii}
+%\end{center}
+%\end{table}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%\begin{table}[h!]
+%\begin{center}
+%   \caption{Table compare the performance for model price in term of hedging ratio }
+%\begin{tabular}{ |l|l| }
+%\hline
+%\multicolumn{2}{ |p{10cm}|}{Hedge ratio  obtained with NIG, VG,CGMY and BS models for the sets of (C$+\Delta$,G,M,Y$+\Delta$) } \\
+%\hline
+% Model price & hedging ratio with delta out of money  \\ \hline
+%\multirow{1}{*}{CGMY model} & $3.44 \%$  \\ \hline
+%\multirow{1}{*}{ VG model} & $ 2.65 \%$  \\ \hline
+%\multirow{1}{*}{NIG model} & $ 2.57 \%$  \\ \hline
+%\multirow{1}{*}{ BS model}& $ 2.59 \%$ \\ 
+%\hline
+%\multicolumn{2}{ |p{10cm}| }{ Hedge ratio  obtained with NIG, VG,CGMY and BS models for the sets of  (C,G,M,Y$-\Delta$)} \\ \hline
+%\multirow{1}{*}{CGMY model} & $8.21 \%$  \\ \hline
+%\multirow{1}{*}{ VG model} & $6.95\%$  \\ \hline
+%\multirow{1}{*}{NIG model} & $7.28  \%$ \\ \hline
+%\multirow{1}{*}{ BS model}& $7.15 \%$  \\ 
+%\hline
+%\multicolumn{2}{ |p{10cm}| }{ Hedge ratio  obtained with NIG, VG,CGMY and BS models for the sets of (C,G,M,Y$+\Delta$)} \\  \hline
+%\multirow{1}{*}{CGMY model} & $ 3.96 \%$  \\ \hline
+%\multirow{1}{*}{ VG model} & $4.020\%$  \\ \hline
+%\multirow{1}{*}{NIG model} & $3.86 \%$ \\ \hline
+%\multirow{1}{*}{ BS model}& $4.87 \%$  \\ \hline
+%\end{tabular}\label{T2iii}
+%\end{center}
+%\end{table}
+%
+%From the results presented in the tables \eqref{T2i}, \eqref{T2ii} and \eqref{T2iii}  we see that the values of the hedging ratio obtained with the pure jumps models are similar, while they differ from the value of the hedging ratio obtained with the Black-Scholes model. We observe that the percentage of hedging ratio with various sets of the parameters  are different. This was expected as the various sets of the parameters can lead to different values of the exotic option. Table \eqref{T2i}, shows that the percentage of the hedge ratio computed with the CGMY, NIG, BS and VG models using  the new model parameters  calibrated to the real world data obtain via the sets of varying  parameters  (C-$\Delta$, G, M, Y-$\Delta$),(C+$\Delta$, G, M, Y-$\Delta$)  and (C, G, M, Y-$\Delta$) differ from the one obtained with the other sets of the varying parameters. This means, these three sets of the varying parameters are unrealistic and if one uses these three sets of the model parameters to hedge the vanilla call,  one could be exposed to the model risk since the percentage of hedging ratio are to high than the one obtained with the other sets of the model parameters. IN addition, the tables \eqref{T2i}, \eqref{T2ii} and \eqref{T2iii}, show that  the percentage  of the hedge ratio computed with the CGMY, NIG, BS and VG models using  the sets  parameters  calibrated to the real world data obtain via the sets of varying  parameters  (C, G, M, Y)  and (C, G, M, Y-$\Delta$)  are similar from each other, and the one computed with the sets of varying  parameters  (C-$\Delta$, G, M, Y-$\Delta$)  and (C+$\Delta$, G, M, Y+$\Delta$) and  (C, G, M, Y+$\Delta$) are also different. Table \eqref{T2i}, shows  that the values of the percentage of hedge ration computed with the CGMY, NIG, BS and VG models using  the new model parameters  calibrated to the real world data obtain via the sets of varying  parameters  (C-$\Delta$, G, M, Y) are very small and similar compared  to the one obtained from other sets of the varying parameters. We also see that  from this set, the  percentage of hedge ration  compute with the CGMY, NIG,  and VG models are very small than the one obtained with the BS model. Thus, if we use the sets of the model parameters of NIG, CGMY and VG model to hedge the vanilla call,  we may be exposed to less risk when we hedge our derivative  since the percentage of hedging ratio are small than to the one obtained from the other sets.
+%
+%
+%
+%%
+%%
+%% And we also observed that  for the case where  the model parameter are obtained with the varying model parameters $(C-\Delta, G, M, Y)$ ,   the value of the hedging ratio computed with the CGMY, BS, and NIG models are small than the one obtained with the VG model (see table \eqref{T2i} ). Other hand in the table \eqref{T2iii} we noticed that the same scenario also repeats. We observed that the values of the hedging ratio computed with the CGMY, NIG and VG models using  the model parameters obtained with the varying model parameters $(C+\Delta, G, M, Y+\Delta)$ and $(C G, M, Y+\Delta,)$  are similar and small than the value of the hedging ratio computed with the BS model.  However, we also  noticed that the values of the hedging ratio computed with the BS, NIG and VG models using the model parameters obtained with the varying parameters $(C, G, M, Y-\Delta)$ are small than the hedging ratio value obtained with CGMY model.  
+%%In the table \eqref{T2ii} we now observed that the values of the  hedging ratio  computed with the CGMY, NIG and VG models using the model parameters obtained with the varying parameters $(C-\Delta , G, M, Y-\Delta)$ , $(C+\Delta , G, M, Y-\Delta)$ and $(C-\Delta , G, M, Y+\Delta)$ are small than the value of the  hedging ratio  obtained with the BS  model. 
+%
+%
+%In general, when we look at all the results discussed above, we can say that the pure jump model (CGMY, NIG and VG models) hedges the vanilla call options better than the Black-Scholes model in terms of the hedging ratio. However, it is difficult to say which of the three models ( NIG, VG and CGMY models)  hedges the vanilla call option better? Because the values of the value of hedging ratio obtained with these models are similar. Here, we ill not try to respond to this question, however we will try to respond to it in the future research.  Based on these results, we conclude this research by saying that the pure jump mode (CGMY, NIG and VG models)  may present less risk than the Black-Scholes model when hedging  the vanilla call option. 
+%
+%%Looking at the results presented in above table \eqref{T1}, we can see that the values of the hedging ratio computed with all four models are a bite similar.  We note that the value of the hedging ratio for NIG, VG and Black-Scholes models are very similar and a little small than the one obtained with CGMY model.
+% %In table \eqref{T2} we can see that the same scenario also repeats. This means that the different model parameters can not always lead to the big difference in hedging an European call option.
+% 
+%
+%
+%
+%%An other important point we can note that even if the real market prices are obtained with CGMY model, but the CGMY model still not hedge better than European call option than the VGl, NIG and Black-Scholes models.  However, the  fact that  hedging ratio value for  VG, NIG, CGMY and Black-Scholes models  are litlle bite similar, therefore,  we can say that none of the four model prices discussed in this project perform better than an other in hedging an European call option.
+%
+%
+% 
+%
+%
+%%In table \eqref{T2}, we can also notice that the same scenario may repeat. We can easily see that the the value of their  hedging ratio still very close results. That implies the different model parameters can not always lead  to the big difference in hedging an European call option.
+%%
+%%We also note that even if the real market prices are obtained from the CGMY model, but the CGMY model still gives the close value of hedging ratio for European call option as VG model, NIG model and Black-Scholes model. Therefore, we can say that none amongst these four model price may give more or less risk  
+%%when we hedge the European call option. 
+%
+%%Now, we compare the hedge performance for those four model prices when in hedging lookback option.
+%
+%%$0.083425926$ \\ \hline
+%%\multirow{1}{*}{ VG model} & $0.07415467$  & $0.133527357$ \\ \hline
+%%\multirow{1}{*}{NIG model} & $0.071433322$ & $0.109825784$ \\ \hline
+%%\multirow{1}{*}{ BS model}& $0.081955556$ & $0.03525212$ \\ \hline
+%
+%%Looking at the results presented in above table\eqref{T1}, we can see that when the option is expired in-the-money, the hedging ratio computed with Black-Schole model is very small than hedging ratio computed with CGMY model, VG model and NIG model. We have $0.048173806$, $0.098275237$ and $0.074573664$ of the difference between the CGMY hedging ratio and Black-Scholes hedging ratio, VG hedging ratio and Black-Scholes hedging ratio and NIG  hedging ratio and Black-Scholes hedging ratio. And when the option is expired out-the-money, the hedging ratio of Black-Scholes model, VG model, NIG model and  CGMY model are a bite similar. The same scenario also repeats for second model parameter which can be seen in table \eqref{T2}. In appendix\eqref{Ch} we present the  graphs of the delta hedging error. We can see that portfolio value expired above of original prices for all given model. 
+%
+%%We also notice that even if the real market price are obtained from the CGMY model, but the Black-Scholes model still gives a better hedge ratio for European call price than the remain pure jump model (VG model, NIG model and CGMY model). There­fore, one can say that the Black-Scholes model gives a small risk when we hedge European call prices than VG model, CGMY model and NIG model. 
+%%Now, in next section we want to compare the hedging performance for those four model prices when we hedge the exotic option.
+%
+%%When we look at the results presented in above table\eqref{T1}, one can see that for the first parameter there are similarity for all hedging ratio for each model model price in both cases when the option expire in and out the money. The same scenario also repeats for second model parameter we can it see in table \eqref{T2}. Therefore, we may find difficult to say which amongst four model prices discussed here, present  more or less risk when we hedge the vanilla call price based on above hedging ratio results. Thus, one can just say that the Black-Scholes mode, VG model, NIG model and CGMY model give very similar risk when we hedge the vanilla call prices. The graphics between the hedge portfolio and option price  are presented in appendix\eqref{Ch}. 
+%%Next, we want to see if the scenario will repeat when we compute the hedging ratio for lookback fixed call option. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\subsubsection{Hedging performance for lookback fixed option}
+%%In this section, we compute the delta using Finite difference method (FDM). We follow the same procedure discussed in previous section in order to compute hedging portfolio. We generate the underlying assets  with two different model parameters of CGMY model via monte Carlo method. We note that in that case the monte Carlo estimator depends significantly in a parameter $\epsilon$. Therefore, it will not be ease to compute the delta hedging with discontinuous paths. We take $\epsilon =0.5$ in all cases. We first compute the standard deviation error between the portfolio value and lookback fixed option for each model price. And then, we compute  hedging ratio for each model price using the same formula \eqref{fo}. For each paths obtained with CGMY model, we compute the hedging ratio when the option is expired out-the-money. The results are presented in following tables \eqref{T3} and \eqref{T4}:
+%%
+%%%In this section, we consider the delta computed with Finite difference method Or FMD. We follow the same procedure as discussed in previous section in order to generate the underlying asset prices. Thus, we generate two different underlying assets prices with two different CGMY Model parameters using Monte Carlo method, and then compute the delta or finite different estimator. We may note that in such case the Monte Carlo estimator depends significantly in a parameter $\epsilon$. Therefore, it will not be ease to compute the delta hedging with discontinuous paths. We assume the value of parameter $\epsilon =0.5$ for all cases. We compute hedging ratio between the lookback option error and initial lookback fixed call price for each model price. The hedging ratio for each model price are computed with  two different underlying asset prices. For each model model parameter we compute the delta hedging when the lookback fixed price is expired out-the-money and in-the-money using FDM. The results are presented in following  table\eqref{T2}:
+%%
+%%\begin{table}[h!]
+%%\begin{center}
+%%   \caption{Table compare the performance for model price in term of hedging ratio }
+%%\begin{tabular}{ |l|l| }
+%%\hline
+%%\multicolumn{2}{ |c| }{The underlying asset asset price computed with first CGMY model parameter} \\
+%%\hline
+%% Model price & hedging ratio with delta out of money \\ \hline
+%%\multirow{1}{*}{CGMY model} & $0.126070857$  \\ \hline
+%%\multirow{1}{*}{ VG model} & $0.066712111$  \\ \hline
+%%\multirow{1}{*}{NIG model} & $0.077852092$  \\ \hline
+%%\multirow{1}{*}{ BS model}& $0.140560217$  \\ \hline
+%%\end{tabular}\label{T3}
+%%\end{center}
+%%\end{table}
+%%
+%%
+%%\begin{table}[h!]
+%%\begin{center}
+%%   \caption{Table compare the performance for model price in term of hedging ratio }
+%%\begin{tabular}{ |l|l| }
+%%\hline
+%%\multicolumn{2}{ |c| }{The underlying asset asset price computed with second CGMY model parameter} \\
+%%\hline
+%% Model price & hedging ratio with delta out of money \\ \hline
+%%\multirow{1}{*}{CGMY model} & $0.113053613$  \\ \hline
+%%\multirow{1}{*}{ VG model} & $0.100862613$  \\ \hline
+%%\multirow{1}{*}{NIG model} & $0.047319149$  \\ \hline
+%%\multirow{1}{*}{ BS model}& $0.189403318$  \\ \hline
+%%\end{tabular}\label{T4}
+%%\end{center}
+%%\end{table}
+%%
+%%Table \eqref{T3} shows the result for hedging ratio obtain with a first model parameter of CGMY model. One can see the hedging ratio value for VG and NIG models look close and small than the one from CGMY model and Black-Scholes model.While, the hedgging ratio value for the Black-Scholes model is larger than the value of hedging ratio for the pure jump model. When we also look at in table \eqref{T4}, we see that the same scenario repeats. However, in the n table \eqref{T4} the only hedging value of NIG model is smaller than the hedge value of VG, CGMY and Black-Scholes models.
+%%
+%%The fact that we computed the hedging ratio for all model prices with two different model parameters, but we still notice that NIG model still gives a very small hedging ratio valuefor both cases compare to the three remain models. Thus, we can say that the NIG model hedge the lookback fixed option better than VG, CGMY, and Black-Scholes models especialy when the option is expired out-the-money.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%In this section, we consider  the different market prices obtained from CGMY market prices with the different model parameters as our data.  We use above methodology discussed above in order to test the hedging performance for each model prices. We analyse the hedging performance for each model price  with each data. We consider each model parameters obtain from the calibration for each CGMY market prices. We compare the hedging performance for each model price in the case of European vanilla call option and  also for exotic option especially the lookback option using above hedginghedging ratio formula \eqref{fo}.
+%
+%%We may also give a simple difference between the dynamic and static hedging. \cite{CAW} was first to proposed the static hedging, in order to hedge the short position by holding a strategy or portfolio of shorter-term contract with a range of different strikes. The importance of using the static hedging is that it can eliminate or reduce the model risk. In fact, the dynamic hedging is a model dependent and consists to adjust the holding of the hedging instrument at discrete interval\cite{ES1}. 
+%
+%
+%
+%
+%
+%
+%% Moreover, some sources of risk may be due to the change in the interest rate, in volatility or in underlying asset. Therefore, we may consider the Greeks which is defined as the sensitivities of an option price to the different type of risk see \cite{ES1}. We can use the Greeks so that they take position in other underlying asset in order to build the portfolio which, is indifferent to a given sources of risk in theory \cite{ES1}.   
+%

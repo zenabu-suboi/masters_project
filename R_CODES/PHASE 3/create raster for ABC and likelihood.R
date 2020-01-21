@@ -3,19 +3,23 @@
 
 minrangeBeta= c(range(abc0.1lin$unadj.values[1:5000,1])[1],range(abc0.1$unadj.values[1:5000,1])[1],range(ABC_seq1$param[, 1])[1]
                 , range(ABC_seq2$param[, 1])[1],range(abcref1$unadj.values[,1])[1],range(abcref2$unadj.values[,1][1])
-                , range(abcref1.0.1p$unadj.values[,1])[1],range(abcref2.0.1p$unadj.values[,1])[1])
+                , range(abcref1.0.1p$unadj.values[,1])[1],range(abcref2.0.1p$unadj.values[,1])[1], range(abc2ref1$unadj.values[,1][1])
+                                              , range(abc2ref2$unadj.values[,1][1]))
 
 maxrangeBeta= c(range(abc0.1lin$unadj.values[1:5000,1])[2],range(abc0.1$unadj.values[1:5000,1])[2],range(ABC_seq1$param[, 1])[2]
                 , range(ABC_seq2$param[, 1])[2],range(abcref1$unadj.values[,1])[2],range(abcref2$unadj.values[,1][2])
-                , range(abcref1.0.1p$unadj.values[,1])[2],range(abcref2.0.1p$unadj.values[,1])[2])
+                , range(abcref1.0.1p$unadj.values[,1])[2],range(abcref2.0.1p$unadj.values[,1])[2], range(abc2ref1$unadj.values[,1][2])
+                , range(abc2ref2$unadj.values[,1][2]))
 
 minrangeGamma= c(range(abc0.1lin$unadj.values[1:5000,2])[1],range(abc0.1$unadj.values[1:5000,2])[1],range(ABC_seq1$param[, 2])[1]
                  , range(ABC_seq2$param[, 2])[1],range(abcref1$unadj.values[,2])[1],range(abcref2$unadj.values[,2][1])
-                 , range(abcref1.0.1p$unadj.values[,2])[1],range(abcref2.0.1p$unadj.values[,2])[1])
+                 , range(abcref1.0.1p$unadj.values[,2])[1],range(abcref2.0.1p$unadj.values[,2])[1], range(abc2ref1$unadj.values[,2][1])
+                 , range(abc2ref2$unadj.values[,2][1]))
 
 maxrangeGamma= c(range(abc0.1lin$unadj.values[1:5000,2])[2],range(abc0.1$unadj.values[1:5000,2])[2],range(ABC_seq1$param[, 2])[2]
                  , range(ABC_seq2$param[, 2])[2],range(abcref1$unadj.values[,2])[2],range(abcref2$unadj.values[,2][2])
-                 , range(abcref1.0.1p$unadj.values[,2])[2],range(abcref2.0.1p$unadj.values[,2])[2])
+                 , range(abcref1.0.1p$unadj.values[,2])[2],range(abcref2.0.1p$unadj.values[,2])[2], range(abc2ref1$unadj.values[,2][2])
+                 , range(abc2ref2$unadj.values[,2][2]))
 
 
 

@@ -1,16 +1,26 @@
 
-library(EasyABC)
 library(SimInf)
+library(EasyABC)
+
+
+u0= data.frame(S=c(990), I=c(10), R=c(0))
+
+model <- SIR(u0, 1:75, beta= 0.2, gamma=0.02)
+result <- run(model, threads = 1)#
+plot(result)
+prev <- prevalence(result, I~.)
+
+result@U[2,]
 
 ### create function to use in ABC_mcmc
-
 # scenario 1
 
 modelforABC= function(parameters){
   library(SimInf)
   u0= data.frame(S=c(990), I=c(10), R=c(0))
   
-  model <- SIR(u0, 1:75, beta= parameters[1], gamma=parameters[2])
+  model <- SIR(u0, 1:75, beta= parameters[1],
+               gamma=parameters[2])
   result <- run(model, threads = 1)#, seed=sample.int(1000000000,1)) 
   prev <- prevalence(result, I~.)
   targ<- numeric()
@@ -42,12 +52,16 @@ truepop= c(mean(saveres[,1]), mean(saveres[,2]))
 truepop
 
 ########################
+# scenario 1 == 2 targets
 
 set.seed(234)
 #tol=100%
-ABC_rej2<-ABC_rejection(model=modelforABC, prior=list(c("unif",0,1),c("unif",0,0.5)), 
-                       summary_stat_target=truepop, nb_simul=216601,
-                       tol=1, progress_bar = T)
+ABC_rej2<-ABC_rejection(model=modelforABC, 
+                        prior=list(c("unif",0,1),
+                        c("unif",0,0.5)), 
+                        summary_stat_target=truepop,
+                        nb_simul=216601,
+                        tol=1, progress_bar = T)
 ABC_rej2$computime
 
 
@@ -62,27 +76,42 @@ Tabc0.1
 
 par(mfrow=c(2,2))
 
-plot(abc0.1$unadj.values[,1],abc0.1$unadj.values[,2], xlab = "beta", ylab = "gamma",
+plot(abc0.1$unadj.values[,1],
+     abc0.1$unadj.values[,2],
+     xlab = "beta", ylab = "gamma",
      main ="#params = 5066")
 
-plot(abc0.1$unadj.values[1:5000,1],abc0.1$unadj.values[1:5000,2], xlab = "beta", ylab = "gamma",
+plot(abc0.1$unadj.values[1:5000,1],
+     abc0.1$unadj.values[1:5000,2],
+     xlab = "beta", ylab = "gamma",
      main ="#params = 5000")
 
-plot(abc0.1$unadj.values[1:5000,1],abc0.1$unadj.values[1:5000,2], xlab = "beta", ylab = "gamma",
+
+## appears in creating a raster
+plot(abc0.1$unadj.values[1:5000,1]
+     ,abc0.1$unadj.values[1:5000,2],
+     xlab = "beta", ylab = "gamma",
      main ="S1_posterior_for_Rejection")
 
 
 #################################################
-
+# s1_seq
 
 set.seed(123)
-ABC_seq2<-ABC_sequential(method="Lenormand", model=modelforABC, prior=list(c("unif",0,1),
-                                                                                c("unif",0,0.5)), nb_simul=10000,
-                         summary_stat_target=truepop, p_acc_min=0.4, progress_bar = T)
+ABC_seq2<-ABC_sequential(method="Lenormand",
+                         model=modelforABC,
+                         prior=list(c("unif",0,1),
+                         c("unif",0,0.5)),
+                         nb_simul=10000,
+                         summary_stat_target=truepop, 
+                         p_acc_min=0.4, progress_bar = T)
 
 #par(mfrow=c(3,1))
 
-plot(ABC_seq2$param[, 1], ABC_seq2$param[, 2],xlab = "beta", ylab = "gamma", main ="S1_posterior_for_sequential")
+## appears in creating  a raster
+plot(ABC_seq2$param[, 1], ABC_seq2$param[, 2],
+     xlab = "beta", ylab = "gamma",
+     main ="S1_posterior_for_sequential")
 
 ABC_seq2$computime
 
@@ -94,7 +123,8 @@ modelforABCmcmc2= function(parameters){
   library(SimInf)
   u0= data.frame(S=c(990), I=c(10), R=c(0))
   
-  model <- SIR(u0, 1:75, beta= parameters[1], gamma=parameters[2])
+  model <- SIR(u0, 1:75, beta= parameters[1],
+               gamma=parameters[2])
   result <- run(model, threads = 1)#, seed=sample.int(1000000000,1)) 
   prev <- prevalence(result, I~.)
   targ<- numeric()
@@ -123,7 +153,9 @@ for(i in 1:100){
 }
 
 ### we call the target: truepop.prev 
-truepop.prev= c(mean(saveres[,1]), mean(saveres[,2]),mean(saveres[,3]))
+truepop.prev= c(mean(saveres[,1]), 
+                mean(saveres[,2]),
+                mean(saveres[,3]))
 truepop.prev
 
 
@@ -131,9 +163,12 @@ truepop.prev
 
 
 set.seed(123) # scenario 2
-ABC_seq1<-ABC_sequential(method="Lenormand", model=modelforABCmcmc2, prior=list(c("unif",0,1),
-                                                                                c("unif",0,0.5)), nb_simul=10000,
-                         summary_stat_target=truepop.prev, p_acc_min=0.4, progress_bar = T)
+ABC_seq1<-ABC_sequential(method="Lenormand", 
+                         model=modelforABCmcmc2,
+                         prior=list(c("unif",0,1),
+                         c("unif",0,0.5)), nb_simul=10000,
+                         summary_stat_target=truepop.prev,
+                         p_acc_min=0.4, progress_bar = T)
 
 #par(mfrow=c(3,1))
 #R0<-ABC_seq1$param[, 1]/ ABC_seq1$param[, 2]
@@ -142,7 +177,9 @@ ABC_seq1<-ABC_sequential(method="Lenormand", model=modelforABCmcmc2, prior=list(
 
 
 
-plot(ABC_seq1$param[, 1], ABC_seq1$param[, 2],xlab = "beta", ylab = "gamma", main ="posterior_for_sequential")
+plot(ABC_seq1$param[, 1], ABC_seq1$param[, 2],
+     xlab = "beta", ylab = "gamma",
+     main ="posterior_for_sequential")
 
 ABC_seq1$computime
 
@@ -152,8 +189,11 @@ ABC_seq1$computime
 
 
 set.seed(234)
-ABC_rej<-ABC_rejection(model=modelforABC, prior=list(c("unif",0,1),c("unif",0,0.5)), 
-                       summary_stat_target=truepop, nb_simul=10000,
+ABC_rej<-ABC_rejection(model=modelforABC, 
+                       prior=list(c("unif",0,1),
+                       c("unif",0,0.5)), 
+                       summary_stat_target=truepop,
+                       nb_simul=10000,
                        tol=0.5, progress_bar = T)
 ABC_rej$computime
 # R0<-ABC_rej$param[, 1]/ ABC_rej$param[, 2]
@@ -172,8 +212,11 @@ ABC_rej$computime
 
 set.seed(234)
 #tol=100%
-ABC_rej<-ABC_rejection(model=modelforABCmcmc2, prior=list(c("unif",0,1),c("unif",0,0.5)), 
-                       summary_stat_target=truepop.prev, nb_simul=277690,
+ABC_rej<-ABC_rejection(model=modelforABCmcmc2,
+                       prior=list(c("unif",0,1),
+                       c("unif",0,0.5)), 
+                       summary_stat_target=truepop.prev,
+                       nb_simul=277690,
                        tol=1, progress_bar = T)
 ABC_rej$computime
 
@@ -190,13 +233,27 @@ Tabc0.1lin
 ?abc
 
 
-plot(abc0.1lin$unadj.values[,1],abc0.1lin$unadj.values[,2], xlab = "beta", ylab = "gamma",
+plot(abc0.1lin$unadj.values[,1],
+     abc0.1lin$unadj.values[,2],
+     xlab = "beta", ylab = "gamma",
      main ="#params = 5096")
 
-plot(abc0.1lin$unadj.values[1:5000,1],abc0.1lin$unadj.values[1:5000,2], xlab = "beta", ylab = "gamma",
+plot(abc0.1lin$unadj.values[1:5000,1],
+     abc0.1lin$unadj.values[1:5000,2],
+     xlab = "beta", ylab = "gamma",
      main ="#params = 5000")
 
-plot(abc0.1lin$unadj.values[1:5000,1],abc0.1lin$unadj.values[1:5000,2], xlab = "beta", ylab = "gamma",
+
+#appears in creating a raster
+plot(abc0.1lin$unadj.values[1:5000,1],
+     abc0.1lin$unadj.values[1:5000,2],
+     xlab = "beta", ylab = "gamma",
      main ="posterior_for_Rejection")
 
 #####################################################################
+
+write.csv(abc0.1lin[["unadj.values"]], file = "mydata", 
+            append = FALSE, quote = TRUE, sep = " ",
+            eol = "\n", na = "NA", dec = ".", row.names = F,
+            col.names = TRUE)
+mydata

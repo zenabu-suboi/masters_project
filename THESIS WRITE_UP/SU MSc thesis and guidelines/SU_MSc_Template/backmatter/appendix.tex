@@ -1,0 +1,556 @@
+%\chapter{The graphics of hedging performance}
+%\label{Ch}
+%%We present the graphics for the hedging performance between the vanilla and the portfolio, based on the option expiring out the-money.
+%%
+%%
+%%\begin{figure}[h!]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%    \includegraphics[width=0.4  \textwidth,  natwidth=610,natheight=642]{../HED/BS.png}    &
+%%    \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/NIG.png}     & 
+%%    \\
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/vg.png}     & 
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/cgmy.png}      & 
+%%  \end{tabular}
+%%  \caption{ The portfolio value and vanilla computed with NIG, VG, CGMY and BS models using the model parameter obtained with the market data computed with  (C,G,M,Y) model parameters} \label{f1}
+%%\end{figure}
+%%
+%%\begin{figure}[h!]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%    \includegraphics[width=0.4  \textwidth,  natwidth=610,natheight=642 ]{../HED/BS7.png}     &
+%%    \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/NIG7.png}     & 
+%%    \\
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/VG7.png}      & 
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/CGMY7.png}      & 
+%%  \end{tabular}
+%%  \caption{ The portfolio value and vanilla computed with NIG, VG, CGMY and BS models using the model parameter obtained with the market data computed with  (C+$\Delta$ ,G,M,Y-$\Delta$) model parameters} \label{f1}
+%%\end{figure}
+%%
+%%\begin{figure}[h!]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%    \includegraphics[width=0.4  \textwidth, natwidth=610,natheight=642 ]{../HED/BS2.png}    &
+%%    \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/NIG2.png}     & 
+%%    \\
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/VG2.png}     & 
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/CGMY2.png}      & 
+%%  \end{tabular}
+%%  \caption{ The portfolio value and vanilla computed with NIG, VG, CGMY and BS models using the model parameter obtained with the market data computed with  (C+$\Delta$,G,M,Y) model parameters} \label{f1}
+%%\end{figure}
+%%
+%%\begin{figure}[h!]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%    \includegraphics[width=0.4  \textwidth,  natwidth=610,natheight=642 ]{../HED/BS3.png}     &
+%%    \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/NIG3.png}     & 
+%%    \\
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/VG3.png}      & 
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/CGMY3.png}      & 
+%%  \end{tabular}
+%%  \caption{ The portfolio value and vanilla computed with NIG, VG, CGMY and BS models using the model parameter obtained with the market data computed with  (C-$\Delta$ ,G,M,Y-$\Delta$) model parameters} \label{f2}
+%%\end{figure}
+%%
+%%\begin{figure}[h!]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%    \includegraphics[width=0.4  \textwidth,  natwidth=610,natheight=642 ]{../HED/BS4.png}    &
+%%    \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/NIG4.png}     & 
+%%    \\
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/VG4.png}     & 
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/CGMY4.png}      & 
+%%  \end{tabular}
+%%  \caption{ The portfolio value and vanilla computed with NIG, VG, CGMY and BS models using the model parameter obtained with the market data computed with  (C+$\Delta$,G,M,Y+$\Delta$) model parameters} \label{f1}
+%%\end{figure}
+%%
+%%
+%%
+%%\begin{figure}[h!]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%    \includegraphics[width=0.4  \textwidth,  natwidth=610,natheight=642 ]{../HED/BS8.png}    &
+%%    \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/NIG8.png}     & 
+%%    \\
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/VG8.png}     & 
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/CGMY8.png}      & 
+%%  \end{tabular}
+%%  \caption{ The portfolio value and vanilla computed with NIG, VG, CGMY and BS models using the model parameter obtained with the market data computed with  (C-$\Delta$,G,M,Y+$\Delta$) model parameters} \label{f1}
+%%\end{figure}
+%%
+%%\begin{figure}[h!]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%    \includegraphics[width=0.4  \textwidth,  natwidth=610,natheight=642]{../HED/BS9.png}     &
+%%    \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/NIG9.png}     & 
+%%    \\
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/VG9.png}      & 
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/CGMY9.png}      & 
+%%  \end{tabular}
+%%  \caption{ The portfolio value and vanilla computed with NIG, VG, CGMY and BS models using the model parameter obtained with the market data computed with  (C ,G,M,Y-$\Delta$) model parameters} \label{f1}
+%%\end{figure}
+%%
+%%\begin{figure}[h!]
+%%\centering
+%%  \begin{tabular}{@{}cccc@{}}
+%%    \includegraphics[width=0.4  \textwidth,  natwidth=610,natheight=642 ]{../HED/BS1_HED.png}     &
+%%    \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/NIG1.png}     & 
+%%    \\
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/VG1_HED.png}      & 
+%%       \includegraphics[width=0.4 \textwidth,  natwidth=610,natheight=642]{../HED/CGMY1.png}      & 
+%%  \end{tabular}
+%%  \caption{ The portfolio value and vanilla computed with NIG, VG, CGMY and BS models using the model parameter obtained with the market data computed with  (C-$\Delta$ ,G,M,Y) model parameters} \label{f1}
+%%\end{figure}
+%
+%% We number appendices as in the main file, A, B, C.
+%% The appendice has title, do not include "Appendix" above.
+%% You need permission from Barry to have Appendices
+%% Why is it necessary? Does it add value?
+%
+%\section{Table of S\&P 500 indexed}
+%\label{A11}
+%The table below has $77$ call option prices of the S\&P 500 index.  The market price closed on $18$  April $2002$ and that day the spot price of  the S\&P 500 index closed at $1124.47$, the interest rate at $r=1.9\%$ and the dividend at $q=1.2\%$ per year. 
+%
+%\begin{table}[h!]
+% \begin{center}
+%  \caption{Table of $77$ call prices of S\&P 500 indexed. } \label{tab2}
+%\begin{tabular}{l*{7}{c}r}
+%Strike   & May $(2002)$ & Jun $(2002)$  & Sep. $(2002)$  & Dec $(2002)$   & March $(2003)$ & June $(2003)$ & Dec. $2003$    \\
+%\hline
+%975 &0.000 & 0.000&161.60 & 173.30 &0.000  & 0.000 & 0.000  \\
+%995  & 0.000  &0.000 &144.80 & 157.00&0.000  & 182.10&0.000   \\
+%1025&0.000 &0.000 &0.000 & 120.10& 133.10 & 146.50 & 0.000 \\
+%1050 &0.000 & 84.50 & 100.70&114.80 &  0.000  & 143.00&171.40\\
+%1075 & 0.000& 64.30 & 82.50 & 97.60 & 0.000  &0.000 &0.000 \\
+%1090 &43.10 & 0.000 & 0.000&0.000 &  0.000 &0.000 &0.000\\
+%1100&35.00 & 0.000 & 65.50 &81.00 & 96.20& 111.30&140.40\\
+%1110 &0.000 & 39.50 & 0.000 &0.000 &0.000  & 0.000 &0.000 \\
+%1120& 22.90& 33.50 & 0.000 &0.000 &  0.000 & 0.000 &0.000\\
+%1125&20.20 & 30.70 & 51.00 &66.90 & 81.70& 97.00&0.000 \\
+%1130 & 0.000& 28.00& 0.000  &0.000 &0.000 &0.000 &0.000  \\
+%1135 &0.000 & 25.60 & 45.50 &0.000 & 0.000 &0.000 &0.000 \\
+%1140&13.30 & 23.20 &0.000 &58.90 &  0.000 & 0.000 &0.000 \\
+%1150 &0.000 & 19.10 & 38.10&53.90&  68.30& 83.30&112.80 \\
+%1160 & 0.000 & 15.30 & 0.000 &0.000 & 0.000 &0.000 &0.000  \\
+%1170 & 0.000 & 12.10 & 0.000 &0.000 & 0.000 &0.000 &0.000  \\
+%1175 &0.000 & 10.90 & 27.70 &42.50 & 56.60&0.000 &99.80 \\
+%1200 & 0.000 & 0.000 & 19.60 & 33.00  &46.10 & 60&0.000   \\
+%1225 & 0.000 &0.000  & 13.20& 24.90  & 36.90& 49.80&0.000  \\
+%1250 & 0.000 &0.000  & 0.000 & 18.30  & 29.30 & 41.20&66.90\\
+%1275 &0.000 &0.000  & 0.000  & 13.20 & 22.50& 0.000 &0.000 \\
+%1300 & 0.000 &0.000  &0.000  & 0.000 & 17.20 & 27.10&49.50  \\
+%1325 & 0.000 &0.000  & 0.000 &  0.000 & 12.80 &0.000 &0.000\\
+%1350 & 0.000 &0.000  & 0.000 & 0.000 &  0.000 &17.10&35.70 \\
+%1400 & 0.000 &0.000  & 0.000 & 0.000 &  0.000 & 10.10&25.20 \\
+%1450 & 0.000 &0.000  & 0.000 & 0.000 & 0.000 & 0.000 &17.00   \\
+%1500&0.000 &0.000 & 0.000 &  0.000 &  0.000 &0.000 &12.20 \\
+%\end{tabular}
+%\end{center}
+%\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{The Algorithms for Simulating the Path of the Pure Jump  Model }
+%In this section we discuss the procedure to simulate the pure jump models. We discuss the algorithms for each of our given models (VG, NIG and CGMY models).  The  VG, NIG and CGMY models can be written via a subordinator part,  an  important factor because it  helps us to avoid dealing directly with the jump kernel may hinder the simulation of our models Mbakwe \cite{CM}.
+%
+%
+%
+%%We describe the algorithm for each model considered in this thesis. It well known that the VG, NIG, CGMY model can be written with subordinator part. This fact is very useful, because it allows us to avoid the direct way to deal with the jump kernel which may be very difficult to simulate.
+%
+%% the differents algorithm of the   pure jump model algorithms of the different examples for pure jump L\'evy process discussed in the previous section. This part is very useful when we simulate the paths of stock price with the models as VG model and NIG model using Monte Carlo method.In chapter(4), we used these algorithm that we want describe now. We have said in section \ref{ab} that the  NIG process and VG process can be written as time-changed Brownian motion, this fact help us a lot for simulating these models. In using the fact the pure jump L\'evy process as time -change Brownian motion, we avoid of direct manner to deal with the jump kernel, which can be difficult to simulate. Other feature, is the pure jump L\'evy process as time -change Brownian motion can provide a modularity so, to fit into the existing simulation package.
+%
+%\subsection{The Algorithm for Simulating the Path of  the VG processes}
+%\label{AL3}
+%In order to simulate the path of the VG model we need to consider the subordinator part of the VG model as previously stated. The subordinate part of VG model is the Inverse Gamma process.  The following algorithm of the VG model presented below is similar to the one introduced by \textit{Johnk's generator }. First the process generates first the IG process. By adding the IG section to the standard Brownian motion, we are felt with the following algorithm :
+%
+%%In order to simulate the path of the VG model we need to consider the subordinator part of VG model as we stated before. The subordinate part of VG model is the Inverse Gamma process.  The following algorithm of VG model describes below is similar with the one introduced by \textit{Johnk's generator }. The process consist to generate first the IG process. And then when we add the IG part into the standard Brownian motion it follows the algorithm below:
+%
+%\fbox{
+%        \parbox{1\linewidth}{
+%        \begin{center}
+%        \textbf{ Algorithm: (Johnk's generator of Gamma variables)}
+%        \end{center}
+%        \begin{itemize} 
+%        \item First procedure:  we want to generate the Gamma process $G(t) \sim$ gamma$(\frac{t}{\nu}, \nu)$\\
+%              i.   We must generate  the tow i.i.d. uniforms [0,1] random variables U,Z.\\
+%              ii.  Set $A = U^{\frac{1}{b}}$ and $B = Z^{\frac{1}{1-b}}$ with $b = \frac{1}{\nu}$\\
+%              iii. if $A + B \leq 1$ pass to the next step otherwise back to the first step $(i)$\\
+%              iv.  Generate an exponential random variable $\exp$ \\
+%              v.   $Return$  $G(t) = (\exp A )/(A+ B)$ 
+%         \item Second procedure: Now, we put the $G(t)$ into a Brownian motion \\
+%               i. Generate $W$ as a standard Brownian motion  \\
+%               ii. $Return$ the   $X_{VG}(t,\sigma,\nu,\theta)$ \\
+%               i.e. $ X = \theta G(t) + \sigma \sqrt{G(t)} W $   
+%               
+%        \end{itemize}
+%         }
+%}
+%This algorithm is validated if the following condition is satisfied $\frac{t}{\nu} <1$. Which is in general true for the most cases since we can cut the time line in the  smallest segments (see \citep{L,M}). The graph \ref{l} shows the path of VG model simulated with above algorithm:
+%\begin{figure}[!h]
+%  \centering
+%  \includegraphics[width= 0.62\textwidth,  natwidth=610,natheight=642]{../image_yhesis/VG1.pdf}  \label{l} 
+%  \caption{The Path of VG process with $\nu = 0.0100, \sigma = 0.24, \theta = 0.542$, the 	Number of simulation $N = 1000$, the time $T= 1$. }
+%\end{figure}
+%
+%\subsection{The Algorithm for Simulating the Path of NIG processes}
+%\label{AL}
+%The simulation of the path of NIG process is given in the same way as the simulation of the path of VG process. We first need to consider the subordinator part of NIG model which is the Inverse Gaussian process (IG) in order to generate the path of NIG process. The following algorithm gives the process to simulate the path of NIG model.  We first generate the path of Inverse Gaussian process and then we plug it into the standard Brownian Motion.
+%%We may consider the subordinator part of NIG model which is Inverse Gaussian process (IG) in order to simulate the model. The process to simulate the model is followed: We first generate the Inverse Gaussian process and then we plague it into the standard Brownian Motion.
+%%In subsection \ref{w}, we said that the $NIG$ process $X_{(NIG)}$  with the parameters $(\alpha,\beta,\delta)$ can be written easily  as the time-change Brownian motion with the Brownian motion subordinated is inverse Gaussian process $NIG(e,d)$ with $e = 1$ and $d =\delta \sqrt{\alpha^2 - \beta^2}$. The following algorithm writes below give  the procedure that we can simulate the NIG process with parameters $(\alpha,\beta,\delta)$ .
+%
+%\fbox{
+%        \parbox{1\linewidth}{
+%     
+%        \begin{itemize} 
+%        \item First procedure:  we want to generate the Inverse Gaussian process \\
+%            $(IG)_t \sim$ $NIG(t,\delta \sqrt{\alpha^2 - \beta^2})$\\
+%              i.   Set $d = \delta \sqrt{\alpha^2 - \beta^2}$ \\
+%              ii.  Generate $V$ as a standard normal random variable \\
+%              iii. Set $z = V^2$\\
+%              iv.  Set $v =\frac{1}{d}$ \\
+%              v.   Set y= $tv + \frac{1}{2} zv^2 - \sqrt{\frac{4tz}{v} + \frac{1}{2} z^2 v^2} $\\
+%              iv.  Generate U as a uniform random number\\
+%              iiv. if $U \leq \frac{t}{t + yd}$, $return$ $(IG)_t  = \frac{t^2}{d^2y} $, $return$ $(IG)_t =y $    
+%                
+%         \item Second procedure: Now, we insert $(IG)_t$ into a Brownian motion \\
+%               i. Generate $W$ as a $N(0,1)$ random variable  \\
+%               ii. $Return$ the   $X_{NIG}^t$ \\
+%               i.e. $ X_{(NIG)}^t = \delta^2 \beta (IG)_t  + \delta \sqrt{(IG)_t}W $   
+%               
+%        \end{itemize}
+%         }
+%}
+%The figure \ref{m} below shows the path for NIG processes simulated via the above algorithm: \ref{m}. 
+% \begin{figure}[h!]
+%\begin{center}
+%\includegraphics[width= 0.62 \textwidth,  natwidth=610,natheight=642]{../image_yhesis/IG1.pdf}  \label{m}  
+%\caption{ The Path of NIG process with $\alpha = 12, \beta = 11, \delta =0.8$, the Number of simulation $N = 1000$ and the time $T= 1$}
+%\end{center}
+%\end{figure}
+%
+%\subsection{The Algorithm for Simulating the Path of the CGMY processes}
+%\label{AL1}
+%In general, the density of the CGMY process  can not be expressed in a simple form, except for the simple simulation technique. As we said in section \ref{ab}  the simulation of the path of CGMY model is difficult. Therefore, we need to approximate subordinate part of the CGMY process via the compound Poisson process. %Moreover, the method of the  simulation for the so-called model  could make $CGMY$ model  difficult to add the dependence structure to multiple dimensional problem.
+%Thanks to Dilip and Yor \cite{MP2}, because they were able to calculate the density of the CGMY subordinator and presents it under absolute continuous with  $\alpha$-stable subordinator. Thus,they apply the rejection technique to approximate the subordinator part of the process.
+%\subsubsection{Key point for the simulation of the CGMY model: The stable process}
+%As said previously, the stable process is a key  aspect of  simulating the sample paths  of the CGMY subordinator. We can define the stable process as follows:
+%\begin{defn}[Stable process (cont and Tankov \cite{A})]
+%Let $X$  be a random variable on $\mathbb{R}^d$ is said to be stable if it is stable under an addition property: if $X$ has a stable distribution, means \textit{for all $n>0,\exists b(n)>0$ and $c(n) \in \mathbb{R}^d$}  such that:
+%\begin{align}
+%\label{Eq1}
+%\Phi_{X}(y)^n = \Phi_{X}(yb(n))\exp \{ic.y\},\quad \forall y \in \mathbb{R}^d.
+%\end{align}       
+%And when $X_1,\ldots,X_i$ are independent copies of a stable random variable  $X$ and also $X$ has a stable  distribution; therefore,  $\exists c_i>0$ and a vector $d \in \mathbb{R}$   such that 
+%\begin{align}\label{stb}
+%X_1+\cdots+ X_i = c_iX+d.
+%\end{align}
+%
+%\end{defn} 
+%
+%The above property can only verify at any given time $t$, if the distribution of of $X$ is that of a \textit{selfsimilar} L\'evy process ( cont and Tankov \cite{A},$pg.105$).  
+%
+%%The fact that their distribution are stable, therefore, we can say that the family of  stable processes exhaust the class of L\'evy processes that are \textit{self-similar  } under translation since . 
+%%We can say that the property illustrates above  is verified if for any  time $t$, the f distribution of $X$ is similar to the distribution of L\'evy process  
+%
+%It may be shown by (Gennady and Murad \cite{NG1},corollary 2.1.3), for every stable distribution it exists a constant positive  $ \alpha \in ]0 2]$ so that, we can  rewrite the value $b(n)$  in \ref{Eq1} as  $b(n) =  n^{1/\alpha}$. Then, we can refer the stable distribution with index of stability  $\alpha$  as $\alpha$-stable distribution ( Cont and Tankov \cite{A},$ pg.105$). 
+%If  $X_t$ is a stable L\'evy process, the following equation is evident :
+%\begin{align} \label{UI}
+%X_{at}&= \sum _{j=0}^{n-1} X_{(j+1)at/n} - X_{jat/n}.
+%\end{align}
+%Using the fact that for every L\'evy process, the increments are  i.i.d. Therefore, the equation \ref{UI} reduces as 
+%\begin{align}\label{St}
+%X_{at} \stackrel{d}{=}  \sum_{j=0}^{n-1} X_{jat/n} =  X_{0}+ \cdots + X_{(n-1)at/n},
+%\end{align} 
+%and applying the stability property \ref{stb} to equation \ref{St}, it follows:
+%\begin{align} \label{Gn}
+%X_{at} & \stackrel{d}{=}   m X_{at/n} + r, \quad \forall m>0, \quad \text{and} \quad r \text{ is a vector}.
+%\end{align}
+%In general, an $\alpha$-stable L\'evy process can satisfy this relation up to translation   [ \cite{A}, $pg.106$]:
+%\begin{align}
+%(X_{at})_{t\geq 0} & \stackrel{d}{=} (a^{1/\alpha}X_t + ct)_{t\geq 0}
+%\end{align}
+%where $a>0$ and $c\in \mathbb{R}^d$.
+%We can say that the family of the stable distribution is defined by a stable L\'evy process. And  conversely we can say that:  the stable distribution is the distribution  at any given time of a stable  L\'evy process and it is also infinitely divisible  ( Cont and Tankov \cite{A}, section 3.7). In the following result we present the characteristic triplet of stable distribution and for  all stable  L\'evy processes:
+%\begin{align}
+%\mu(x) = \frac{a}{x^{1+\alpha}}1_{x>0} + \frac{b}{\vert x \vert ^{1+ \alpha}}1_{x<0},
+%\end{align}
+%where  the constants $a>0$ and $b>0$. We can derive the characteristic function of stable L\'evy process using  L\'evy-Khinchin representation:
+%\begin{align*}
+% \phi_{X}(y)= \left\lbrace
+%\begin{array}{l l}
+%\exp \Bigg \lbrace- \sigma \vert y \vert (1 + (i\beta \frac{2}{\pi}) \text{sgn} (y)  \log \vert y \vert) + i\nu y \Bigg \rbrace, & \quad \text{if  }\alpha = 1, \\
+%\exp \Bigg \lbrace- \sigma ^{\alpha} \vert y \vert ^{\alpha}(1 - (i \beta)  \text{sgn} (y) \tan \frac{\pi \alpha}{2}) + i\nu y \Bigg \rbrace, & \quad \text{if} \alpha \not= 1, 
+%\end{array} \right.
+%\end{align*}
+%where $0< \alpha \leq 2 $, $\mu \in \mathbb{R}$ and 
+%\begin{align}
+%\sigma & = \frac{a+b}{2}\frac{\Gamma(\frac{\alpha}{2})+ \Gamma(1-\frac{\alpha}{2})}{\Gamma(1+\alpha)} \\
+% \text{and} \\
+%\beta & = \frac{a-b}{a+b}.
+%\end{align}
+%The scale  parameter $ \beta$ determines the Skewness of  the distribution  and  $\alpha$ its shape.
+%When we give the specific values to scale parameters $\beta$ and $\alpha$, therefore the $\alpha$-stable distribution can be characterised as follows:
+%\begin{itemize}
+%\item[1]For  $\beta=0$,the  Gaussian distribution which is symmetric around its mean .
+%\item[2]For $\beta=1$, the  L\'evy distribution which is concentrated on $(\mu,\infty)$.
+%\item[3] For $\alpha=1$, the  Cauchy distribution which is symmetric around its mean .
+%\item[4] For $\alpha =2$, the Wiener process.
+%\end{itemize} 
+%\subsection{Describing the algorithm of CGMY subordinator}
+%First, we need to see that the CGMY process can satisfy all the conditions given in the proposition \ref{AB1}, in order to relate the two L\'evy densities of the CGMY process and a one-sided stable subordinator.
+%\begin{itemize}
+%\item[i] The $\nu_{CGMY}$ L\'evy density is absolutely continuous with respect to a density $\nu(dy)$ (i.e. $\nu_{CGMY}(0^{-}) = \nu_{CGMY}(0^{+})$) and then it can be given by :
+%\begin{align}
+%\nu_{CGMY}(y)= C\frac{e^{Ay-B\vert y \vert}}{\vert y\vert^{1+Y}} \quad \text{where} \quad A = \frac{G-M}{2},B=\frac{G+M}{2}.
+%\end{align}
+%\item[ii] if we set $\mu = \frac{G-M}{2} $ we then show $\nu_{CGMY}(-y)e^{\mu y} = \nu_{CGMY}(y)e^{-\mu y}$: 
+%\begin{align}
+%\nu_{CGMY}(-y)e^{\mu y} &= \Bigg \lbrace \frac{Ce^{My}}{\vert y\vert^{1+Y}}1_{y<0} + \frac{Ce^{-Gy}}{\vert y\vert^{1+Y}}1_{y>0}  \Bigg \rbrace \exp \Big( \frac{G-M}{2} y \Big) \nonumber \\
+%& =   \frac{Ce^{\frac{G+M}{2}y}}{\vert y\vert^{1+Y}}1_{y<0} + \frac{Ce^{-\frac{G+M}{2}y}}{\vert y\vert^{1+Y}}1_{y>0}   \nonumber \\
+%&= \frac{Ce^{Gy+\frac{M-G}{2}y}}{\vert y\vert^{1+Y}}1_{y<0} + \frac{Ce^{-My+\frac{M-G}{2}y}}{\vert y\vert^{1+Y}}1_{y>0}   \nonumber\\
+%&=\Bigg \lbrace \frac{Ce^{\frac{G}{2}y}}{\vert y\vert^{1+Y}}1_{y<0} + \frac{Ce^{-\frac{M}{2}y}}{\vert y\vert^{1+Y}}1_{y>0}  \Bigg \rbrace \exp \Big( \frac{M-G}{2}y \Big)  \nonumber\\
+%&= \nu_{CGMY}(y)e^{-\mu y}
+%\end{align}
+%\item[iii] if $\mu= -M$
+%\begin{align*}
+%\nu_{CGMY}(\sqrt{u})e^{-\mu \sqrt{u}} &=C\frac{e^{-M \sqrt{u}}}{u^{(1+Y)/2}}e^{M\sqrt{u}} \\
+%& =\frac{C}{u^{(1+Y)/2}}
+%\end{align*}
+%is completely monotonic if $Y>-1$.
+%\end{itemize} 
+%Dilip and Yor \cite{MP2} were able to give an exact form of the CGMY subordinator by applying  the proposition \ref{BS} and related the two L\'evy densities of  CGMY model and for the one-sided stable subordinator. Thus, we can express a L\'evy density of CGMY model in the following proposition. 
+%\begin{prop}
+%Given a subordinator $(Z_t)_{t\geq0}$  with its L\'evy density expresses as follows :
+%\begin{align}\label{a123}
+%\nu_{Z_t}(x) = \frac{e^{\frac{x}{2}A^2-\frac{x}{4}B^2}}{\vert x \vert^{1+Y/2}}D_{-Y}(\lambda \sqrt{x}),
+%\end{align}
+%where $D_{-Y}$ represents the parabolic function with index $\alpha$ and $A = \frac{G-M}{2},B=\frac{G+M}{2}$. Thus, the subordinator process $X_t$ may be expressed as:
+%\begin{align}
+%X_t = aZ_t + W(Z_t)
+%\end{align}
+%where $(W_t)_{t\geq 0}$ is standard Brownian motion and $a$ CGMY process.
+%\end{prop}
+% This above form \ref{a123} is just a simple one, and the original of this form has been produced by (J\'er\'emy and Tankov \cite{MPT}). The outline of the proof can be found on the paper of  Dilip and Yor \cite{MP2}.
+%On other hand, Dilip and Yor \cite{MP2} have related a L\'evy density of the subordinator with L\'evy process of a $\frac{\alpha}{2}-$stable subordinator. Which is shown in the following theorem.
+%\begin{theorem}[Linking between the  L\'evy density of CGMY subordinator and of $\frac{\alpha}{2}-$stable process]
+%Given a L\'evy density of CGMY subordinator $\nu_{Z_t}$ and $\nu_{\frac{\alpha}{2}}$ of $\frac{\alpha}{2}-$stable process; hence the both densities are linked as follows :
+%\begin{align}\label{ex}
+%\nu_{z_t}(y) = g(y)\nu_{\frac{\alpha}{2}}(y),
+%\end{align}
+% with the continuous function $g$ is expressed as 
+% \begin{align}
+% g(x) = \dfrac{2^{\frac{Y}{2}} \Gamma(\frac{Y+1}{2}) e^{\frac{x}{2}(A^2-B^2/2)}}{\sqrt{\pi}}D_{-Y}(B\sqrt{x}),
+%\end{align}  
+% where  $A = \frac{G-M}{2},B=\frac{G+M}{2}$ and 
+% \begin{align}\label{Rsq}
+% \nu_{\frac{\alpha}{2}}(x) = \dfrac{C\sqrt{\pi}}{2^{\frac{Y}{2}} \Gamma(\frac{Y+1}{2})} \frac{1_{x>0}}{x^{1+Y/2}} \equiv \frac{K}{x^{1+Y/2}}1_{x>0},
+% \end{align}
+% where $g(x)\leq 1$.
+% \end{theorem}
+%The outline of the proof can be found on the paper of ( Dilip and Yor \cite{MP2}).
+%
+%Based in the above result, we can say that the CGMY subordinator is absolutely continuous with  $\frac{\alpha}{2}-$stable subordinator. Since  Dilip and Yor \cite{MP2} derived the exact form of a L\'evy density for CGMY subordinator \ref{ex}, therefore we only need a technique that will allow us to simulate that exact form. Hence, we can apply the rejection method which has been developed by (Jan Rosinski \cite{RS}).
+% \subsubsection{Rosinski Rejection method}
+%The Rejection method can simplify  the simulation of the paths of $\alpha-$stable subordinator see \cite{RS}, as the exact  form \ref{ex} has  been written in term of stable subordinator. 
+%\begin{theorem}[Rejection method]
+%Given a L\'evy process $(X_0(t))_{0 \leq t \leq 1 } $ on $ \mathbb{R}^d$ and $Q_0$ its L\'evy measure, which satisfies to the following condition:
+%\begin{align}
+%\frac{dQ}{dQ_0} \leq 1,
+%\end{align}
+%where $Q$ is related L\'evy measure of a L\'evy process $X(t)_{0 \leq t \leq1}$.
+%Let  $Z_0$ be a jump  process of   $X_0$, which is represented as   
+%\begin{align}
+%Z_0 \stackrel{d}{=} \sum_{k=0}^{\infty}\delta (U_k,J_k^0),
+%\end{align}
+%where $(U_k)_{k\in [1,\infty)}$ is an i.i.d sequence of uniform $\mathcal{U}[0,1]$ random variable and $J_k^0$ is non zeros jumps. Let $\lbrace B_k \rbrace_{k \geq 0}$ be also an i.i.d. sequence $\mathcal{U}[0,1]$ random variable which does not dependent to a couple $\lbrace U_k,J_k^0 \rbrace$. Then, we can define
+%\[ J_k= \left\lbrace
+%\begin{array}{l l}
+%J_k^0 & \quad \text{if  } \frac{dQ}{dQ_0} \geq B_k, \\
+%0 & \quad \text{otherwise}, 
+%\end{array} \right.
+%\] 
+%Then
+%\begin{align}
+%Z^*\stackrel{d}{=} \sum_{k=0}^{\infty}\delta (U_k,J_k),
+%\end{align}
+%where $Z^*$ represents the market Poisson point process.
+%\end{theorem}
+%The outline of the proof can be found  on the papaer of (Jan Rosinski \citep{RS}).
+%
+%The central idea of that theorem is to find a simple way to generate a L\'evy process $X_0$ such that the small number of  jumps  can be removed in order to find the jumps of $X$ (Jan Rosinski \citep{RS}). Now, we have a clear idea about the rejection method. We only need to approximate the stable subordinator in order to apply the rejection method  as a Compound Poisson process.
+%\subsubsection{Application of rejection technique as Compound Poisson process}
+%\label{Se}
+%There are many techniques which can be used to directly simulate the stable process. Moreover, the process can have an infinite number of jumps, therefore to use the rejection method to generate the CGMY subordinator, one needs to approximate the stable subordinator via a compound Poisson process with drift. To achieve this, we would neglect all jumps smaller than $\epsilon$ with $\epsilon >0$ ( J\'er\'emy and Tankov \cite{MPT}). In section \ref{Cp}, we express a L\'evy density of a compound Poisson process by $\lambda f(y)$ with $\lambda$ its intensity and $f(y)$ the jumps size distribution. We need to make the correct choice of the size distribution $f$ and intensity $\lambda$ such that we can link the truncated L\'evy measure of the stable process with the approximating compound Poisson process ( J\'er\'emy and Tankov \cite{MPT}). We can then express a truncated L\'evy density in the following form:
+%\begin{align}\label{Lb}
+%\nu_{\epsilon}(y) = \dfrac{C \sqrt{\pi}}{2^{\frac{Y}{2}}\Gamma(\frac{Y}{2}+\frac{1}{2})}\frac{1_{y>\epsilon}}{\vert y \vert^{1+\frac{Y}{2}}} \equiv  \frac{K}{y^{1+Y/2}}1_{y>0}.
+%\end{align}    
+%We can  normalise the above density \ref{Lb} in order to obtain $f$: 
+%\begin{align}
+%\int_{-\infty}^{\infty} \nu_{\epsilon}(x)dx &= \int_{\epsilon}^{\infty} \frac{K}{x^{1+ Y/2}}dx = \Bigg[ -\frac{2K}{Yx^{\frac{Y}{2}}}\Bigg]_{\epsilon}^{\infty} \nonumber \\
+%&= \frac{2K}{Y\epsilon^{Y/2}} \quad (Y>0),
+%\end{align}
+%And  $f$ can be expressed as follows: 
+%\begin{align}
+%f(y) = \frac{\nu_{\epsilon}(y)}{\int_{-\infty}^{\infty} \nu_{x}dx} = \frac{Y\epsilon^{Y/2}}{2y^{1+\frac{Y}{2}}}1_{y>\epsilon}.
+%\end{align}
+%Its cumulative density is given by $F(y)$ :
+%\begin{align}
+%F(y) &= \int_{-\infty}^{y}f(x)dx = \int_{\epsilon}^y\frac{Y\epsilon^{Y/2}}{2x^{1+\frac{Y}{2}}}dx \nonumber \\
+%& = \Bigg[ -\frac{\epsilon^{\frac{Y}{2}}}{x^{\frac{Y}{2}}}\Bigg]_{\epsilon}^{y} = 1- \frac{\epsilon^{\frac{Y}{2}}}{y^{\frac{Y}{2}}},
+%\end{align}
+%and  $F^{-1}$ is given 
+%\begin{align}
+%F^{-1}(y) = \frac{\epsilon}{(1-y)^{\frac{2}{Y}}} \quad (y>\epsilon>0).
+%\end{align}
+%Thus, we can generate the jump sizes of the approximating using $\epsilon/U^{\frac{Y}{2}}$ (inverse of the cumulative distribution) where $U$ is a sequence of uniform distribution and $\epsilon$ (it is a very small value). We can choose the expected arrival rate of jumps $\lambda$ such that $\nu_{\epsilon}(y) = \lambda f(y)$:
+%\begin{align}
+% \lambda = \frac{2K}{Y \epsilon^{\frac{Y}{2}}}.
+%\end{align}  
+%In order to improve the precision of the approximation, we have to replace the small jumps which have been lost during the truncated  by expected value at a rate :
+%\begin{align}
+%\int_{0}^{\epsilon}x \nu_{\frac{Y}{2}}(x)dx & = \int_{0}^{\epsilon} \frac{K}{x^{\frac{Y}{2}}} dx \nonumber \\
+%& =\Bigg[ \frac{Kx^{1-\frac{Y}{2}}}{1-\frac{Y}{2}}\Bigg]_{0}^{\epsilon} =  \frac{K\epsilon^{1-\frac{Y}{2}}}{1-\frac{Y}{2}} \equiv d \quad (Y<2).
+%\end{align}
+%It may be seen that, the truncated can insert  the error  into the approximation when the $Y \rightarrow 2$. Therefore, it may be difficult to quantify such error when it implies on the final process (J\'er\'emy and Tankov \cite{MPT}). Therefore, we advise that for the value of the $\epsilon$ to be very smaller or $10^{-4}$.% Moreover, when $\epsilon$ is not increased, and the expected computation time on a set interval time can increase relative to $ O(\lambda) = O(\epsilon^{-Y/2})$.  
+%
+%\subsubsection{Algorithm to simulate the path of the CGMY processes } 
+%Summarising the precedent section \ref{Se}, we could  build the algorithm of CGMY processes as follows:
+%\begin{itemize}
+%\item Setting a time step $t =C$, and we take 
+%\begin{align}
+%B & = \frac{G+M}{2} \\
+%A & = \frac{G-M}{2}.
+%\end{align}
+%\item Next simulate the one-side stable subordinator at time $t$, with  a L\'evy measure 
+%\begin{align*}
+%\frac{K}{x^{1+Y/2}}dx.
+%\end{align*} 
+%Thus, we take $\epsilon = 10^{-4}$ and then truncated jump below $\epsilon$ and replacing them by their expected value :
+%\begin{align*}
+%d &=  \int_{0}^{\epsilon} \frac{K}{x^{\frac{Y}{2}}} dx \\
+%&=\frac{K\epsilon^{1-\frac{Y}{2}}}{1-\frac{Y}{2}} 
+%\end{align*} 
+%where $K $ is defined in \ref{Lb}.
+%\item Next, we determine the arrival rate $\lambda$ in term of small value $\epsilon$ 
+%\begin{align*}
+%\lambda &=\int_{\epsilon}^{\infty} \frac{K}{x^{\frac{Y}{2}}} dx \\
+%&=\frac{2K}{Y \epsilon^{\frac{Y}{2}}}.
+%\end{align*}
+%\item The exponential interval jumps times are simulated by 
+%\begin{align*}
+%t_j = -\frac{1}{\lambda} \log(1-u_{2i}),
+%\end{align*}
+%where $u_{2i}$ is an independent uniform sequence.
+%\item The actual jumps sizes are given by 
+%\begin{align*}
+%\Gamma_i = \sum_{j=1}^i t_j.
+%\end{align*}
+%\item The jumps sizes $y_i$ are given by
+%\begin{align}
+%y_i = \frac{\epsilon}{(1-u_{1i})^{\frac{2}{Y}}},
+%\end{align}
+%with an independent uniform sequence $u_{1i}$.
+%\item Let $S(t)$  be a process of the stable subordinator defines by:
+%\begin{align*}
+%S(t) = dt + \sum_{i=1}^{\infty} y_i1_{\Gamma_i <t}.
+%\end{align*} 
+%\item Therefore, we can simulate the CGMY subordinator $Z_t$ by 
+%\begin{align*}
+%Z_t = dt + \sum_{i=1}^{\infty} y_i1_{\Gamma_i <t}1_{h(y)>u_{3i}}
+%\end{align*}
+%with $u_{3i}$ representing an independent uniform sequence and $h(y)$ is a truncated function given by 
+%\begin{align}
+%h(y) = e^{-\frac{B^2y}{2}}\dfrac{\Gamma(\frac{Y}{2}+0.5)}{\Gamma(Y)\Gamma(1/2)}2^Y\Bigg( \frac{B^2y}{2}\Bigg)^{Y/2}I(Y,B^2y,\frac{B^2y}{2}),
+%\end{align}
+%where 
+%\begin{align*}
+%I(Y,2\lambda,\lambda) = \frac{H_Y(\sqrt{2\lambda})\Gamma(Y)}{(2\lambda)^{Y/2}}.
+%\end{align*}
+%The function $H_{\beta}$ is Hermite function is defined in term of the Confluent Hypergeometric function $1G_1$:
+%\begin{align*}
+%H_{\beta}(x) = 2^{\beta}\Bigg[\frac{1}{\Gamma(\frac{1-\beta}{2})\Gamma(\frac{1}{2})}1G_1\Bigg(\frac{-\beta}{2},\frac{1}{2},\frac{x^2}{2}\Bigg) \Bigg] - 2^{\beta/2}\Bigg[\frac{x}{\sqrt{2} \Gamma(\frac{-\beta}{2})\Gamma(\frac{3}{2})}1G_1\Bigg(\frac{1-\beta}{2},\frac{3}{2},\frac{x^2}{2}\Bigg) \Bigg]. 
+%\end{align*}
+%\item Finally, the $CGMY$ process is given 
+%\begin{align*}
+%X = AZ_t + \sqrt{Z_t}W,
+%\end{align*}
+%where $W$ is standard Brownian motion. The above expression  is similar to one given here  (J\'er\'emy and Tankov \cite{MPT}).
+%\end{itemize}
+%In the following figures \ref{m1} we simulate the paths of CGMY model using the above algorithm. . 
+% \begin{figure}[h!]
+%\begin{center}
+%\includegraphics[width= 0.5\textwidth,  natwidth=610,natheight=642]{../image_yhesis/path1.pdf}  \label{m1}  \\
+% The Path of $CGMY$ process with $Y= 0.7$ the 	Number of simulation $N = 1000$, the time T= 1.\\
+%\includegraphics[width= 0.5\textwidth,  natwidth=610,natheight=642]{../image_yhesis/Path2.pdf}  \label{m2}
+%\caption{ The Path of $CGMY$ process with $Y= 1.5$ the 	Number of simulation $N = 1000$, the time T= 1}
+%\end{center}
+%\end{figure}
+%
+%\section{Trajectories of pure jump L\'evy model via Monte Carlo Method}
+%\label{S}
+%In appendix \ref{Ch} we simulated the sample trajectories of the VG, NIG and CGMY models using their  algorithms for each model with the random values of the model parameters. Here We want to simulate the trajectories for those models via the Monte Carlo method using the model parameters obtained with the calibration of the  S\&P 500 indexed options. The figures \ref{fi} and \ref{fj} show the trajectories for each models.
+%
+%\begin{figure}[h!]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%     \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../traj1.png}  &
+%         \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../traj3_3.png}  & 
+%  \end{tabular}
+%  \caption{ Trajectories of the CGMY and NIG models } \label{fi}
+%\end{figure}
+%\begin{figure}[h!]
+%\centering
+%  \begin{tabular}{@{}cccc@{}}
+%    \includegraphics[width=0.5 \textwidth,  natwidth=610,natheight=642]{../traj2_v.png}  &
+%  \end{tabular}
+%\caption{ Trajectories of the VG model} \label{fj}
+%\end{figure}
+%Looking at the figures above, we observe that the trajectories for each model simulate via Monte Carlo method look similar with their trajectories simulated in appendix \ref{Ch} based on their algorithms. In the next we present the results of the exotic options computed via Monte Carlo method.
+%
+%\section{Compute the Call Price using the Fast  Fourier Transform}
+%In this section, we discuss  the method for computing the integral \ref{INV3} using the FFT algorithm. We want to write the integral \ref{INV}  in the form of summation. Carr and Madan\cite{CDMP}, and Schoutens \cite{WVG} describe the method of computing the option prices based on FFT.
+%
+%The integral of option price below 
+%\begin{align}
+%\label{INV3}
+%C(k;T)& =\frac{\exp(-\alpha k)}{2\pi}\int_{\mathbb{R}}e^{-ivk}\psi(T;v)dv .
+%\end{align}
+%can be computed numerically using Trapezoid rule.  To do this, Carr and Madan \citep{CDMP} used the Trapezoid rule for an integral in order to approximate the integral in terms of the summation. Thus, they approximated the integral
+%\begin{align}
+%C(k;T)= \frac{\exp(-\alpha k)}{\pi}\int_{0}^{\infty}e^{-ivk}\psi(C;v)dv, 
+%\end{align}
+% on the $N$ point-grid $(0,\eta,2\eta,\dots,(N-1)\eta )$  using the Trapezoid rule as: % as follows:
+%\begin{align}
+%\label{C2}
+%C(k;T) & \simeq \frac{\exp(-\alpha k)}{\pi}\sum \limits_{n=1}^N e^{-iv_nk}\psi(C,v_n)\eta \quad \text{where} \quad v_n= \eta (n-1).
+%\end{align}
+%We can compute the value of the above vanilla call formula \ref{C2}  for $N \log$-strikes in the range of $-b$ to $b$  (Schoutens \citep{WVG},$pg.37$). We notice that $b=0$ if the initial price $S_0=1$: 
+%\begin{align*}
+%k_j=-b+\lambda(j-1) \quad \text{where},\quad j =1,\dots, N\quad \text{and}\quad \lambda=\frac{2b}{N}. 
+%\end{align*}  
+%Thus, we can rewrite the summation \ref{4} as follows:
+%\begin{align}
+%\label{5}
+%C(k_j;T) & \simeq \frac{\exp(-\alpha k_j)}{\pi}\sum \limits_{n=1}^N e^{-iv_n(-b+\lambda(j-1) )}\psi(v_n)\eta, \\
+%&\simeq \frac{\exp(-\alpha k_j)}{\pi}\sum \limits_{n=1}^N e^{(-i \eta \lambda(n-1)(j-1))}e^{iv_nb}\psi(v_n)\eta.
+%\end{align}
+%When the values of $\eta$ and $\lambda$ are chosen such that $\eta \lambda = \frac{2\pi}{N}$, we obtain 
+%\begin{align} 
+% \label{6}
+%C(k_j;T) & \simeq \frac{\exp(-\alpha k_j)}{\pi}\sum \limits_{n=1}^N e^{(- \frac{i2\pi(n-1)(j-1)}{N})}e^{iv_nb}\psi(v_n)\eta.
+%\end{align}
+%The above summation \ref{6} is an exact application of FFT on the vector $(\exp{(iv_nb)}\Psi(v_n)\eta,n=1,\dots,N)$. When we set $\eta \lambda = \frac{2\pi}{N}$, and also consider the smaller value of $\eta$. We observe that the grid-size $\lambda$ for the $\log$-strike grid are become  larger [Carr and Madan \citep{WVG},$pg.37$].% To be able to obtain the satisfactory result, \cite{CDMP} suggest the following  choice:
+%%\begin{align*}
+%%\eta &= 0.25 \\
+%%N &= 4096 \\
+%%\alpha &=1.5
+%%\end{align*}
+%%which gives
+%%\begin{align*}
+%%\lambda & = 0.0061 \\
+%%b &=12.57.
+%%\end{align*}
+%
+%Carr and Madan \citep{CDMP}  proposed that Simpson's rule weightings can be applied in the summation \ref{6} on the $N$ grid-space $(0,\eta,2 \eta,\dots,(N-1)\eta)$. In order to obtain an accurate integration on a large value of $\eta $. Applying the Simpson's rule weightings and the summation \ref{6} can be approximated by:
+%\begin{align} 
+% \label{7}
+%C(k_j;T) & \simeq \frac{\exp(-\alpha k_j)}{\pi}\sum \limits_{n=1}^Ne^{iv_nb}\psi(v_n)\eta \Bigg( \frac{3+(-1)^n-\delta_{n-1}}{3}\Bigg)
+%\end{align}
+%where the value $\delta_n $ represents an indicator function whose the value is $1$ for $n=0$ and zero otherwise.

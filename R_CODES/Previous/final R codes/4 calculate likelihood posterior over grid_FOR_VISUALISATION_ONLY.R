@@ -45,8 +45,8 @@ contour(x= betagrid,
 
 ### new plot, better than contour (more similar to raster plot from abc)
 forplot= data.frame(betgrd= rep(betagrid,nb),
-                    gamgrd= rep(gammagrid, each=ng),
-                    likhd= c(likmatV)
+                    gamgrd= rep(gammagrid, each=ng)
+                  
 )
 
 head(forplot)
