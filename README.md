@@ -22,3 +22,9 @@ This MSc project seeks to compare model calibration methods to ascertain which o
      - A simulation study using a stochastic SIR model with two parameters (β = 0.2 and γ = 0.02) was performed. 
      - For comparison of performance, the “true posterior”  is generated using Rejection ABC with small tolerance.
      - Percentage overlaps will be computed for all methods to compare the methods to the true posterior.
+
+
+## Packages Required
+     - EasyABC
+     - SimInf
+     
