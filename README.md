@@ -9,7 +9,8 @@ This MSc project seeks to compare model calibration methods to ascertain which o
   * Bayesian Maximum Likelihood Estimation (BMLE)
 
 ## Model to be calibrated / Model under which simulation is performed
-    We use a simple stochastic Susceptible Infetious and Recovered (SIR) model with two parameters (beta - transmission coefficient and gamma - recovery rate).
+    We use a simple stochastic Susceptible Infetious and Recovered (SIR) model with two 
+    parameters (beta - transmission coefficient and gamma - recovery rate).
 
 ## Major input requirements of the methods
     - Model under which simulation id performed
