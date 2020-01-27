@@ -25,9 +25,31 @@ The reference posterior is a posterior generated from Rejection ABC with a very 
      - For comparison of performance, the “reference posterior”  is generated using Rejection ABC with small tolerance.
      - Percentage overlaps will be computed for all methods to compare the methods to the reference posterior.
 
-
+## Expected Output
+     - Posterior for each calibration method
+     - Run time
+     
 ## Packages Required
      - EasyABC
      - SimInf
      - ABCtargets*
-     
+   
+ 
+ ## Flow diagram for SEAMS workshop
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
