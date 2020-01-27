@@ -2,50 +2,21 @@
 library(SimInf)
 library(EasyABC)
 
-##########################################################################
-
-### create function to use in ABC_mcmc
-# scenario 1 == two targets
-
-modelforABCmcmc2 = function(parameters){
-  library(SimInf)
-  u0= data.frame(S = c(990), # initial compartmental values
-                 I = c(10), 
-                 R = c(0))
-  
-  model <- SIR(u0, 1:75,                  # stochastic sir model that outputs different epicurves
-               beta = parameters[1],      # per run
-               gamma = parameters[2]) 
-  
-  result <- run(model, 
-                threads = 1)   # runs the SIR model and outputs results
-  
-  prev <- prevalence(result, I~.)
-  targ <- numeric()
-  targ[1] <- prev[50,2]
-  targ[2] <- prev[75,2]
-  
-  return(c(targ[1],targ[2]))
-}
-
-
-### try running it once, should return two population prevalence
-modelforABC(c(0.2,0.02))
-
-
+#####################################################################
+source("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project/my_functions")
 
 ### set.seed for reproducibility
 set.seed(123)
 
 ### save the results from 10000 runs, take the means as the targets
-saveres = matrix(c(0,0),100,2)
+targetStats = matrix(c(0,0),100,2)
 for(i in 1:100){
-  saveres[i,] = modelforABC(c(0.2,0.02))
+  targetStats[i,] = modelforABC(c(0.2,0.02))
 }
 ### we call the target: truepop.prev 
-truepop = c(mean(saveres[,1]),
-            mean(saveres[,2]))
-truepop
+meanTargetStats = c(mean(targetStats[,1]),
+            mean(targetStats[,2]))
+meanTargetStats
 
 
 ######################################################################
@@ -53,18 +24,24 @@ truepop
 
 set.seed(234)
 #tol=100%
-ABC_rej2<-ABC_rejection(model = modelforABC, 
+
+## Specify number of simulations (from command line)
+
+ABC_rej2 <- ABC_rejection(model = modelforABC, 
                         prior = list(c("unif",0,1),
                                      c("unif",0,0.5)), 
-                        summary_stat_target = truepop,
-                        nb_simul = 216601,
+                        summary_stat_target = meanTargetStats,
+                        nb_simul = 10000,
                         tol = 1, 
                         progress_bar = T)
+
+# + save output to file (filename?)
+
 ABC_rej2$computime
 
 
 Tabc0.1 = proc.time()
-abc0.1 <- abc(target = c(truepop),
+abc0.1 <- abc(target = c(meanTargetStats),
                  param = ABC_rej2$param,
                  sumstat = ABC_rej2$stats,
                  tol = 0.03,
@@ -91,7 +68,7 @@ ABC_seq2<-ABC_sequential(method = "Lenormand",
                          prior = list(c("unif",0,1),
                                       c("unif",0,0.5)),
                          nb_simul = 10000,
-                         summary_stat_target = truepop, 
+                         summary_stat_target = meanTargetStats, 
                          p_acc_min = 0.4, 
                          progress_bar = T)
 
