@@ -5,7 +5,7 @@ This MSc project seeks to compare model calibration methods to ascertain which o
   - closeness to the "reference posterior"
   - Compute time.
 
-The reference posterior is a posterior generated from Rejection ABC with a very small tolerance.
+The reference posterior is a set of parameter combinations generated from Rejection ABC with a very small tolerance.
 
 ## The methods to be compared are 
   * Rejection Approximate Bayesian Computation (RABC)
