@@ -2,16 +2,14 @@
 
 
 
-### create function to use in ABC_mcmc
-# scenario 1 == two targets
 
 targets <- function(parameters){
 
   library(SimInf)
 
   modelforABC = function(parameters,
-                         times=1:75,
-                         targetTimes=c(50,75),
+                         times = 1:75,
+                         targetTimes = c(50,75),
                          peakPrevalence = FALSE){
 
 
@@ -31,14 +29,13 @@ targets <- function(parameters){
     # targ <- numeric()
     targs <- prev[targetTimes,2]
 
-    if (peakPrevalence){return(c(targs,max(prev[,2])))}
+    if (peakPrevalence){
+
+      return(c(targs,max(prev[,2])))}
+
     else(return(targs))
-  }
 
-
-### try running it once, should return two population prevalence percentages
-##modelforABC(c(0.2,0.02))
-
+     }
 
 
 ### set.seed for reproducability
@@ -47,14 +44,14 @@ set.seed(123)
 ### save the results from 10000 runs, take the means as the targets
 savetargs = matrix(c(0,0),100,2)
 for(i in 1:100){
-  savetargs[i,] = modelforABC(parm1,
-                             parm2)
+  savetargs[i,] = modelforABC(parameters)
 }
+
 ### we call the target
   targs = c(mean(savetargs[,1]),
              mean(savetargs[,2]))
 
-return(targets)
+return(targs)
 
 }
 
