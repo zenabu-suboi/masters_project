@@ -1,4 +1,6 @@
 # Calibrating Models to Data: A Comparison of Methods
+Calibration is the process of adjusting input parameters to identify the parameter combinations that fit your model well to data.
+
 This MSc project seeks to compare model calibration methods to ascertain which of the methods performs best in terms of 
   - closeness to the "reference posterior"
   - Compute time.
