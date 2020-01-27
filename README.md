@@ -23,7 +23,7 @@ The reference posterior is a posterior generated from Rejection ABC with a very 
     - Number of simulations
 
 ## Method
-     - A simulation study using a stochastic SIR model with two parameters (β = 0.2 and γ = 0.02) is performed in R. 
+     - A simulation study using a stochastic SIR model with two parameters(β = 0.2 and γ = 0.02) is performed in R. 
      - For comparison of performance, the “reference posterior”  is generated using Rejection ABC with small tolerance.
      - Percentage overlaps will be computed for all methods to compare the methods to the reference posterior.
 
