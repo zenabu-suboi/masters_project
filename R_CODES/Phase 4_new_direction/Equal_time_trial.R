@@ -29,7 +29,7 @@ modelforABCmcmc2 = function(parameters){
 }
 
 
-### try running it once, should return two population prevalence percentages
+### try running it once, should return two population prevalence
 modelforABC(c(0.2,0.02))
 
 
