@@ -32,7 +32,7 @@ The reference posterior is a posterior generated from Rejection ABC with a very 
 ## Packages Required
      - EasyABC
      - SimInf
-     - ABCtargets*
+     - ABCtargets *
    
  
  ## Flow diagram for SEAMS workshop
