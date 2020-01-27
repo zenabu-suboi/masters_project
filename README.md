@@ -1,8 +1,8 @@
 # Calibrating Models to Data: A Comparison of Methods
 This MSc project seeks to compare model calibration methods to ascertain which of the methods performs best in terms of 
   - closeness to the "reference posterior"
-  - Compute time
-The reference posterior is a posterior generated from Rejection ABC with a very small tolerance
+  - Compute time.
+The reference posterior is a posterior generated from Rejection ABC with a very small tolerance.
 
 ## The methods to be compared are 
   * Rejection Approximate Bayesian Computation (RABC)
