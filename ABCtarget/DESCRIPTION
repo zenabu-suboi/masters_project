@@ -1,0 +1,14 @@
+Package: ABCtargets
+Type: Package
+Title: COMPUTES TARGETS FOR ABC SIMULATIONS
+Version: 0.1.0
+Author: Zenabu Suboi
+Maintainer: zenabu@sun.ac.za
+Description: This ABCtargets package contains a function called targets. This function 
+             runs a stochastic SIR model and outputs different results per model run.
+            The peak prevalence of each model output and/or prevalence at time
+            points 50 and 75 are saved in a matrix. The model is run 100 times saving the
+            prevalence values. The mean prevalence values are computed as targets.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
