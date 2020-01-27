@@ -34,7 +34,7 @@ modelforABC(c(0.2,0.02))
 
 
 
-### set.seed for reproducability
+### set.seed for reproducibility
 set.seed(123)
 
 ### save the results from 10000 runs, take the means as the targets

@@ -25,8 +25,6 @@ modelforABCmcmc2 = function(parameters){
   targ[2] <- prev[75,2]
   peak_prev <- max(prev[,2])
   
-  # pop[1]=result@U[2,30]
-  # pop[2]=result@U[2,60]
   return(c(targ[1],targ[2],peak_prev))
 }
 
