@@ -37,7 +37,7 @@ The reference posterior is a posterior generated from Rejection ABC with a very 
  
  ## Flow diagram for SEAMS workshop
  
- ![Flow Diagram](https://github.com/zenabu-suboi/masters_project/blob/master/IMAGES/seams_flowchart.jpg)
+ ![Flow Diagram](https://github.com/zenabu-suboi/masters_project/blob/master/IMAGES/seams_flowchart.png)
  
  
  
