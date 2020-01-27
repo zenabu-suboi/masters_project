@@ -6,15 +6,21 @@ library(EasyABC)
 ##########################################################################
 # scenario 2 == 3 targets 
 
-modelforABCmcmc2= function(parameters){
+modelforABCmcmc2 = function(parameters){
   library(SimInf)
-  u0= data.frame(S=c(990), I=c(10), R=c(0))
+  u0= data.frame(S = c(990),
+                 I = c(10), 
+                 R = c(0))
   
-  model <- SIR(u0, 1:75, beta= parameters[1],
-               gamma=parameters[2])
-  result <- run(model, threads = 1)#, seed=sample.int(1000000000,1)) 
+  model <- SIR(u0, 1:75, 
+               beta = parameters[1],
+               gamma = parameters[2])  
+  
+  result <- run(model, 
+                threads = 1)#, seed=sample.int(1000000000,1)) 
+  
   prev <- prevalence(result, I~.)
-  targ<- numeric()
+  targ <- numeric()
   targ[1] <- prev[50,2]
   targ[2] <- prev[75,2]
   peak_prev <- max(prev[,2])
@@ -49,18 +55,22 @@ truepop
 
 
 set.seed(123) # scenario 2
-ABC_seq1<-ABC_sequential(method="Lenormand", 
-                         model=modelforABCmcmc2,
-                         prior=list(c("unif",0,1),
-                                    c("unif",0,0.5)), nb_simul=10000,
-                         summary_stat_target=truepop.prev,
-                         p_acc_min=0.4, progress_bar = T)# time = 6590.6s
+ABC_seq1<-ABC_sequential(method = "Lenormand", 
+                         model = modelforABCmcmc2,
+                         prior = list(c("unif",0,1),
+                                    c("unif",0,0.5)),
+                         nb_simul = 10000,
+                         summary_stat_target = truepop,
+                         p_acc_min = 0.4,
+                         progress_bar = T)# time = 6590.6s
 
 
-par(mfrow=c(1,2))
+par(mfrow = c(1,2))
 
-plot(ABC_seq1$param[, 1], ABC_seq1$param[, 2],
-     xlab = "beta", ylab = "gamma",
+plot(ABC_seq1$param[, 1], 
+     ABC_seq1$param[, 2],
+     xlab = "beta", 
+     ylab = "gamma",
      main ="posterior_for_sequential",
      ylim = c(0,0.06),
      xlim = c(0,0.8))
@@ -71,26 +81,17 @@ ABC_seq1$computime
 
 # Rejection ---------------------------------------------------------------
 
-
-set.seed(234)
-ABC_rej<-ABC_rejection(model=modelforABC, 
-                       prior=list(c("unif",0,1),
-                                  c("unif",0,0.5)), 
-                       summary_stat_target=truepop,
-                       nb_simul=10000,
-                       tol=0.5, progress_bar = T)
-
-
 #################################
 
 set.seed(234)
 #tol=100%
-ABC_rej<-ABC_rejection(model=modelforABCmcmc2,
-                       prior=list(c("unif",0,1),
+ABC_rej<-ABC_rejection(model = modelforABCmcmc2,
+                       prior = list(c("unif",0,1),
                                   c("unif",0,0.5)), 
-                       summary_stat_target=truepop.prev,
-                       nb_simul=277690,
-                       tol=1, progress_bar = T)
+                       summary_stat_target = truepop.prev,
+                       nb_simul = 277690,
+                       tol = 1,
+                       progress_bar = T) # run simulations for rejection ABC
 ABC_rej$computime
 
 
@@ -100,7 +101,7 @@ abc0.1lin <- abc(target = c(truepop.prev),
                  sumstat = ABC_rej$stats,
                  tol = 0.025,
                  method = "rejection") ### change method here!
-Tabc0.1lin= proc.time()-Tabc0.1lin
+Tabc0.1lin = proc.time()-Tabc0.1lin
 Tabc0.1lin
 
 ?abc
