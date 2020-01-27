@@ -29,7 +29,7 @@ The reference posterior is a posterior generated from Rejection ABC with a very 
 
 ## Expected Output
      - Posterior for each calibration method
-     - Run time
+     - Record run times
      
 ## Packages Required
      - EasyABC
