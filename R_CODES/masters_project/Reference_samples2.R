@@ -6,12 +6,14 @@ source("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project
 
 set.seed(234)
 #tol=100%
-ABC_rej2ref1<-ABC_rejection(model=modelforABC, 
-                            prior=list(c("unif",0.1,0.4),
+ABC_rej2ref1 <- ABC_rejection(model = modelforABC, 
+                            prior =list(c("unif",0.1,0.4),
                                        c("unif",0.01,0.03)), 
-                           summary_stat_target=truepop,
-                           nb_simul=1000000,
-                           tol=1, progress_bar = T)
+                           summary_stat_target = meanTargetStats,
+                           nb_simul = 10000,
+                           tol=1,
+                           progress_bar = T,
+                           use_seed = T)
 ABC_rej2ref1$computime
 
 

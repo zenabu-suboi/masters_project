@@ -38,7 +38,7 @@ cl <- makeCluster(no_cores) # makes cluster with number of cores assigned for th
 
 registerDoParallel(cl)  # registers the cluster
 
-ABC_rej2ref1 <- foreach(simulation = 1:4, nsim = 25,# runs simulations four times to obtain 
+ABC_rejref <- foreach(simulation = 1:4,# runs simulations four times to obtain 
                                             #hence gives one to each core
                        .combine = c,
                        .packages = c("SimInf", "EasyABC")) %dopar%
@@ -47,7 +47,7 @@ ABC_rej2ref1 <- foreach(simulation = 1:4, nsim = 25,# runs simulations four time
                               prior = list(c("unif",0.1,0.4),
                                          c("unif",0.01,0.03)), 
                               summary_stat_target = meanTargetStats,
-                              nb_simul = nsim,
+                              nb_simul = 2500,
                               tol = 1,
                               progress_bar = T,
                               use_seed = T) # each core runs 25 simulations in the calibration
@@ -59,18 +59,23 @@ stopImplicitCluster() # stops cluster and reverts back to using one core
 ################################################################################
 # check compute time
 
-computime =  (ABC_rej2ref1$computime * 4) # approximately
+computime =  ABC_rejref$computime  
 
 
-##################################################################################
+ ##################################################################################
 #gathering desired output and save 
 
-gather_params <- ABC_rej2ref1[seq(1, length(ABC_rej2ref1), 7)] # 
+gather_params <- ABC_rejref[seq(1, length(ABC_rejref), 7)] # Gathers all parameter combinations
 
-posterior <- rbind(gather_params[[1]], 
-                   gather_params[[2]],
-                   gather_params[[3]],
-                   gather_params[[4]])
+posterior <- data.frame(rbind(gather_params[[1]], 
+                        gather_params[[2]],
+                        gather_params[[3]],
+                        gather_params[[4]])) # 
 
-saveRDS(posterior, "ref_posterior.rds")
+
+gather_params[[1]]
+
+#saveRDS(posterior, "ref_posterior.rds")
 ###################################################################################
+# class(posterior)
+# class(gather_params[[1]])
