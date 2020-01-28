@@ -4,6 +4,9 @@ Revisit old code and remove any duplications
 Figure out which part of code takes long
 ##Goal for Friday:
 Parallelize the 10e6 simulation code to run faster:
+  - use doParallel package in R to parallelize code on my computer ? ==> minimal goal
+OR
+Try command line?
   - isolate script to be run in parallel
   - accept command line input for number of simulations**
   - have script save results to unique filename
