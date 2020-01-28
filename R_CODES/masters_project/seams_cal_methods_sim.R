@@ -1,12 +1,12 @@
 
-getwd()
+
 
 library(SimInf)
 library(EasyABC)
 
 #####################################################################
 source("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project/my_functions")
-source("my_functions")
+source('my_functions')
 
 
 
@@ -20,7 +20,7 @@ for(i in 1:100){
 }
 ### we call the target: truepop.prev 
 meanTargetStats = c(mean(targetStats[,1]),
-            mean(targetStats[,2]))
+                    mean(targetStats[,2]))
 meanTargetStats
 
 
@@ -33,12 +33,12 @@ set.seed(234)
 ## Specify number of simulations (from command line)
 
 ABC_rej2 <- ABC_rejection(model = modelforABC, 
-                        prior = list(c("unif",0,1),
-                                     c("unif",0,0.5)), 
-                        summary_stat_target = meanTargetStats,
-                        nb_simul = 1000,
-                        tol = 1, 
-                        progress_bar = T)
+                          prior = list(c("unif",0,1),
+                                       c("unif",0,0.5)), 
+                          summary_stat_target = meanTargetStats,
+                          nb_simul = 100,
+                          tol = 1, 
+                          progress_bar = T)
 
 # + save output to file (filename?)
 
@@ -47,10 +47,10 @@ ABC_rej2$computime
 
 Tabc0.1 = proc.time()
 abc0.1 <- abc(target = c(meanTargetStats),
-                 param = ABC_rej2$param,
-                 sumstat = ABC_rej2$stats,
-                 tol = 0.03,
-                 method = "rejection") ### change method here!
+              param = ABC_rej2$param,
+              sumstat = ABC_rej2$stats,
+              tol = 0.5,
+              method = "rejection") ### change method here!
 Tabc0.1 = proc.time()-Tabc0.1
 Tabc0.1
 
@@ -72,7 +72,7 @@ ABC_seq2<-ABC_sequential(method = "Lenormand",
                          model = modelforABC,
                          prior = list(c("unif",0,1),
                                       c("unif",0,0.5)),
-                         nb_simul = 100,
+                         nb_simul = 1000,
                          summary_stat_target = meanTargetStats, 
                          p_acc_min = 0.4, 
                          progress_bar = T)

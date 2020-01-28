@@ -7,7 +7,7 @@ modelforABC = function(parameters,
                       times=1:75, 
                       targetTimes=c(50,75),
                       peakPrevalence = FALSE){
-  
+
   
   u0 = data.frame(S = c(990), # initial compartmental values
                   I = c(10),
