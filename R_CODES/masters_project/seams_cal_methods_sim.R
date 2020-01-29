@@ -5,24 +5,8 @@ library(SimInf)
 library(EasyABC)
 
 #####################################################################
-source("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project/my_functions")
-source('my_functions')
-
-
-
-### set.seed for reproducibility
-set.seed(123)
-
-### save the results from 10000 runs, take the means as the targets
-targetStats = matrix(c(0,0),100,2)
-for(i in 1:100){
-  targetStats[i,] = modelforABC(c(0.2,0.02))
-}
-### we call the target: truepop.prev 
-meanTargetStats = c(mean(targetStats[,1]),
-                    mean(targetStats[,2]))
-meanTargetStats
-
+setwd("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project")
+source("my_functions.R")
 
 ######################################################################
 # scenario 1 == 2 targets
@@ -35,10 +19,11 @@ set.seed(234)
 ABC_rej2 <- ABC_rejection(model = modelforABC, 
                           prior = list(c("unif",0,1),
                                        c("unif",0,0.5)), 
-                          summary_stat_target = meanTargetStats,
-                          nb_simul = 100,
+                          summary_stat_target = targets(c(0.2, 0.02)),
+                          nb_simul = 10,
                           tol = 1, 
-                          progress_bar = T)
+                          progress_bar = T,
+                          use_seed = T)
 
 # + save output to file (filename?)
 

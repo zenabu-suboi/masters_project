@@ -39,6 +39,34 @@ modelforABC = function(parameters,
 
 
 ###########################################################################################
+# 2. function for obtaining targets
+
+targets <- function(my_parameters){
+  
+  ### set.seed for reproducibility
+  set.seed(123)
+  
+  ### save the results from 1000 runs, take the means as the targets
+  targetStats = matrix(c(0,0),100,2)
+  for(i in 1:100){
+    targetStats[i,] = modelforABC(c(my_parameters[1],
+                                    my_parameters[2]))
+  }
+  ### we call the target: meanTargetStats 
+  meanTargetStats = c(mean(targetStats[,1]),
+                      mean(targetStats[,2]))
+  return(meanTargetStats) 
+  
+}
+
+#targets(c(0.2, 0.02))
+
+
+
+
+
+
+############################################################################################
 # 2. BMLE function
 
 #samSize <- 100

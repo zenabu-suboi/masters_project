@@ -9,23 +9,6 @@
 library(foreach)
 library(doParallel)
 
-####################################################################
-#Eg. running the sir model in parallel
-
-# no_cores <- detectCores() - 4
-# cl <- makeCluster(no_cores)
-# registerDoParallel(cl)
-# 
-# ABCmodel <- foreach(simulation = 1:100,
-#                     .combine = rbind,
-#                     .packages = "SimInf") %dopar%
-# 
-#                          modelforABC(c(runif(1,0,1), 
-#                                        runif(1,0,0.05)))
-# 
-# stopImplicitCluster()
-
-
 ##########################################################################
 ##########################################################################
 ## runnunig rej ABC in parallel 
@@ -38,7 +21,7 @@ cl <- makeCluster(no_cores) # makes cluster with number of cores assigned for th
 
 registerDoParallel(cl)  # registers the cluster
 
-ABC_rejref <- foreach(simulation = 1:4,# runs simulations four times to obtain 
+ABC_rejref <- foreach(simulations = 1:4,# runs simulations four times to obtain 
                                             #hence gives one to each core
                        .combine = c,
                        .packages = c("SimInf", "EasyABC")) %dopar%
@@ -51,11 +34,13 @@ ABC_rejref <- foreach(simulation = 1:4,# runs simulations four times to obtain
                               tol = 1,
                               progress_bar = T,
                               use_seed = T) # each core runs 25 simulations in the calibration
-#                                          #method and and retains 25 parameter combinations
+                                          #method and and retains 25 parameter combinations
+ 
 
+stopImplicitCluster() # stops cluster and reverts back to using only one core/ exit cluster
+                      
 
-stopImplicitCluster() # stops cluster and reverts back to using one core
-
+################################################################################
 ################################################################################
 # check compute time
 
@@ -73,7 +58,7 @@ posterior <- data.frame(rbind(gather_params[[1]],
                         gather_params[[4]])) # 
 
 
-gather_params[[1]]
+#gather_params[[1]]
 
 #saveRDS(posterior, "ref_posterior.rds")
 ###################################################################################

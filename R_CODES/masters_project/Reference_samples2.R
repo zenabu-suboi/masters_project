@@ -1,24 +1,31 @@
 
 
-source("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project/my_functions")
+library(SimInf)
+library(EasyABC)
 
+
+#################################################################################
+setwd("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project")
+source("my_functions.R")
+
+#################################################################################
 # scenario 1 = 2 targets
 
-set.seed(234)
+#set.seed(234)
 #tol=100%
 ABC_rej2ref1 <- ABC_rejection(model = modelforABC, 
-                            prior =list(c("unif",0.1,0.4),
+                            prior = list(c("unif",0.1,0.4),
                                        c("unif",0.01,0.03)), 
-                           summary_stat_target = meanTargetStats,
-                           nb_simul = 10000,
-                           tol=1,
+                           summary_stat_target = targets(c(0.2, 0.02)),
+                           nb_simul = 1000000,
+                           tol = 1,
                            progress_bar = T,
                            use_seed = T)
 ABC_rej2ref1$computime
 
 
 #Tabcref1 = proc.time()
-abc2ref1 <- abc(target = c(truepop),
+abc2ref1 <- abc(target = targets(c(0.2, 0.02)),
                param = ABC_rej2ref1$param,
                sumstat = ABC_rej2ref1$stats,
                tol = 0.05,
