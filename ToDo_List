@@ -2,7 +2,7 @@ Make changes in README
 Include flow Diagram in README
 Revisit old code and remove any duplications
 Figure out which part of code takes long
-##Goal for Friday:
+## Goal for Friday:
 Parallelize the 10e6 simulation code to run faster:
   - use doParallel package in R to parallelize code on my computer ? ==> minimal goal
 OR
