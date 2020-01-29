@@ -1,11 +1,10 @@
 
-#######################################################
-#installing/loading the latest installr package:
-  #install.packages("installr"); library(installr) # install+load installr
+#################################################################################
+setwd("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project")
+source("my_functions.R")
 
-#updateR() # updating R.
-######################################################
-####################################################
+#################################################################################
+################################################################################
 library(foreach)
 library(doParallel)
 
@@ -14,31 +13,32 @@ library(doParallel)
 ## runnunig rej ABC in parallel 
 
 
+library(foreach)
 # Calculate the number of cores
-no_cores <- detectCores() - 4 # detects number of cores on computer and puts four out of use
+no_cores <- detectCores() - 3 # detects number of cores on computer and no_cores in use
 
 cl <- makeCluster(no_cores) # makes cluster with number of cores assigned for the simulation
 
 registerDoParallel(cl)  # registers the cluster
 
-ABC_rejref <- foreach(simulations = 1:4,# runs simulations four times to obtain 
-                                            #hence gives one to each core
-                       .combine = c,
-                       .packages = c("SimInf", "EasyABC")) %dopar%
+ABC_rejref <- foreach(simulations = 1:5,# runs simulations five times to obtain 
+                                        # hence gives one to each core
+                      .combine = c,
+                      .packages = c("SimInf", "EasyABC")) %dopar%
   
-                ABC_rejection(model = modelforABC, 
-                              prior = list(c("unif",0.1,0.4),
-                                         c("unif",0.01,0.03)), 
-                              summary_stat_target = meanTargetStats,
-                              nb_simul = 2500,
-                              tol = 1,
-                              progress_bar = T,
-                              use_seed = T) # each core runs 25 simulations in the calibration
-                                          #method and and retains 25 parameter combinations
- 
+  ABC_rejection(model = modelforABC, 
+                prior = list(c("unif",0.1,0.4),
+                             c("unif",0.01,0.03)), 
+                summary_stat_target = targets(c(0.2, 0.02)),
+                nb_simul = 200000,
+                tol = 1,
+                progress_bar = T,
+                use_seed = T) # each core runs 2e5 simulations in the calibration
+                             #method and and retains 2e5 parameter combinations
+
 
 stopImplicitCluster() # stops cluster and reverts back to using only one core/ exit cluster
-                      
+
 
 ################################################################################
 ################################################################################
@@ -55,7 +55,8 @@ gather_params <- ABC_rejref[seq(1, length(ABC_rejref), 7)] # Gathers all paramet
 posterior <- data.frame(rbind(gather_params[[1]], 
                         gather_params[[2]],
                         gather_params[[3]],
-                        gather_params[[4]])) # 
+                        gather_params[[4]],
+                        gather_params[[5]])) # 
 
 
 #gather_params[[1]]
