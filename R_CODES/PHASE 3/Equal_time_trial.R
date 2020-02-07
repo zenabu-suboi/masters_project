@@ -252,8 +252,3 @@ plot(abc0.1lin$unadj.values[1:5000,1],
 
 #####################################################################
 
-write.csv(abc0.1lin[["unadj.values"]], file = "mydata", 
-            append = FALSE, quote = TRUE, sep = " ",
-            eol = "\n", na = "NA", dec = ".", row.names = F,
-            col.names = TRUE)
-mydata

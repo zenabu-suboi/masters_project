@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.5)  16 JAN 2020 16:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.5)  6 FEB 2020 13:46
 entering extended mode
 **./Main_Zenabu.tex
 (Main_Zenabu.tex
@@ -467,8 +467,24 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 ox.sty"
 Package: tcolorbox 2019/11/15 version 4.22 text color boxes
 
+("C:\Users\ZENABU\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/basiclayer\pg
+f.sty"
+("C:\Users\ZENABU\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/utilities\pgf
+rcs.sty"
+("C:\Users\ZENABU\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\p
+gfutil-common.tex"
+\pgfutil@everybye=\toks31
+\pgfutil@tempdima=\dimen149
+\pgfutil@tempdimb=\dimen150
 
-! LaTeX Error: File `pgf.sty' not found.
+("C:\Users\ZENABU\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\p
+gfutil-common-lists.tex"))
+("C:\Users\ZENABU\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\p
+gfutil-latex.def"
+\pgfutil@abb=\box35
+
+
+! LaTeX Error: File `everyshi.sty' not found.
 
 Type X to quit or <RETURN> to proceed,
 or enter new name. (Default extension: sty)
@@ -477,17 +493,17 @@ Enter file name:
 ! Emergency stop.
 <read *> 
          
-l.24 \RequirePackage{pgf}[2008/01/15]
-                                     
+l.123 \EveryShipout
+                   {%
 *** (cannot \read from terminal in nonstop modes)
 
  
 Here is how much of TeX's memory you used:
- 4940 strings out of 492895
- 65280 string characters out of 3123269
- 165104 words of memory out of 3000000
- 8871 multiletter control sequences out of 15000+200000
+ 5194 strings out of 492895
+ 70747 string characters out of 3123269
+ 172004 words of memory out of 3000000
+ 9107 multiletter control sequences out of 15000+200000
  5008 words of font info for 17 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 26i,1n,35p,197b,59s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,1n,35p,246b,59s stack positions out of 5000i,500n,10000p,200000b,50000s
 !  ==> Fatal error occurred, no output PDF file produced!

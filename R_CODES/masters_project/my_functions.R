@@ -63,9 +63,6 @@ targets <- function(my_parameters){
 
 
 
-
-
-
 ############################################################################################
 # 2. BMLE function
 
@@ -73,11 +70,12 @@ targets <- function(my_parameters){
 
 library(SimInf)
 
-sir_bmle <- function(beta,
+sir_bmle <- function(beta,  # this fuction creats the model to be used 
+                     #in obtaining both observed (calibraton targets) and modle outcomes
                      gamma, 
                      N = 1000,
                      inf = 0.1, 
-                     sampleSize = 100){
+                     sampleSize = samSize){
   
   
   u0 <- data.frame(S=N*(1-inf),
@@ -98,10 +96,10 @@ sir_bmle <- function(beta,
   
   
   samplePop <- c(summary(as.factor
-                        (sample(individuals50,
-                        size = sampleSize))),
-                        summary(as.factor(sample(individuals75,
-                        size = sampleSize))))
+                         (sample(individuals50,
+                                 size = sampleSize))),
+                 summary(as.factor(sample(individuals75,
+                                          size = sampleSize))))
   
   pop <- samplePop[names(samplePop) == "I"] #lret it return zero instead of numeric(0)
   
@@ -119,5 +117,107 @@ sir_bmle <- function(beta,
   
 }
 
+
 #sir_bmle(0.2, 0.02)
+
+
+########################################################################################
+
+targets_bmle <- function(my_params){
+  
+  ### set.seed for reproducibility
+  set.seed(123)
+  
+  ### save the results from 1000 runs, take the means as the targets
+  targetStats_bmle = matrix(c(0,0),100,2)
+  for(i in 1:100){
+    targetStats_bmle[i,] = sir_bmle(my_params[1], my_params[2])
+  }
+  ### we call the target: meanTargetStats 
+  meanTargetStats_bmle = c(mean(targetStats_bmle[,1]),
+                      mean(targetStats_bmle[,2]))
+  return(meanTargetStats_bmle) 
+  
+}
+
+
+
+######################################################################
+# this function 
+
+bmle <- function(randDraw, betaGamma, samSize){ # func takes 3 arguments
+  
+  #testing the method
+  # randDraw = 10
+  # betaGamma = c(0.2, 0.02)
+  # samSize = 100
+  
+  
+  # step 1
+  
+  joint_logliks <- c() # empty vector 
+  
+  betaPrior <- runif(randDraw, min = 0.0, max = 1.0) # specifies beta prior
+  gammaPrior <- runif(randDraw, min = 0.0, max = 0.05) # specifies gamma prior
+  
+  ###################################################################
+  
+  #step 2
+  #store all the model outputs
+  model_outputs <- matrix(c(0, 0), randDraw, 2)
+  
+  for(i in 1:randDraw){
+    #store all the model outputs  
+    model_outputs[i,] <- round(sir_bmle(betaPrior[i], gammaPrior[i]))
+    
+    #trueData
+    observed_output <- round(targets_bmle(c( betaGamma[1],  betaGamma[2])))
+    
+    ####################################################################
+    
+    #step 3
+    #store the likehoods of each time point
+    loglik <- c()  # creats empty vector
+    
+    
+    #3.
+    # L(p) = (n choose x) * p^x * (1-p)^(n - x)
+    # log(L) = log(n choose x) + xlog(p) + (n-x)log(1-p)
+    
+    
+    for(j in 1:length(observed_output)){
+      
+      loglik[j] <- dbinom(observed_output[j], 
+                          samSize,
+                          (model_outputs[i,j]/samSize),
+                          log = TRUE)
+    }
+    
+    #sums the two log-likelihood values of the time points 
+    #per model run 
+    
+    joint_logliks[i] <- sum(loglik) 
+    
+  }
+  
+  #rescaling the log likelihoods back to likelihood values, for each
+  #parameter combination
+  
+  # the likelihood is high for values of the parameter combination
+  #that make observed output = model output more 
+  #likely, and small for values of parameter combination that
+  # make observed output = model output unlikely
+  
+  
+  likelihoods <- exp(joint_logliks) # computes the likelihoods as the exp 
+  #  of the loglikelihoods
+  
+  weights <- likelihoods/sum(likelihoods)  
+  
+  BMLE.result <- data.frame(betaPrior, gammaPrior, 
+                            joint_logliks, likelihoods, weights)
+  
+  
+  return(list(BMLE.result))
+}
 

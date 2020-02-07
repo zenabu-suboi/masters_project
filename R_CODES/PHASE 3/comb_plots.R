@@ -1,10 +1,23 @@
+
+setwd("C:/Users/ZENABU/Documents/GitHub/masters_project/
+        R_CODES/Phase 4_new_direction")
+
+
+# read in all the posterior datasets for the three methods
+readRDS("rejposterior.rds")
+ rejposterior <- readRDS("C:/Users/ZENABU/Documents/GitHub/masters_project/
+                         R_CODES/Phase 4_new_direction/rejposterior.rds")
+ 
+ 
+#############################################################################
+
 par(mar = c(4,4,3,2))
 
 par(mfrow = c(2,2))
 # s1
 ## appears in creating a raster
-plot(abc0.1$unadj.values[1:5000,1],
-     abc0.1$unadj.values[1:5000,2], 
+plot(rejposterior[,1],
+     rejposterior[,2], 
      xlab = "beta", ylab = "gamma",
     # col = "purple",
      main ="Rejection ABC" ,ylim = c(0,0.05),
@@ -35,8 +48,8 @@ points(abc2ref1$unadj.values[,1],
 ## appears in creating  a raster
 
 ## appears in creating  a raster
-plot(ABC_seq2$param[, 1], 
-     ABC_seq2$param[, 2],
+plot(seqposterior[, 1], 
+     seqposterior[, 2],
      xlab = "beta", ylab = "gamma",
     # col = "darkgrey",
      main ="Sequential ABC", ylim = c(0,0.05),
@@ -66,7 +79,7 @@ mtext("Scenario 1", side = 3, line = -1, outer = T, cex=1.2)
 
 ########################################################################
 
-#S2
+#Scenario 2
 
 par(mar = c(5,4,3,2))
 
@@ -94,7 +107,7 @@ points(abc2ref2$unadj.values[,1],
 # 
 # box(which = "figure", lty = "solid", col = 'red')
 
-#################
+################# seq plot
 
 plot(ABC_seq1$param[, 1],
      ABC_seq1$param[, 2],
@@ -112,16 +125,38 @@ points(abc2ref2$unadj.values[,1],
        col = "blue",
        xlim=c(0,1), main ="posterior_for_abc2ref2") # retained 0.5% 0f thw 1000000 runs
 
-
-mtext("Scenario 2", side = 3, line = -14, outer = TRUE, cex = 1.2)
-
 # 
 # legend("topright", legend=c( "True posterior","Sequential"),
 #       fill = c( "blue" , "grey"), cex=0.8)
 # 
 # box(which = "figure", lty = "solid", col = 'red')
 
-###################################################################
+##################### bmle plot
+
+plot(ABC_seq1$param[, 1],
+     ABC_seq1$param[, 2],
+     xlab = "beta", ylab = "gamma",
+     # col = "darkgrey",
+     main ="Sequential ABC",
+     ylim = c(0,0.06), xlim = c(0,0.7),
+     cex.axis = 1.3,
+     cex.lab = 1.3)
+
+
+points(abc2ref2$unadj.values[,1],
+       abc2ref2$unadj.values[,2],
+       xlab = "beta", ylab = "gamma",ylim=c(0,0.6),
+       col = "blue",
+       xlim=c(0,1), main ="posterior_for_abc2ref2") # retained 0.5% 0f thw 1000000 runs
+
+
+
+
+
+
+mtext("Scenario 2", side = 3, line = -14, outer = TRUE, cex = 1.2)
+
+##################################################################
 #Legend
 
 
