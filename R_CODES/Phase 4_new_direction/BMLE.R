@@ -43,16 +43,16 @@ ptm <- proc.time() #records time for running randDraw
 
 #randDraw = 509163 # original value
 
-randDraw = 100
+randDraw = 50
 
-func_results <- bmle(randDraw = 100, betaGamma = c(0.2, 0.02),
+func_results <- bmle(randDraw = 50, betaGamma = c(0.2, 0.02),
                      samSize = 100) # samples randDraw samples from the prior
 
-set.seed(123)
+set.seed(122)
 
 #4 resampling from the posterior
  # size = 5000 original value
-resample <- sample(x = c(1 : randDraw), size = 80, replace=T,
+resample <- sample(x = c(1 : randDraw), size = 40, replace=T,
                     prob = func_results[[1]]$weights)
  
 resample_output <- func_results[[1]][sort(unique(resample)),]

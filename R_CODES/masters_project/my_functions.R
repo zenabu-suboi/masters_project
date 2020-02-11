@@ -41,7 +41,7 @@ modelforABC = function(parameters,
 ###########################################################################################
 # 2. function for obtaining targets
 
-targets <- function(my_parameters){
+targets2 <- function(my_parameters){
   
   ### set.seed for reproducibility
   set.seed(123)
@@ -60,6 +60,34 @@ targets <- function(my_parameters){
 }
 
 #targets(c(0.2, 0.02))
+
+############################################
+
+
+# 2. function for obtaining targets
+
+targets3 <- function(my_parameters){
+  
+  ### set.seed for reproducibility
+  set.seed(123)
+  
+  ### save the results from 1000 runs, take the means as the targets
+  targetStats3 = matrix(c(0,0),100,3)
+  for(i in 1:100){
+    targetStats3[i,] = modelforABC(c(my_parameters[1],
+                                    my_parameters[2]))
+  }
+  ### we call the target: meanTargetStats 
+  meanTargetStats3 = c(mean(targetStats[,1]),
+                      mean(targetStats[,2]),
+                      mean(targetStats[,3]))
+  return(meanTargetStats3) 
+  
+}
+
+#targets(c(0.2, 0.02))
+
+
 
 
 
@@ -158,7 +186,7 @@ bmle <- function(randDraw, betaGamma, samSize){ # func takes 3 arguments
   joint_logliks <- c() # empty vector 
   
   betaPrior <- runif(randDraw, min = 0.0, max = 1.0) # specifies beta prior
-  gammaPrior <- runif(randDraw, min = 0.0, max = 0.05) # specifies gamma prior
+  gammaPrior <- runif(randDraw, min = 0.0, max = 0.5) # specifies gamma prior
   
   ###################################################################
   
