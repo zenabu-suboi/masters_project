@@ -6,7 +6,7 @@
 modelforABC = function(parameters, 
                       times=1:75, 
                       targetTimes=c(50,75),
-                      peakPrevalence = FALSE){
+                      peakPrevalence = TRUE){
 
   
   u0 = data.frame(S = c(990), # initial compartmental values
@@ -72,9 +72,9 @@ targets3 <- function(my_parameters){
   set.seed(123)
   
   ### save the results from 1000 runs, take the means as the targets
-  targetStats3 = matrix(c(0,0),100,3)
+  targetStats = matrix(c(0,0,0),100,3)
   for(i in 1:100){
-    targetStats3[i,] = modelforABC(c(my_parameters[1],
+    targetStats[i,] = modelforABC(c(my_parameters[1],
                                     my_parameters[2]))
   }
   ### we call the target: meanTargetStats 
@@ -85,7 +85,7 @@ targets3 <- function(my_parameters){
   
 }
 
-#targets(c(0.2, 0.02))
+#targets3(c(0.2, 0.02))
 
 
 

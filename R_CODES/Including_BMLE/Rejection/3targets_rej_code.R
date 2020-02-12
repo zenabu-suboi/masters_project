@@ -1,7 +1,8 @@
 
+
 #################################################################################
 setwd("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project")
-source("my_functions.R")
+source("my_functions.R") # change peakprev to TRUE in func file
 
 ################################################################################
 library(EasyABC)
@@ -13,29 +14,29 @@ library(SimInf)
 # 1. Rejection ABC
 
 
-ABC_rej2 <- ABC_rejection(model = modelforABC, 
+ABC_rej <- ABC_rejection(model = modelforABC, 
                           prior = list(c("unif",0,1),
                                        c("unif",0,0.5)), 
-                          summary_stat_target = targets2(c(0.2, 0.02)),
-                          nb_simul = 216601,
+                          summary_stat_target = targets3(c(0.2, 0.02)),
+                          nb_simul = 277690,
                           tol = 1, 
                           progress_bar = T,
                           use_seed = T)
 
 # + save output to file (filename?)
 
-ABC_rej2$computime
+ABC_rej$computime
 
 
 Tabc0.1 = proc.time()
-abc0.1 <- abc(target = targets2(c(0.2, 0.02)),
+abcrej <- abc(target = targets2(c(0.2, 0.02)),
               param = ABC_rej2$param,
               sumstat = ABC_rej2$stats,
-              tol = 0.03,
+              tol = 0.025,
               method = "rejection") ### change method here!
 Tabc0.1 = proc.time()-Tabc0.1
 Tabc0.1
 
 
-saveRDS(abc0.1$unadj.values[1:5000,], file = "2targets_rej_post")
-targets2_rej_post <- readRDS("2targets_rej_post")
+saveRDS(abcrej$unadj.values, file = "3targets_rej_post")
+targets3_rej_post <- readRDS("3targets_rej_post")

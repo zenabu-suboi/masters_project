@@ -1,4 +1,5 @@
-
+library(EasyABC)
+library(SimInf)
 
 #################################################################################
 setwd("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project")
@@ -19,3 +20,6 @@ ABC_seq2<-ABC_sequential(method = "Lenormand",
                          summary_stat_target = targets2(c(0.2, 0.02)), 
                          p_acc_min = 0.4, 
                          progress_bar = T)
+
+saveRDS(ABC_seq2$param, file = "2targets_seq_post")
+targets2_seq_post <- readRDS("2targets_seq_post")

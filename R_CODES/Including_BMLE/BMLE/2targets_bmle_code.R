@@ -185,12 +185,12 @@ resampleSize <- 40
 
   ###########################################
   
-  resample2 <- sample(x = c(1 : randDraw), size = 40, replace=F,
-                     prob = BMLE2.weight2$weight2)
-  
-  resample_output2 <- BMLE2.weight2[sort(unique(resample2)),]
-  
-  post2 <- data.frame(resample_output2[,c(1,2,4)],
-                     table(resample2))
-  posterior2 <- post2[,c(1:3,5)]
-  
+  # resample2 <- sample(x = c(1 : randDraw), size = 40, replace=F,
+  #                    prob = BMLE2.weight2$weight2)
+  # 
+  # resample_output2 <- BMLE2.weight2[sort(unique(resample2)),]
+  # 
+  # post2 <- data.frame(resample_output2[,c(1,2,4)],
+  #                    table(resample2))
+  # posterior2 <- post2[,c(1:3,5)]
+  # 
