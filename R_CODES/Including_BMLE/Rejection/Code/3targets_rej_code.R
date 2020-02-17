@@ -13,15 +13,15 @@ library(SimInf)
 
 # 1. Rejection ABC
 
-
+set.seed(121)
 ABC_rej <- ABC_rejection(model = modelforABC, 
                           prior = list(c("unif",0,1),
                                        c("unif",0,0.5)), 
                           summary_stat_target = targets3(c(0.2, 0.02)),
                           nb_simul = 277690,
                           tol = 1, 
-                          progress_bar = T,
-                          use_seed = T)
+                          progress_bar = T)
+                         # use_seed = T)
 
 # + save output to file (filename?)
 
@@ -41,4 +41,4 @@ Tabc0.1
 saveRDS(abcrej$unadj.values[1:5000,], file = "3targets_rej_post")
 targets3_rej_post <- readRDS("3targets_rej_post")
 
-#plot(targets3_rej_post[,1], targets3_rej_post[,2])
+plot(targets3_rej_post[,1], targets3_rej_post[,2])

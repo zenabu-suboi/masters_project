@@ -1,21 +1,32 @@
 
+#################################################################################
+setwd("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project")
+source("my_functions.R")
+
+################################################################################
+library(EasyABC)
+library(SimInf)
+
+############################################################################
+
 
 
 # scenario 1 = 2 targets
 
-set.seed(234)
+set.seed(121)
 #tol=100%
 ABC_rej2ref1<-ABC_rejection(model=modelforABC, 
                             prior=list(c("unif",0.1,0.4),
                                        c("unif",0.01,0.03)), 
-                           summary_stat_target=truepop,
+                           summary_stat_target = targets3(c(0.2, 0.02)),
                            nb_simul=500000,
-                           tol=1, progress_bar = T)
+                           tol=1,
+                           progress_bar = T)
 ABC_rej2ref1$computime
 
 
 #Tabcref1 = proc.time()
-abc2ref1 <- abc(target = c(truepop),
+abc2ref1 <- abc(target = targets3(c(0.2, 0.02)),
                param = ABC_rej2ref1$param,
                sumstat = ABC_rej2ref1$stats,
                tol = 0.01,
@@ -23,8 +34,8 @@ abc2ref1 <- abc(target = c(truepop),
 #Tabcref1= proc.time()-Tabcref1
 #Tabcref1
 
-saveRDS(object = abc2ref1$unadj.values , file = 'refposterior.rds')
-ref_posterior <- readRDS('refposterior.rds')
+saveRDS(object = abc2ref1$unadj.values , file = 'targets3_refposterior.rds')
+ref_posterior <- readRDS('targets3_refposterior.rds')
 
 
 plot(abc2ref1$unadj.values[,1],abc2ref1$unadj.values[,2], xlab = "beta", ylab = "gamma",

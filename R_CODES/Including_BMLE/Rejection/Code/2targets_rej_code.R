@@ -12,15 +12,15 @@ library(SimInf)
 
 # 1. Rejection ABC
 
-
+set.seed(121)
 ABC_rej2 <- ABC_rejection(model = modelforABC, 
                           prior = list(c("unif",0,1),
                                        c("unif",0,0.5)), 
                           summary_stat_target = targets2(c(0.2, 0.02)),
                           nb_simul = 216601,
                           tol = 1, 
-                          progress_bar = T,
-                          use_seed = T)
+                          progress_bar = T)
+                          #use_seed = T)
 
 # + save output to file (filename?)
 

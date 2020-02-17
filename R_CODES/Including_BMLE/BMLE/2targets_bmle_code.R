@@ -133,7 +133,6 @@ baysianML <- function(randDraw, betaGamma, samSize = samSize){
   #Now to assosciate each parameter combination its log-likelihood
   BMLE.result2 <- data.frame(betaPrior,gammaPrior, BML2.loglik2)
   
-  
   return(list(BMLE.result2))
   
 }
@@ -141,10 +140,10 @@ baysianML <- function(randDraw, betaGamma, samSize = samSize){
 
 #Running the calibration method and storing the results
 
-randDraw <- 50
+randDraw <- 509163
 betaGamma <- c(0.2, 0.02)   #True values of the parameters
  
-  BMLE2 <- baysianML(randDraw, betaGamma, samSize) 
+BMLE2 <- baysianML(randDraw, betaGamma, samSize) 
 
 nameCols2 <- c("betaPrior", "gammaPrior", "likelihood", "weight2")
 
@@ -163,26 +162,24 @@ nameCols2 <- c("betaPrior", "gammaPrior", "likelihood", "weight2")
   
   colnames(BMLE2.weight2) <- nameCols2
   
-
-
-
 ######################################################
 
 #4.
 #ReSample step 
 #BMLE.post.2 <- list()
 
-resampleSize <- 40
+resampleSize <- 5000
 
 ## Finding the posterior distribution using the weights calculated above.
   
   BMLE.post.2 <- sample_n(BMLE2.weight2,
                                size = resampleSize,
-                               replace = F, 
+                               replace = T, 
                                weight = BMLE2.weight2$weight2) 
 
- # sum(BMLE2.weight2$weight2)
+ #sum(BMLE2.weight2$weight2)
 
+  plot(BMLE.post.2$betaPrior, BMLE.post.2$gammaPrior)
   ###########################################
   
   # resample2 <- sample(x = c(1 : randDraw), size = 40, replace=F,
