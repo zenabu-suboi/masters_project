@@ -35,10 +35,10 @@ abc2ref1 <- abc(target = targets3(c(0.2, 0.02)),
 #Tabcref1
 
 saveRDS(object = abc2ref1$unadj.values , file = 'targets3_refposterior.rds')
-ref_posterior <- readRDS('targets3_refposterior.rds')
+ref3_posterior <- readRDS('targets3_refposterior.rds')
 
 
-plot(abc2ref1$unadj.values[,1],abc2ref1$unadj.values[,2], xlab = "beta", ylab = "gamma",
+plot(ref3_posterior[,1],ref3_posterior[,2], xlab = "beta", ylab = "gamma",
      ylim=c(0,0.5),
      xlim=c(0,1), main ="posterior_for_abc2ref1") # retained 0.5% 0f thw 1000000 runs
 
