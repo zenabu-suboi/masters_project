@@ -1,3 +1,47 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{Fojo}
+Anthony~T Fojo, Emily~A Kendall, Parastu Kasaie, Sourya Shrestha, Thomas~A
+  Louis, and David~W Dowdy.
+\newblock Mathematical modeling of “chronic” infectious diseases: unpacking
+  the black box.
+\newblock In {\em Open forum infectious diseases}, volume~4, page ofx172.
+  Oxford University Press US, 2017.
+
+\bibitem{Kennedy}
+Marc~C Kennedy and Anthony O'Hagan.
+\newblock Bayesian calibration of computer models.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 63(3):425--464, 2001.
+
+\bibitem{Menzies}
+Nicolas~A Menzies, Dj{\o}ra~I Soeteman, Ankur Pandya, and Jane~J Kim.
+\newblock Bayesian methods for calibrating health policy models: a tutorial.
+\newblock {\em PharmacoEconomics}, 35(6):613--624, 2017.
+
+\bibitem{Stout}
+Natasha~K Stout, Amy~B Knudsen, Chung~Yin Kong, Pamela~M McMahon, and G~Scott
+  Gazelle.
+\newblock Calibration methods used in cancer simulation models and suggested
+  reporting guidelines.
+\newblock {\em Pharmacoeconomics}, 27(7):533--545, 2009.
+
+\bibitem{Elske}
+Elske van~der Vaart, Mark~A Beaumont, Alice~SA Johnston, and Richard~M Sibly.
+\newblock Calibration and evaluation of individual-based models using
+  approximate bayesian computation.
+\newblock {\em Ecological Modelling}, 312:182--190, 2015.
+
+\bibitem{Vanni}
+Tazio Vanni, Jonathan Karnon, Jason Madan, Richard~G White, W~John Edmunds,
+  Anna~M Foss, and Rosa Legood.
+\newblock Calibrating models in economic evaluation.
+\newblock {\em Pharmacoeconomics}, 29(1):35--49, 2011.
+
+\bibitem{Karnon}
+Tazio Vanni, Jonathan Karnon, Jason Madan, Richard~G White, W~John Edmunds,
+  Anna~M Foss, and Rosa Legood.
+\newblock Calibrating models in economic evaluation.
+\newblock {\em Pharmacoeconomics}, 29(1):35--49, 2011.
 
 \end{thebibliography}

@@ -91,6 +91,7 @@
                     \includegraphics[width=#1]{#2}}}}}}
 
 %==== Local Defs ====================================================
+
 \makeatletter
 
 %
@@ -100,7 +101,10 @@
 
 \makeatother
 
+
 %==== TITLE PAGE ====================================================
+
+
 \title{\bfseries
        \AorE{%-- Afrikaans ------------------------------------------
        Bla bla bla     \\[1ex]
@@ -130,11 +134,14 @@
 %\supervisor{Dr.\  }
 %\supervisor{}
 \supervisor{1. Dr.  Marijn C. Hazelbag \\\\ 2. Prof. Wim Delva}
-\setdate{9}{2020}
+\setdate{12}{2020}
+
 
 %====================================================================
 %     MAIN DOCUMENT
 %====================================================================
+
+
 \maxsecnumdepth{subsubsection}
 \maxtocdepth{subsection}
 
@@ -148,7 +155,10 @@
 
 \begin{document}
 
+
 %==== Front matter ==================================================
+
+
  \frontmatter
  \WaterMark{UScrest-WM}
  \TitlePage
@@ -207,8 +217,12 @@
 \fancyhead[RO]{  \nouppercase{\rightmark}}
 \fancyhead[LO]{ \textbf{\thepage}}
 \fancyhead[RE]{ \textbf{\thepage}}
-\fancyfoot{}%[CE,CO]{\textbf{\thepage}}
+\fancyfoot{}%[CE,CO]{\textbf{\thepage
+
+
 %==== Main document =================================================
+
+
 \include{contents/chapter1}
 \clearpage 
 \include{contents/chapter2}
@@ -227,7 +241,11 @@
 %\clearpage
 
 %\clearpage 
+
+
 %==== Appendices ====================================================
+
+
 %\appendix
 %\appendixpage\relax
 %\include{contents/Chap-3}
@@ -237,15 +255,19 @@
 \lhead[]{Appendix A: Tables}
 %\input{appendix}
 %\pagenumbering{roman}
-\include{backmatter/appendix}
+\include{backmatter/appendix
+
+
 %==== Bibliography acro's & Index ===================================
+
+
 \backmatter
 \clearpage  
  \fancyhf{}  
  \fancyfoot{}  
 \bibliographystyle{plain}
-\fancyhead[LE]{List of references}
-\fancyhead[RO]{ List of references}
+\fancyhead[LE]{References}
+\fancyhead[RO]{References}
 \fancyhead[LO]{ \textbf{\thepage}}
 \fancyhead[RE]{ \textbf{\thepage}}
 \bibliography{Msc}

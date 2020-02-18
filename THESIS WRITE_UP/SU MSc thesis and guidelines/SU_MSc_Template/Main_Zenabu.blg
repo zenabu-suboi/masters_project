@@ -7,6 +7,6 @@ A level-1 auxiliary file: contents/chapter4.aux
 A level-1 auxiliary file: contents/chapter5.aux
 A level-1 auxiliary file: backmatter/appendix.aux
 The style file: plain.bst
-I found no \citation commands---while reading file Main_Zenabu.aux
 Database file #1: Msc.bib
-(There was 1 error message)
+Warning--can't use both volume and number fields in Fojo
+(There was 1 warning)
