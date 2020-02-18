@@ -89,7 +89,9 @@ targets2_bmle <- function(beta, gamma){
 # 1 - 3a. This function generates a prior distribution for the parameters and assigns likelihood values 
 #to the parameter combinations
 
-baysianML <- function(randDraw, betaGamma, samSize = samSize){
+baysianML <- function(randDraw, 
+                      betaGamma, 
+                      samSize = samSize){
   
   BML2.loglik2 <- c()
   
@@ -140,7 +142,7 @@ baysianML <- function(randDraw, betaGamma, samSize = samSize){
 
 #Running the calibration method and storing the results
 
-randDraw <- 509163
+randDraw <- 50#509163
 betaGamma <- c(0.2, 0.02)   #True values of the parameters
  
 BMLE2 <- baysianML(randDraw, betaGamma, samSize) 
