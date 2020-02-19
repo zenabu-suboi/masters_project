@@ -142,7 +142,7 @@ baysianML <- function(randDraw,
 
 #Running the calibration method and storing the results
 
-randDraw <- 50#509163
+randDraw <- 509163
 betaGamma <- c(0.2, 0.02)   #True values of the parameters
  
 BMLE2 <- baysianML(randDraw, betaGamma, samSize) 
