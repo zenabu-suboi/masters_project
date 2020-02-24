@@ -17,7 +17,7 @@ ABC_seq2<-ABC_sequential(method = "Lenormand",
                          prior = list(c("unif",0,1),
                                       c("unif",0,0.5)),
                          nb_simul = 10000,
-                         summary_stat_target = c( 0.60848, 0.38441), 
+                         summary_stat_target = c(0.60848, 0.38441), 
                          p_acc_min = 0.4, 
                          progress_bar = T)
 

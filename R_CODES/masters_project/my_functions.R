@@ -10,7 +10,7 @@ library(tictoc)
 modelforABC = function(parameters, 
                       times=1:75, 
                       targetTimes=c(50,75),
-                      peakPrevalence = F){
+                      peakPrevalence = T){
 
   
   u0 = data.frame(S = c(990), # initial compartmental values
@@ -87,7 +87,7 @@ modelforABC = function(parameters,
                       mean(targetStats[,3]))
   #return(meanTargetStats3) 
  
-  meanTargetStats3 <- c()
+  meanTargetStats3 <- c(0.60848, 0.38441, 0.67556)
   
 #}
 
