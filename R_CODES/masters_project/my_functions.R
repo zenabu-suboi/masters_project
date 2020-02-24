@@ -3,10 +3,14 @@
 ## this function runs a stochastic SIR model and outputs peak prevalence and/or 
 ##prevalence at times 50 & 75 as targets to used for the ABC simulations
 
+library(EasyABC)
+library(tictoc)
+
+#runtimes <- c()
 modelforABC = function(parameters, 
                       times=1:75, 
                       targetTimes=c(50,75),
-                      peakPrevalence = T){
+                      peakPrevalence = F){
 
   
   u0 = data.frame(S = c(990), # initial compartmental values
@@ -18,8 +22,10 @@ modelforABC = function(parameters,
                beta = parameters[1],      # per run
                gamma = parameters[2]) 
   
+  
   result <- run(model, 
                 threads = 1)   # runs the SIR model and outputs results
+
   
   prev <- prevalence(result, I~.)
   # targ <- numeric()
@@ -41,7 +47,7 @@ modelforABC = function(parameters,
 ###########################################################################################
 # 2. function for obtaining 2 targets
 
-targets2 <- function(my_parameters){
+#targets2 <- function(my_parameters){
   
   ### set.seed for reproducibility
   set.seed(123)
@@ -49,24 +55,23 @@ targets2 <- function(my_parameters){
   ### save the results from 1000 runs, take the means as the targets
   targetStats = matrix(c(0,0),100,2)
   for(i in 1:100){
-    targetStats[i,] = modelforABC(c(my_parameters[1],
-                                    my_parameters[2]))
+    targetStats[i,] = modelforABC(c(0.2,0.02))
   }
   ### we call the target: meanTargetStats 
   meanTargetStats = c(mean(targetStats[,1]),
                       mean(targetStats[,2]))
-  return(meanTargetStats) 
-  
-}
+   
+  #meanTargetStats  =  c(0.60848, 0.38441)
 
-#targets(c(0.2, 0.02))
+  
+#}
 
 ############################################
 
 
 #  function for obtaining 3 targets
 
-targets3 <- function(my_parameters){
+#targets3 <- function(my_parameters){
   
   ### set.seed for reproducibility
   set.seed(123)
@@ -74,16 +79,17 @@ targets3 <- function(my_parameters){
   ### save the results from 1000 runs, take the means as the targets
   targetStats = matrix(c(0,0,0),100,3)
   for(i in 1:100){
-    targetStats[i,] = modelforABC(c(my_parameters[1],
-                                    my_parameters[2]))
+    targetStats[i,] = modelforABC(c(0.2,0.02))
   }
   ### we call the target: meanTargetStats 
   meanTargetStats3 = c(mean(targetStats[,1]),
                       mean(targetStats[,2]),
                       mean(targetStats[,3]))
-  return(meanTargetStats3) 
+  #return(meanTargetStats3) 
+ 
+  meanTargetStats3 <- c()
   
-}
+#}
 
 #targets3(c(0.2, 0.02))
 
@@ -104,7 +110,7 @@ sir_bmle <- function(beta,  # this fuction creats the model to be used
                      #in obtaining both observed (calibraton targets) and modle outcomes
                      gamma, 
                      N = 1000,
-                     inf = 0.1, 
+                     inf = 0.01, 
                      sampleSize = samSize,
                      peakPrevalence = F){
   

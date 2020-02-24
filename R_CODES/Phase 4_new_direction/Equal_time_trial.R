@@ -5,8 +5,8 @@ library(SimInf)
 library(EasyABC)
 
 #####################################################################
-source("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project/my_functions")
-source("my_functions")
+source("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project/my_functions.R")
+source("my_functions.R")
 
 
 
@@ -36,14 +36,14 @@ ABC_rej2 <- ABC_rejection(model = modelforABC,
                         prior = list(c("unif",0,1),
                                      c("unif",0,0.5)), 
                         summary_stat_target = meanTargetStats,
-                        nb_simul = 1000,
+                        nb_simul = 100,
                         tol = 1, 
                         progress_bar = T)
 
-# + save output to file (filename?)
+ # + save output to file (filename?)
 
 ABC_rej2$computime
-
+ABC_rej2$nsim
 
 Tabc0.1 = proc.time()
 abc0.1 <- abc(target = c(meanTargetStats),

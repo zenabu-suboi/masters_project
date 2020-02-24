@@ -45,7 +45,8 @@ for(i in 1:100){
 
 ### we call the target: truepop.prev 
 truepop = c(mean(saveres[,1]), 
-                mean(saveres[,2]))
+                mean(saveres[,2]),
+            mean(saveres[,3]))
 truepop
 
 
