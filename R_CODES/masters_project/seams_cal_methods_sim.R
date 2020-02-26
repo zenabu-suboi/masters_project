@@ -53,14 +53,18 @@ plot(abc0.1$unadj.values[1:5000,1],
 # s1_seq
 
 set.seed(123)
+
+#open file handle timerecord
 ABC_seq2<-ABC_sequential(method = "Lenormand",
                          model = modelforABC,
                          prior = list(c("unif",0,1),
                                       c("unif",0,0.5)),
-                         nb_simul = 1000,
+                         nb_simul = 10,
                          summary_stat_target = meanTargetStats, 
                          p_acc_min = 0.4, 
                          progress_bar = T)
+#close filehandle timerecord
+
 
 #par(mfrow=c(3,1))
 
