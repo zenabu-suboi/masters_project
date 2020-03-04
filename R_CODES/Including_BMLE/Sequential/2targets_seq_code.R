@@ -11,6 +11,7 @@ source("my_functions.R")
 
 # 1. Sequential ABC
 
+
 set.seed(121)
 ABC_seq2<-ABC_sequential(method = "Lenormand",
                          model = modelforABC,

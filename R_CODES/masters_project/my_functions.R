@@ -7,11 +7,18 @@ library(EasyABC)
 library(tictoc)
 
 #runtimes <- c()
+
 modelforABC = function(parameters, 
-                      times=1:75, 
-                      targetTimes=c(50,75),
-                      peakPrevalence = T){#, filename_handle = "timerecord"){
-  ## add timestamp to file timerecord
+                       times=1:75, 
+                       targetTimes=c(50,75),
+                       peakPrevalence = T){
+  ### you must have already defined and opened a file object called zzfile
+  
+  ###########################################
+  # open file connection
+  
+  
+  tic()# begin timer 
   
   u0 = data.frame(S = c(990), # initial compartmental values
                   I = c(10),
@@ -22,20 +29,24 @@ modelforABC = function(parameters,
                beta = parameters[1],      # per run
                gamma = parameters[2]) 
   
-
+  
   result <- run(model, 
                 threads = 1)   # runs the SIR model and outputs results
+  toctime <- toc() # end timer
   
+  writeLines( as.character(toctime$toc-toctime$tic),
+              zztime, sep = "\n") 
+  
+  ########################################## 
   
   prev <- prevalence(result, I~.)
   # targ <- numeric()
   targs <- prev[targetTimes,2]
   
   if (peakPrevalence){return(c(targs,max(prev[,2])))}
-   else(return(targs))
+  else(return(targs))
   ## add timestand to file timerecord
 }
-
 
 # modelforABCmcmc2_ArbitraryTargets(c(0.2,0.02),
 #                                   times=1:75,

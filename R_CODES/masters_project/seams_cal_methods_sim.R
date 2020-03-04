@@ -16,6 +16,9 @@ set.seed(234)
 
 ## Specify number of simulations (from command line)
 
+zztime <- file("mytime.txt")
+open(zztime, "w")
+
 ABC_rej2 <- ABC_rejection(model = modelforABC, 
                           prior = list(c("unif",0,1),
                                        c("unif",0,0.5)), 
@@ -24,6 +27,9 @@ ABC_rej2 <- ABC_rejection(model = modelforABC,
                           tol = 1, 
                           progress_bar = T,
                           use_seed = T)
+
+close(zztime) ## close file connection
+unlink(zztime)
 
 # + save output to file (filename?)
 
@@ -55,15 +61,22 @@ plot(abc0.1$unadj.values[1:5000,1],
 set.seed(123)
 
 #open file handle timerecord
+
+record_time <- file("mytime_seq_2targets.txt")
+open(record_time, "w")
+
 ABC_seq2<-ABC_sequential(method = "Lenormand",
                          model = modelforABC,
                          prior = list(c("unif",0,1),
                                       c("unif",0,0.5)),
                          nb_simul = 10,
-                         summary_stat_target = meanTargetStats, 
+                         summary_stat_target = c(0.60848, 0.38441), 
                          p_acc_min = 0.4, 
-                         progress_bar = T)
-#close filehandle timerecord
+                         progress_bar = T,
+                         verbose=T)
+
+close(record_time) ## close file connection
+unlink(record_time)
 
 
 #par(mfrow=c(3,1))
