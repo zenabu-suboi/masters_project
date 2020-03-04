@@ -32,7 +32,12 @@ unlink(record_time_rej2)
 
 ########################################################
 # record times
-ABC_rej2$computime
+ABC_rej2$computime # total time
+timedata_rej2 <- read.csv("mytime_rej_2targets.txt")
+dim(timedata_rej2)
+Rej2time <- ABC_rej2$computime - sum(timedata_rej2)
+# algorithm time = total time - model runtime
+
 
 ######################################################
 

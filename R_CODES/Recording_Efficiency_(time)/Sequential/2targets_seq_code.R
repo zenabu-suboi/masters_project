@@ -14,7 +14,7 @@ source("my_functions.R")
 
 # 1. Sequential ABC
 
-record_time-seq2 <- file("mytime_seq_2targets.txt")
+record_time_seq2 <- file("mytime_seq_2targets.txt")
 open(record_time_seq2, "w")
 
 set.seed(121)
@@ -30,7 +30,16 @@ ABC_seq2<-ABC_sequential(method = "Lenormand",
 close(record_time_seq2) ## close file connection
 unlink(record_time_seq2)
 
+##########################################################
+# record times
 ABC_seq2$computime
+timedata2 <- read.csv("mytime_seq_2targets.txt")
+dim(timedata2)
+Seq2time <- ABC_seq2$computime - sum(timedata2)
+
+hist(timedata2)
+
+#########################################################
 
 saveRDS(ABC_seq2$param, file = "2targets_seq_post")
 targets2_seq_post <- readRDS("2targets_seq_post")
