@@ -5,6 +5,7 @@
 
 library(EasyABC)
 library(tictoc)
+library(SimInf)
 
 #runtimes <- c()
 
@@ -16,7 +17,7 @@ modelforABC = function(parameters,
   
   ###########################################
   # open file connection
-  
+  #record_time <- file("mytime_seq_2targets.txt")
   
   tic()# begin timer 
   
@@ -37,7 +38,7 @@ modelforABC = function(parameters,
   #print(toctime)
   
   writeLines( as.character(toctime$toc-toctime$tic),
-              record_time, sep = "\n") 
+              record_time_seq2, sep = "\n") 
   
   ########################################## 
   
@@ -61,22 +62,22 @@ modelforABC = function(parameters,
 # 2. function for obtaining 2 targets
 
 #targets2 <- function(my_parameters){
-  
-  ### set.seed for reproducibility
-  set.seed(123)
-  
-  ### save the results from 1000 runs, take the means as the targets
-  targetStats = matrix(c(0,0),100,2)
-  for(i in 1:100){
-    targetStats[i,] = modelforABC(c(0.2,0.02))
-  }
-  ### we call the target: meanTargetStats 
-  meanTargetStats = c(mean(targetStats[,1]),
-                      mean(targetStats[,2]))
-   
-  #meanTargetStats  =  c(0.60848, 0.38441)
 
-  
+### set.seed for reproducibility
+# set.seed(123)
+# 
+# ### save the results from 1000 runs, take the means as the targets
+# targetStats = matrix(c(0,0),100,2)
+# for(i in 1:100){
+#   targetStats[i,] = modelforABC(c(0.2,0.02))
+# }
+# ### we call the target: meanTargetStats 
+# meanTargetStats = c(mean(targetStats[,1]),
+#                     mean(targetStats[,2]))
+#  
+#meanTargetStats  =  c(0.60848, 0.38441)
+
+
 #}
 
 ############################################
@@ -85,23 +86,23 @@ modelforABC = function(parameters,
 #  function for obtaining 3 targets
 
 #targets3 <- function(my_parameters){
-  
-  ### set.seed for reproducibility
-  set.seed(123)
-  
-  ### save the results from 1000 runs, take the means as the targets
-  targetStats = matrix(c(0,0,0),100,3)
-  for(i in 1:100){
-    targetStats[i,] = modelforABC(c(0.2,0.02))
-  }
-  ### we call the target: meanTargetStats 
-  meanTargetStats3 = c(mean(targetStats[,1]),
-                      mean(targetStats[,2]),
-                      mean(targetStats[,3]))
-  #return(meanTargetStats3) 
- 
-  #meanTargetStats3 <- c(0.60848, 0.38441, 0.67556)
-  
+
+### set.seed for reproducibility
+# set.seed(123)
+# 
+# ### save the results from 1000 runs, take the means as the targets
+# targetStats = matrix(c(0,0,0),100,3)
+# for(i in 1:100){
+#   targetStats[i,] = modelforABC(c(0.2,0.02))
+# }
+# ### we call the target: meanTargetStats 
+# meanTargetStats3 = c(mean(targetStats[,1]),
+#                     mean(targetStats[,2]),
+#                     mean(targetStats[,3]))
+#return(meanTargetStats3) 
+
+#meanTargetStats3 <- c(0.60848, 0.38441, 0.67556)
+
 #}
 
 #targets3(c(0.2, 0.02))
@@ -190,7 +191,7 @@ targets_bmle <- function(my_params){
   }
   ### we call the target: meanTargetStats 
   meanTargetStats_bmle = c(mean(targetStats_bmle[,1]),
-                      mean(targetStats_bmle[,2]))
+                           mean(targetStats_bmle[,2]))
   
   return(meanTargetStats_bmle) 
   

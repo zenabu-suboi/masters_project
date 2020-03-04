@@ -47,13 +47,13 @@ modelforABC = function(parameters,
   ## add timestand to file timerecord
 }
 
-record_time <- file("mytime.txt")
-open(record_time, "w")
- 
-modelforABC(c(0.2,0.02))
- 
-close(record_time) ## close file connection
-unlink(record_time)
-
-library(tictoc)
-?toc
+# record_time <- file("mytime.txt")
+# open(record_time, "w")
+#  
+# modelforABC(c(0.2,0.02))
+#  
+# close(record_time) ## close file connection
+# unlink(record_time)
+# 
+# library(tictoc)
+# ?toc
