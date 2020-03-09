@@ -13,30 +13,48 @@ library(SimInf)
 
 # 1. Rejection ABC
 
+record_time_rej3 <- file("mytime_rej_3targets.txt")
+open(record_time_rej3, "w")
+
 set.seed(121)
-ABC_rej <- ABC_rejection(model = modelforABC, 
+ABC_rej3 <- ABC_rejection(model = modelforABC, 
                           prior = list(c("unif",0,1),
                                        c("unif",0,0.5)), 
-                          summary_stat_target = targets3(c(0.2, 0.02)),
-                          nb_simul = 277690,
+                          summary_stat_target = c(0.622, 0.371, 0.677),
+                          nb_simul = 75000,
                           tol = 1, 
                           progress_bar = T)
                          # use_seed = T)
 
-# + save output to file (filename?)
+close(record_time_rej3) ## close file connection
+unlink(record_time_rej3) ## unlink connection
 
-ABC_rej$computime
+####################################################################
 
+# record times
+ABC_rej3$computime # total time
+timedata_rej3 <- read.csv("mytime_rej_3targets.txt", header = F)
+
+
+#dim(timedata_rej2)
+Rej3time <- ABC_rej3$computime - (sum(timedata_rej3)/10^9)
+# algorithm time = total time - model runtime
+
+hist(timedata_rej3[,1]/10^9, breaks = 1000)
+
+
+####################################################################
 
 Tabc0.1 = proc.time()
-abcrej <- abc(target = targets3(c(0.2, 0.02)),
-              param = ABC_rej$param,
-              sumstat = ABC_rej$stats,
-              tol = 0.025,
+abcrej <- abc(target = c(0.622, 0.371, 0.677),
+              param = ABC_rej3$param,
+              sumstat = ABC_rej3$stats,
+              tol = 0.07,
               method = "rejection") ### change method here!
 Tabc0.1 = proc.time()-Tabc0.1
 Tabc0.1
 
+##################################################################
 
 saveRDS(abcrej$unadj.values[1:5000,], file = "3targets_rej_post")
 targets3_rej_post <- readRDS("3targets_rej_post")

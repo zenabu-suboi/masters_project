@@ -12,7 +12,7 @@ library(SimInf)
 modelforABC = function(parameters, 
                        times=1:75, 
                        targetTimes=c(50,75),
-                       peakPrevalence = F){
+                       peakPrevalence = T){
   
   #tic()# begin timer 
   
@@ -28,10 +28,11 @@ modelforABC = function(parameters,
   time <- microbenchmark(result <- run(model, 
                 threads = 1),   # runs the SIR model and outputs results
  times = 1) # measures time in nanoseconds (/10^9)
+  
   #toctime <- toc(quiet=T) # end timer
   
   writeLines( as.character(time$time),
-              record_time_rej2, sep = "\n") 
+              record_time_rej3, sep = "\n") 
   
  # writeLines( as.character(toctime$toc-toctime$tic),
   #           record_time_rej2, sep = "\n") 
@@ -48,7 +49,8 @@ modelforABC = function(parameters,
 
 ## Run model once to get new targets
 #modelforABC(c(0.2,0.02))
-# Targets = c(0.644, 0.404)
+   # 2 Targets = c(0.644, 0.404)
+   # 3 Targets = c(0.622, 0.371, 0.677)
 
 ###########################################################################################
 # 2. function for obtaining 2 targets
