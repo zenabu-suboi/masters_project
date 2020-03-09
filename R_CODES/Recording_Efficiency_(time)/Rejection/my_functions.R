@@ -4,7 +4,7 @@
 ##prevalence at times 50 & 75 as targets to used for the ABC simulations
 
 library(EasyABC)
-library(tictoc)
+library(microbenchmark)
 library(SimInf)
 
 #runtimes <- c()
@@ -13,13 +13,8 @@ modelforABC = function(parameters,
                        times=1:75, 
                        targetTimes=c(50,75),
                        peakPrevalence = F){
-  ### you must have already defined and opened a file object called zzfile
   
-  ###########################################
-  # open file connection
-  #record_time <- file("mytime_rej_2targets.txt")
-  
-  tic()# begin timer 
+  #tic()# begin timer 
   
   u0 = data.frame(S = c(990), # initial compartmental values
                   I = c(10),
@@ -30,15 +25,16 @@ modelforABC = function(parameters,
                beta = parameters[1],      # per run
                gamma = parameters[2]) 
   
+  time <- microbenchmark(result <- run(model, 
+                threads = 1),   # runs the SIR model and outputs results
+ times = 1) # measures time in nanoseconds (/10^9)
+  #toctime <- toc(quiet=T) # end timer
   
-  result <- run(model, 
-                threads = 1)   # runs the SIR model and outputs results
-  toctime <- toc(quiet=T) # end timer
-  
-  #print(toctime)
-  
-  writeLines( as.character(toctime$toc-toctime$tic),
+  writeLines( as.character(time$time),
               record_time_rej2, sep = "\n") 
+  
+ # writeLines( as.character(toctime$toc-toctime$tic),
+  #           record_time_rej2, sep = "\n") 
   
   ########################################## 
   
@@ -48,15 +44,11 @@ modelforABC = function(parameters,
   
   if (peakPrevalence){return(c(targs,max(prev[,2])))}
   else(return(targs))
-  ## add timestand to file timerecord
 }
-# modelforABCmcmc2_ArbitraryTargets(c(0.2,0.02),
-#                                   times=1:75,
-#                                   targetTimes = c(50,75),
-#                                   peakPrevalence = TRUE)
 
-
-
+## Run model once to get new targets
+#modelforABC(c(0.2,0.02))
+# Targets = c(0.644, 0.404)
 
 ###########################################################################################
 # 2. function for obtaining 2 targets
@@ -106,10 +98,6 @@ modelforABC = function(parameters,
 #}
 
 #targets3(c(0.2, 0.02))
-
-
-
-
 
 ############################################################################################
 # 2. BMLE 
@@ -375,4 +363,12 @@ bmle3 <- function(randDraw, betaGamma, samSize){ # func takes 3 arguments
   
   return(list(BMLE.result))
 }
+
+
+
+
+
+
+
+
 
