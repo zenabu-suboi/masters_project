@@ -40,9 +40,16 @@ timedata_rej3 <- read.csv("mytime_rej_3targets.txt", header = F)
 Rej3time <- ABC_rej3$computime - (sum(timedata_rej3)/10^9)
 # algorithm time = total time - model runtime
 
-hist(timedata_rej3[,1]/10^9, breaks = 1000)
+#Histogram of model runtimes
+hist(timedata_rej3[,1]/10^9, breaks = 10000, xlim = c(0,0.15))
 
+## Pretty plot:
+library(ggplot2)
+if (requireNamespace("ggplot2")) {
+  ggplot2::autoplot(timedata_rej3[,1])
+}
 
+boxplot(timedata_rej3[,1]/10^9)
 ####################################################################
 
 Tabc0.1 = proc.time()
