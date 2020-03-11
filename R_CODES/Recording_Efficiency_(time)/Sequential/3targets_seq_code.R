@@ -39,7 +39,10 @@ dim(timedata3)
 Seq3time <- ABC_seq3$computime - (sum(timedata3)/10^9)
 
 hist(timedata3[,1]/10^9, breaks = 10000)
-#class(timedata2)
+
+#hist(timedata3[1]/10^9, breaks = 10000)
+
+
 
 #x = sum(timedata3[1:10000,1])
 
