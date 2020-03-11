@@ -41,7 +41,7 @@ timedata_rej2 <- read.csv("mytime_rej_2targets.txt", header = F)
 Rej2time <- ABC_rej2$computime - (sum(timedata_rej2)/10^9)
 # algorithm time = total time - model runtime
 
-hist(timedata_rej2[,1]/10^9, breaks = 1000)
+hist(timedata_rej2[,1]/10^9, breaks = 10000, xlim = c(0,0.15))
 ######################################################
 
 Tabc0.1 = proc.time()
