@@ -2,11 +2,12 @@
 
 #################################################################################
 setwd("C:/Users/ZENABU/Documents/GitHub/masters_project/R_CODES/masters_project")
-source("my_functions.R") # change peakprev to TRUE in func file
+source("my_functions.R") # change peakprev to TRUE in functions file
 
 ################################################################################
 library(EasyABC)
 library(SimInf)
+library(microbenchmark)
 
 ############################################################################
 # two targets
