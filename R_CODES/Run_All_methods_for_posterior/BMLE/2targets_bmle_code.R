@@ -89,14 +89,15 @@ targets2_bmle <- function(beta, gamma){
 # 1 - 3a. This function generates a prior distribution for the parameters and assigns likelihood values 
 #to the parameter combinations
 
+
 baysianML <- function(randDraw, 
                       betaGamma, 
                       samSize = samSize){
   
   BML2.loglik2 <- c()
   
-  betaPrior <- runif(randDraw, min = 0, max = 1)
-  gammaPrior <- runif(randDraw, min = 0, max = 0.5)
+  betaPrior <- runif(randDraw, min = 0.18, max = 0.22)
+  gammaPrior <- runif(randDraw, min = 0.01, max = 0.03)
   
   p2 <- matrix(c(0, 0), randDraw, 2)
  
@@ -117,12 +118,12 @@ baysianML <- function(randDraw,
     for(j in 1:length(x2)){
       p2[i, j] <- ifelse(p2[i, j]==0, 0.0001, p2[i, j])
       
-      
+      print(p2)
       loglik2[j] <- log(chooseZ(samSize, x2[j])) + 
                         (x2[j])*log(p2[i,j]) +
                         (samSize-(x2[j]))*
                         log(1-p2[i,j])
-      
+      print(loglik2)
     }
     
 
@@ -140,6 +141,11 @@ baysianML <- function(randDraw,
 }
 
 
+library(tictoc)
+tic()
+baysianML(10, c(0.2,0.02),100)
+toc()
+
 #Running the calibration method and storing the results
 
 randDraw <- 509163
@@ -153,14 +159,25 @@ nameCols2 <- c("betaPrior", "gammaPrior", "likelihood", "weight2")
 
 ## 3b. Weight calculation Method 
 
+BMLE3= baysianML(10, c(0.2,0.02),100)
+BMLE3
+likelihood <- exp(BMLE3[[1]]$BML2.loglik2) # computes likelihood
+
+round(likelihood,3)
   
   likelihood <- exp( BMLE2[[1]]$BML2.loglik2) # computes likelihood
+
+### my rubbish (please remove)
+likelihood= c(0.1,0.2,0.01,0.1)
+ 
+
+
   weight2 <- likelihood/sum(likelihood) # computes weights
   
-  BMLE2.weight2 <- data.frame( BMLE2[[1]]$betaPrior,
-                               BMLE2[[1]]$gammaPrior,
+  BMLE2.weight2 <- data.frame( BMLE3[[1]]$betaPrior,
+                               BMLE3[[1]]$gammaPrior,
                                likelihood,
-                                   weight2) # 
+                                   weight2) # change bmle3 to 2 
   
   colnames(BMLE2.weight2) <- nameCols2
   
@@ -170,7 +187,7 @@ nameCols2 <- c("betaPrior", "gammaPrior", "likelihood", "weight2")
 #ReSample step 
 #BMLE.post.2 <- list()
 
-resampleSize <- 5000
+resampleSize <- 10
 
 ## Finding the posterior distribution using the weights calculated above.
   
