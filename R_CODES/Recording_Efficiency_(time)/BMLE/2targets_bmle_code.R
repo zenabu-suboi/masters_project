@@ -3,7 +3,7 @@
 
 library(gmp)        #for chooseZ() function
 library(dplyr)      # for sample_n function
-library(SimInf)
+#library(SimInf)
 ###################################################################
 setwd("C:/Users/Zee/Documents/GitHub/masters_project/R_CODES/
       Recording_Efficiency_(time)/BMLE/")
@@ -46,7 +46,7 @@ baysianML <- function(randDraw,
     
     #3.
     # L(p) = p^x*(1-p)^(n - x)
-    # log(L) = xlog(p) + (n-x)log(1-p)
+    # log(L) = log(nCx) + xlog(p) + (n-x)log(1-p)
     
     
     for(j in 1:length(x2)){
