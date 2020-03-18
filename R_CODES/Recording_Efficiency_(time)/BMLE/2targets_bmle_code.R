@@ -1,8 +1,8 @@
 
 
 
-library(gmp)        #for chooseZ() function
-library(dplyr)      # for sample_n function
+library(gmp)        #for chooseZ() function computes the binomial coefficient
+library(dplyr)      # for sample_n function, samples rows using probs
 #library(SimInf)
 ###################################################################
 setwd("C:/Users/Zee/Documents/GitHub/masters_project/R_CODES/
@@ -24,8 +24,7 @@ source("my_functions.R")
 
 popsize = 1000
 
-baysianML <- function(randDraw, 
-                      parameters, 
+bayesianML <- function(randDraw, 
                       popsize = 1000){
   
   BML2.loglik2 <- c()
@@ -38,7 +37,7 @@ baysianML <- function(randDraw,
   
   for(i in 1:randDraw){
    
-    p2[i,] <- modelforABC(betaPrior[i], gammaPrior[i]) # model output
+    p2[i,] <- modelforABC(c(betaPrior[i], gammaPrior[i])) # model output
    
     x2 <- c(0.644, 0.404) * popsize # observed output / targets
     
@@ -53,16 +52,16 @@ baysianML <- function(randDraw,
      # p2[i, j] <- ifelse(p2[i, j]==0, 0.0001, p2[i, j])
       
     
-      loglik2[j] <- log(chooseZ(popSize, x2[j])) + 
+      loglik2[j] <- log(chooseZ(popsize, x2[j])) + 
                         (x2[j])*log(p2[i,j]) +
-                        (popSize-(x2[j]))*
+                        (popsize-(x2[j]))*
                         log(1-p2[i,j])
     }
     
 
     BML2.loglik2[i] <- sum(loglik2)  
    
-    cat(paste0(i, ", "))
+   # cat(paste0(i, ", "))
     
   }
   
@@ -85,10 +84,11 @@ baysianML <- function(randDraw,
 randDraw <- 10 #60000 # number of modle runs (simulations)
 parameters <- c(0.2, 0.02)   #True values of the parameters
 
+# open file connection
 record_time_bmle2 <- file("mytime_bmle_2targets.txt")
 open(record_time_bmle2, "w")
 
-BMLE2 <- baysianML(randDraw, parameters, popSize) 
+BMLE2 <- bayesianML(randDraw, popsize) 
 
 close(record_time_bmle2) ## close file connection
 unlink(record_time_bmle2)
@@ -100,18 +100,7 @@ nameCols2 <- c("betaPrior", "gammaPrior", "likelihood", "weight2")
 
 ## 3b. Weight calculation Method 
 
-BMLE3= baysianML(10, c(0.2,0.02),100)
-BMLE3
-likelihood <- exp(BMLE3[[1]]$BML2.loglik2) # computes likelihood
-
-round(likelihood,3)
-  
   likelihood <- exp( BMLE2[[1]]$BML2.loglik2) # computes likelihood
-
-### my rubbish (please remove)
-likelihood= c(0.1,0.2,0.01,0.1)
- 
-
 
   weight2 <- likelihood/sum(likelihood) # computes weights
   

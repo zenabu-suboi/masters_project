@@ -47,13 +47,13 @@ modelforABC = function(parameters,
 }
 
 ## Run model once to get new targets
-record_time_bmle2 <- file("mytime_bmle_2targets.txt")
-open(record_time_bmle2, "w")
-
-modelforABC(c( 0.3992223,0.4734403))
-
-close(record_time_bmle2) ## close file connection
-unlink(record_time_bmle2)
+# record_time_bmle2 <- file("mytime_bmle_2targets.txt")
+# open(record_time_bmle2, "w")
+# 
+# modelforABC(c( 0.3992223,0.4734403))
+# 
+# close(record_time_bmle2) ## close file connection
+# unlink(record_time_bmle2)
 
    # 2 Targets = c(0.644, 0.404)
    # 3 Targets = c(0.622, 0.371, 0.677)
