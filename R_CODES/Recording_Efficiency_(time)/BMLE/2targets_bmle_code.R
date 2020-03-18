@@ -22,8 +22,6 @@ source("my_functions.R")
 # 1 - 3a. This function generates a prior distribution for the parameters and assigns likelihood values 
 #to the parameter combinations
 
-popsize = 1000
-
 bayesianML <- function(randDraw, 
                       popsize = 1000){
   
@@ -49,13 +47,13 @@ bayesianML <- function(randDraw,
     
     
     for(j in 1:length(x2)){
-     # p2[i, j] <- ifelse(p2[i, j]==0, 0.0001, p2[i, j])
+      p2[i, j] <- ifelse(p2[i, j]==0, 0.0001, p2[i, j])
       
     
       loglik2[j] <- log(chooseZ(popsize, x2[j])) + 
                         (x2[j])*log(p2[i,j]) +
                         (popsize-(x2[j]))*
-                        log(1-p2[i,j])
+                        log(1-p2[i,j]) # computes the joint log likelihood
     }
     
 
@@ -83,7 +81,9 @@ bayesianML <- function(randDraw,
 
 randDraw <- 10 #60000 # number of modle runs (simulations)
 parameters <- c(0.2, 0.02)   #True values of the parameters
+popsize <- 1000
 
+set.seed(121)
 # open file connection
 record_time_bmle2 <- file("mytime_bmle_2targets.txt")
 open(record_time_bmle2, "w")
