@@ -12,7 +12,7 @@ library(SimInf)
 modelforABC = function(parameters, 
                        times=1:75, 
                        targetTimes=c(50,75),
-                       peakPrevalence = T){
+                       peakPrevalence = F){
   ### you must have already defined and opened a file object called zzfile
   
   ###########################################
@@ -30,13 +30,17 @@ modelforABC = function(parameters,
                beta = parameters[1],      # per run
                gamma = parameters[2]) 
   
-  time <- microbenchmark(result <- run(model, 
-                                       threads = 1),   # runs the SIR model and outputs results
-                         times = 1) # measures time in nanoseconds (/10^9)
+  result <- run(model, 
+                threads = 1)
+  
+  #time <- microbenchmark(result <- run(model, 
+   #                                    threads = 1),   # runs the SIR model and outputs results
+  #                       times = 1) # measures time in nanoseconds (/10^9)
+  
   #toctime <- toc(quiet=T) # end timer
   
-  writeLines( as.character(time$time),
-              record_time_seq3, sep = "\n") 
+#  writeLines( as.character(time$time),
+ #             record_time_seq3, sep = "\n") 
   
   # writeLines( as.character(toctime$toc-toctime$tic),
   #           record_time_rej2, sep = "\n") 

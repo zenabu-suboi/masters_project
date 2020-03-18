@@ -14,10 +14,12 @@ source("my_functions.R")
 
 # 1. Sequential ABC
 
-record_time_seq2 <- file("mytime_seq_2targets.txt")
-open(record_time_seq2, "w")
+#record_time_seq2 <- file("mytime_seq_2targets.txt")
+#open(record_time_seq2, "w")
 
 set.seed(121)
+
+seq2_total_time <- microbenchmark(
 ABC_seq2 <- ABC_sequential(method = "Lenormand",
                          model = modelforABC,
                          prior = list(c("unif",0,1),
@@ -25,10 +27,12 @@ ABC_seq2 <- ABC_sequential(method = "Lenormand",
                          nb_simul = 10000,
                          summary_stat_target = c(0.644, 0.404), 
                          p_acc_min = 0.4, 
-                         progress_bar = T)
+                         progress_bar = T,
+                         verbose = T), times = 1)
+seq2_total_time$time # total time
 
-close(record_time_seq2) ## close file connection
-unlink(record_time_seq2)
+#close(record_time_seq2) ## close file connection
+#unlink(record_time_seq2)
 
 ##########################################################
 # record times

@@ -50,7 +50,7 @@ modelforABC = function(parameters,
 record_time_bmle2 <- file("mytime_bmle_2targets.txt")
 open(record_time_bmle2, "w")
 
-modelforABC(c(0.2,0.02))
+modelforABC(c( 0.3992223,0.4734403))
 
 close(record_time_bmle2) ## close file connection
 unlink(record_time_bmle2)

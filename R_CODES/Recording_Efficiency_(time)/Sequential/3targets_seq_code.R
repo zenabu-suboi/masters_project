@@ -13,11 +13,13 @@ source("my_functions.R") # change peakprev to TRUE in func file
 
 # 1. Sequential ABC
 
-record_time_seq3 <- file("mytime_seq_3targets.txt")
-open(record_time_seq3, "w")
+#record_time_seq3 <- file("mytime_seq_3targets.txt")
+#open(record_time_seq3, "w")
 
 
 set.seed(121)
+
+seq3_total_time <- microbenchmark(
 ABC_seq3 <- ABC_sequential(method = "Lenormand",
                          model = modelforABC,
                          prior = list(c("unif",0,1),
@@ -25,10 +27,13 @@ ABC_seq3 <- ABC_sequential(method = "Lenormand",
                          nb_simul = 10000,
                          summary_stat_target = c(0.622, 0.371, 0.677), 
                          p_acc_min = 0.4, 
-                         progress_bar = T)
+                         progress_bar = T,
+                         verbose = T),times = 1)
 
-close(record_time_seq3) ## close file connection
-unlink(record_time_seq3)
+seq3_total_time$time # total time
+
+#close(record_time_seq3) ## close file connection
+#unlink(record_time_seq3)
 
 ##########################################################
 # record times

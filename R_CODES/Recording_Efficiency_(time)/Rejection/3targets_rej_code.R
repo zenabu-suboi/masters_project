@@ -10,25 +10,38 @@ library(SimInf)
 library(microbenchmark)
 
 ############################################################################
-# two targets
+# three targets
 
 # 1. Rejection ABC
 
-record_time_rej3 <- file("mytime_rej_3targets.txt")
-open(record_time_rej3, "w")
+#record_time_rej3 <- file("mytime_rej_3targets.txt")
+#open(record_time_rej3, "w")
 
-set.seed(121)
+set.seed(121) # this allows you to capture this particular variations
+
+rej3_total_time <- microbenchmark(
 ABC_rej3 <- ABC_rejection(model = modelforABC, 
                           prior = list(c("unif",0,1),
                                        c("unif",0,0.5)), 
                           summary_stat_target = c(0.622, 0.371, 0.677),
                           nb_simul = 75000,
                           tol = 1, 
-                          progress_bar = T)
+                          progress_bar = T,
+                          verbose = T), times = 1)
                          # use_seed = T)
+rej3_total_time$time # total time
 
-close(record_time_rej3) ## close file connection
-unlink(record_time_rej3) ## unlink connection
+#close(record_time_rej3) ## close file connection
+#unlink(record_time_rej3) ## unlink connection
+
+########################################################
+# save the prior parameter combinations chosen
+
+saveRDS(ABC_rej3, file = "selected_prior3")
+rej3_prior_choice <- readRDS("selected_prior3")
+
+plot(rej3_prior_choice[,1], rej3_prior_choice[,2])
+
 
 ####################################################################
 
@@ -44,14 +57,9 @@ Rej3time <- ABC_rej3$computime - (sum(timedata_rej3)/10^9)
 #Histogram of model runtimes
 hist(timedata_rej3[,1]/10^9, breaks = 10000, xlim = c(0,0.15))
 
-## Pretty plot:
-library(ggplot2)
-if (requireNamespace("ggplot2")) {
-  ggplot2::autoplot(timedata_rej3[,1])
-}
-
 boxplot(timedata_rej3[,1]/10^9)
 ####################################################################
+#get posterior
 
 Tabc0.1 = proc.time()
 abcrej <- abc(target = c(0.622, 0.371, 0.677),
