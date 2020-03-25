@@ -13,7 +13,7 @@ readRDS("rejposterior.rds")
 
 par(mar = c(4,4,3,2))
 
-par(mfrow = c(2,2))
+par(mfrow = c(2,3))
 # s1
 ## appears in creating a raster
 plot(rejposterior[,1],

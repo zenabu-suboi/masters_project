@@ -1,41 +1,97 @@
 
-### set raster/grid width based on maximum obtained parameter ranges
+setwd("C:/Users/Zee/Documents/GitHub/masters_project/R_CODES/
+      Percentage_overlap/")
 
-minrangeBeta= c(range(abc0.1$unadj.values[1:5000, 1])[1],
-                range(ABC_seq2$param[, 1])[1],
-                range(abc0.1lin$unadj.values[1:5000, 1])[1],
-                range(ABC_seq1$param[, 1])[1],
-                range(abc2ref1$unadj.values[, 1])[1],
-                range(abc2ref2$unadj.values[,1])[1]
+# reference data
+mydat_2targets_ref <- as.data.frame(readRDS("targets2_refposterior.rds"))
+mydat_3targets_ref <- as.data.frame(readRDS("targets3_refposterior.rds"))
+
+# seq
+mydat_2targets_seq <- as.data.frame(readRDS("2targets_seq_post"))
+mydat_3targets_seq <- as.data.frame(readRDS("3targets_seq_post"))
+
+#rej
+mydat_2targets_rej <- as.data.frame(readRDS("2targets_rej_post"))
+mydat_3targets_rej <- as.data.frame(readRDS("3targets_rej_post"))
+
+#bmle
+mydat_2targets_bmle <- as.data.frame(readRDS("bmle2_posterior.rds"))
+mydat_3targets_bmle <- as.data.frame(readRDS("bmle3_posterior.rds"))
+
+#Tom's method
+mydat_2targets_tom
+mydat_3targets_tom
+
+######################################################
+# name of columns of posterior data
+
+colnames(mydat_2targets_ref) <- c("beta", "gamma")
+colnames(mydat_3targets_ref) <- c("beta", "gamma")
+colnames(mydat_2targets_rej) <- c("beta", "gamma")
+colnames(mydat_3targets_rej) <- c("beta", "gamma")
+colnames(mydat_2targets_seq) <- c("beta", "gamma")
+colnames(mydat_3targets_seq) <- c("beta", "gamma")
+colnames(mydat_2targets_bmle) <- c("beta", "gamma",
+                                   "likelihood2", "weight2")
+colnames(mydat_3targets_bmle) <- c("beta", "gamma",
+                                   "likelihood3", "weight3")
+
+###################################################################
+ attach()
+
+### set raster/grid width based on minimum and maximum obtained parameter ranges
+
+minrangeBeta= c(range(mydat_2targets_ref$beta)[1],
+                range(mydat_2targets_rej$beta)[1],
+                range(mydat_2targets_seq$beta)[1],
+                range(mydat_2targets_bmle$beta)[1],
+                # tom's 2targ
+                range(mydat_3targets_ref$beta)[1],
+                range(mydat_3targets_rej$beta)[1],
+                range(mydat_3targets_seq$beta)[1],
+                range(mydat_3targets_bmle$beta)[1]
+                # tom's 3targs
                 )
 
 
-maxrangeBeta= c(range(abc0.1$unadj.values[1:5000, 1])[2],
-                range(ABC_seq2$param[, 1])[2],
-                range(abc0.1lin$unadj.values[1:5000, 1])[2],
-                range(ABC_seq1$param[, 1])[2],
-                range(abc2ref1$unadj.values[, 1])[2],
-                range(abc2ref2$unadj.values[, 1])[2]
-                )
+maxrangeBeta= c(range(mydat_2targets_ref$beta)[2],
+                range(mydat_2targets_rej$beta)[2],
+                range(mydat_2targets_seq$beta)[2],
+                range(mydat_2targets_bmle$beta)[2],
+                # tom's 2targ
+                range(mydat_3targets_ref$beta)[2],
+                range(mydat_3targets_rej$beta)[2],
+                range(mydat_3targets_seq$beta)[2],
+                range(mydat_3targets_bmle$beta)[2]
+                # tom's 3targs
+)
 
 
 
-minrangeGamma= c(range(abc0.1$unadj.values[1:5000, 2])[1],
-                 range(abc0.1lin$unadj.values[1:5000, 2])[1],
-                 range(ABC_seq2$param[, 2])[1],
-                 range(ABC_seq1$param[, 2])[1],
-                 range(abc2ref1$unadj.values[,2])[1],
-                 range(abc2ref2$unadj.values[,2])[1]
-                 )
+minrangeGamma= c(range(mydat_2targets_ref$gamma)[1],
+                 range(mydat_2targets_rej$gamma)[1],
+                 range(mydat_2targets_seq$gamma)[1],
+                 range(mydat_2targets_bmle$gamma)[1],
+                 # tom's 2targ
+                 range(mydat_3targets_ref$gamma)[1],
+                 range(mydat_3targets_rej$gamma)[1],
+                 range(mydat_3targets_seq$gamma)[1],
+                 range(mydat_3targets_bmle$gamma)[1]
+                 # tom's 3targs
+)
 
 
-maxrangeGamma= c(range(abc0.1$unadj.values[1:5000,2])[2],
-                 range(abc0.1lin$unadj.values[1:5000,2])[2],
-                 range(ABC_seq2$param[, 2])[2],
-                 range(ABC_seq1$param[, 2])[2],
-                 range(abc2ref1$unadj.values[,2])[2],
-                 range(abc2ref2$unadj.values[,2])[2]
-                 )
+maxrangeGamma= c(range(mydat_2targets_ref$gamma)[2],
+                 range(mydat_2targets_rej$gamma)[2],
+                 range(mydat_2targets_seq$gamma)[2],
+                 range(mydat_2targets_bmle$gamma)[2],
+                 # tom's 2targ
+                 range(mydat_3targets_ref$gamma)[2],
+                 range(mydat_3targets_rej$gamma)[2],
+                 range(mydat_3targets_seq$gamma)[2],
+                 range(mydat_3targets_bmle$gamma)[2]
+                 # tom's 3targs
+)
 
 
 ### get the values to calculate the likelihood for (based on the raster below!)

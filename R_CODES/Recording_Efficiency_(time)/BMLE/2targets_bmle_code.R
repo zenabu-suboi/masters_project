@@ -77,21 +77,27 @@ bayesianML <- function(randDraw,
 # toc()
 
 ################################################################
-#Running the calibration method and storing the results
+#Running the entire calibration method and storing the results
 
-randDraw <- 10 #60000 # number of modle runs (simulations)
-parameters <- c(0.2, 0.02)   #True values of the parameters
-popsize <- 1000
 
-set.seed(121)
+  bmle_time2 <- function(randDraw, # number of modle runs (simulations)
+                         parameters,   #True values of the parameters
+                         popsize = 1000){
+
+
+
 # open file connection
-record_time_bmle2 <- file("mytime_bmle_2targets.txt")
-open(record_time_bmle2, "w")
+# record_time_bmle2 <- file("mytime_bmle_2targets.txt")
+# open(record_time_bmle2, "w")
 
 BMLE2 <- bayesianML(randDraw, popsize) 
 
-close(record_time_bmle2) ## close file connection
-unlink(record_time_bmle2)
+# close(record_time_bmle2) ## close file connection
+# unlink(record_time_bmle2)
+
+# read in time data and record model runtimes
+#model2_time <- read.csv("mytime_bmle_2targets.txt", header = F)
+ #sum(model_time)/10^9
 
 
 nameCols2 <- c("betaPrior", "gammaPrior", "likelihood", "weight2")
@@ -100,12 +106,12 @@ nameCols2 <- c("betaPrior", "gammaPrior", "likelihood", "weight2")
 
 ## 3b. Weight calculation Method 
 
-  likelihood <- exp( BMLE2[[1]]$BML2.loglik2) # computes likelihood
+  likelihood <- exp( BMLE2$BML2.loglik2) # computes likelihood
 
   weight2 <- likelihood/sum(likelihood) # computes weights
   
-  BMLE2.weight2 <- data.frame( BMLE3[[1]]$betaPrior,
-                               BMLE3[[1]]$gammaPrior,
+  BMLE2.weight2 <- data.frame( BMLE2$betaPrior,
+                               BMLE2$gammaPrior,
                                likelihood,
                                    weight2) # change bmle3 to 2 
   
@@ -117,7 +123,7 @@ nameCols2 <- c("betaPrior", "gammaPrior", "likelihood", "weight2")
 #ReSample step 
 #BMLE.post.2 <- list()
 
-resampleSize <- 10
+resampleSize <- 5000
 
 ## Finding the posterior distribution using the weights calculated above.
   
@@ -125,13 +131,41 @@ resampleSize <- 10
                                size = resampleSize,
                                replace = T, 
                                weight = BMLE2.weight2$weight2) 
-
- #sum(BMLE2.weight2$weight2)
-
-  plot(BMLE.post.2$betaPrior, BMLE.post.2$gammaPrior)
-  ###########################################
+ 
   
-  # resample2 <- sample(x = c(1 : randDraw), size = 40, replace=F,
+  return(BMLE.post.2)
+  }
+  
+  
+  
+  #################################################################
+ # recording the total runtime
+  set.seed(121)
+  
+   bmle2_time <- microbenchmark(
+    bmle_time2(randDraw = 60000, # number of modle runs (simulations)
+               parameters = c(0.2, 0.02),   #True values of the parameters
+               popsize = 1000)
+   , times = 1)
+
+###################################################################  
+ sum(BMLE2.weight2$weight2)
+ unique_param_sets2 <- length(unique(BMLE.post.2$weight2)) # = 138
+
+  plot(BMLE.post.2$betaPrior, BMLE.post.2$gammaPrior,
+       xlim = c(0,1), ylim = c(0,0.05))
+  
+  # save prior choices and posterior
+  saveRDS(BMLE2, "bmle2_prior_choices.rds")
+   bmle2_prior_choices <- readRDS("bmle2_prior_choices.rds")
+   
+   saveRDS(BMLE.post.2, "bmle2_posterior.rds")
+   bmle2_posterior <- readRDS("bmle2_posterior.rds")
+   
+  # frequency(bmle2_posterior$weight2)
+  #################################################################
+  
+  # resample2 <- sample(x = c(1 : randDraw), size = 40, replace=T,
   #                    prob = BMLE2.weight2$weight2)
   # 
   # resample_output2 <- BMLE2.weight2[sort(unique(resample2)),]

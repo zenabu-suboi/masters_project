@@ -12,7 +12,7 @@ library(SimInf)
 modelforABC = function(parameters, 
                        tspan = seq(0,75, by=1), 
                        targetTimes = c(50,75),
-                       peakPrevalence = F){
+                       peakPrevalence = T){
   
   #tic()# begin timer 
   
@@ -27,14 +27,17 @@ modelforABC = function(parameters,
                beta = parameters[1],      # per run
                gamma = parameters[2]) 
   
-  time <- microbenchmark(result <- run(model, 
-                threads = 1),   # runs the SIR model and outputs results
+  result <- run(model, 
+                threads = 1)
+  
+   time <- microbenchmark(result <- run(model, 
+               threads = 1),   # runs the SIR model and outputs results
  times = 1) # measures time in nanoseconds (/10^9)
   
   #toctime <- toc(quiet=T) # end timer
   
   writeLines( as.character(time$time),
-              record_time_bmle2, sep = "\n") 
+              record_time_bmle3, sep = "\n") 
   
   ########################################## 
   
@@ -101,7 +104,7 @@ modelforABC = function(parameters,
   #                     mean(targetStats[,3]))
   #return(meanTargetStats3) 
  
-  #meanTargetStats3 <- c(0.60848, 0.38441, 0.67556)
+  #meanTargetStats3 <- c(0.622, 0.371, 0.677)
   
 #}
 
