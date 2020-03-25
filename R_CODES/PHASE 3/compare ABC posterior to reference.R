@@ -27,6 +27,8 @@
 
 #install.packages("ggpubr")
 library(ggpubr)
+library(ggplot2)
+library(cowplot)
 
 ############################################
 
@@ -37,20 +39,24 @@ BMLE <- c(32.3, 42.2) # percentage overlap for bmle in both scenarios
 
 Scenario <- c(1, 2) # scenarios considered
 
+################################################################
+#######################################################
 
-toplot <- data.frame(Rej, Seq, BMLE, Scenario) # dataframe from the abobe vectors 
+toplot = data.frame(Scenario = rep(Scenario, 3),
+                    Percentage_overlap = c(Rej, Seq, BMLE),
+                    class = c(rep('Rejection ABC',2),
+                              rep('Sequential ABC',2),
+                              rep('BMLE',2)))
 
-dp <- ggdotplot(toplot, x = "Scenario", # plot of the p_overlaps 
-                y = c("Rej","Seq","BMLE"),
-                #color = c("green","red"),
-                palette =c( "red","green", "blue"), 
-                fill= "grey", 
-                #add.params = list(shape = 12),
-                binwidth = 3,
-                title = "Plot of the percentage overlap",
-                ylab = "overlap (%)",
-                merge = TRUE, 
-                ylim = c(0, 100))
-dp
+View(toplot)
+q = ggdotplot(toplot, x = 'Scenario',
+              y = 'Percentage_overlap',
+              color = "class",
+              palette = "jco",
+              binwidth = 2, fill = 'class') +
+  facet_wrap(~class,ncol = 3)
+q
 
-?ggdotplot
+
+
+
