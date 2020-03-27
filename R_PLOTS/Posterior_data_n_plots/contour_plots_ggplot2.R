@@ -42,6 +42,10 @@ rej2_cont <- ggplot(mydat_2targets_rej, aes(x=mydat_2targets_rej[,1], #rej2
                    stat_density_2d(aes(fill = ..level..),
                   geom = "polygon", colour="white")+
   ggtitle("Rejection ABC") +
+  
+  geom_point(aes(x=0.2, y=0.02),
+             color = "red",
+             size = 2)+
   #theme_ipsum() +
   theme(
     plot.title = element_text(size=12)
@@ -57,6 +61,10 @@ rej3_cont <- ggplot(mydat_3targets_rej, aes(x=mydat_3targets_rej[,1],
   stat_density_2d(aes(fill = ..level..),
                   geom = "polygon", colour="white")+
   ggtitle("Rejection ABC") +
+  
+  geom_point(aes(x=0.2, y=0.02),
+             color = "red",
+             size = 2)+
   #theme_ipsum() +
   theme(
     plot.title = element_text(size=12)
@@ -73,6 +81,9 @@ seq2_cont <- ggplot(mydat_2targets_seq, aes(x=mydat_2targets_seq[,1],
   stat_density_2d(aes(fill = ..level..),
                   geom = "polygon", colour="white")+
   ggtitle("Sequential ABC") +
+  geom_point(aes(x=0.2, y=0.02),
+             color = "red",
+             size = 2)+
   #theme_ipsum() +
   theme(
     plot.title = element_text(size=12)
@@ -88,6 +99,9 @@ seq3_cont <- ggplot(mydat_3targets_seq, aes(x=mydat_3targets_seq[,1],
   stat_density_2d(aes(fill = ..level..),
                   geom = "polygon", colour="white")+
   ggtitle("Sequential ABC") +
+  geom_point(aes(x=0.2, y=0.02),
+             color = "red",
+             size = 2)+
   #theme_ipsum() +
   theme(
     plot.title = element_text(size=12)
@@ -104,13 +118,16 @@ bmle2_cont <- ggplot(mydat_2targets_bmle, aes(x=mydat_2targets_bmle[,1],
   stat_density_2d(aes(fill = ..level..),
                   geom = "polygon", colour="white")+
   ggtitle("BMLE") +
+  geom_point(aes(x=0.2, y=0.02),
+             color = "red",
+             size = 2)+
   #theme_ipsum() +
   theme(
     plot.title = element_text(size=12)
   ) +
   ylab('Gamma') +
   xlab('Beta')
- # xlim(c(0,1))+
+  #xlim(c(0,1))
   #ylim(c(0,0.1))
   
 
@@ -121,14 +138,14 @@ bmle3_cont <- ggplot(mydat_3targets_bmle, aes(x=mydat_3targets_bmle[,1],
   stat_density_2d(aes(fill = ..level..),
                   geom = "polygon", colour="white")+
   ggtitle("BMLE") +
-  #theme_ipsum() +
-  theme(
-    plot.title = element_text(size=12)
-  ) +
+  geom_point(aes(x=0.2, y=0.02),
+                 color = "red",
+             size = 2)+
+  theme( plot.title = element_text(size=12)) +
   ylab('Gamma') +
   xlab('Beta')
-  #xlim(c(0,1))+
-  #ylim(c(0,0.1))
+ # xlim(c(0.17,0.24))+
+  #ylim(c(0.017,0.023))
 
 
 ###################################################
@@ -147,6 +164,37 @@ plot_grid(
           bmle3_cont,
           #labels = c("A", "B", "C"),
           ncol = 2, nrow = 2)
+
+
+###########################################################
+#ref2_contour
+
+ref3_cont <- ggplot(mydat_3targets_ref, aes(x=mydat_3targets_ref[,1],
+                                              y=mydat_3targets_ref[,2]) ) +
+  stat_density_2d(aes(fill = ..level..),
+                  geom = "polygon", colour="white")+
+  ggtitle("Reference2") +
+  
+  geom_point(aes(x=0.2, y=0.02),
+             color = "red",
+             size = 2)+
+  #theme_ipsum() +
+  theme(
+    plot.title = element_text(size=12)
+  ) +
+  ylab('Gamma') +
+  xlab('Beta')+
+xlim(c(0.17,0.24))+
+ylim(c(0.017,0.023))
+
+
+plot_grid(
+  bmle3_cont,
+ # seq3_cont,
+  ref3_cont,
+  #labels = c("A", "B", "C"),
+  ncol = 2, nrow = 1)
+
 
 
 ###########################################################

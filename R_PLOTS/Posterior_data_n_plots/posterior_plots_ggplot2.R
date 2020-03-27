@@ -68,6 +68,7 @@ rej_ref2_plot <- ggplot(mydat_2targets_rej,
   geom_point(aes(x=beta, y=gamma),
              data = mydat_2targets_ref,
              color = "red",size = 0.5)
+ # geom_density(alpha=0.1)
 
 # rej_ref2_plot + theme(
 #   legend.position = c(.9, .1),
