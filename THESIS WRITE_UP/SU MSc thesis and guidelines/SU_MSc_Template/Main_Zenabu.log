@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.2.21)  26 MAR 2020 12:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.2.21)  2 APR 2020 00:13
 entering extended mode
 **./Main_Zenabu.tex
 (Main_Zenabu.tex
@@ -335,7 +335,10 @@ Package tocloft [2008/07/23] emulated by memoir.
 Package tocvsec2 [2008/07/23] emulated by memoir.
 Package verbatim [2008/07/23] emulated by memoir.
 Package verse [2008/07/23] emulated by memoir.
-) (usthesis.sty
+)
+   defining Unicode char U+00A0 (decimal 160)
+   defining Unicode char U+00A0 (decimal 160)
+ (usthesis.sty
 Package: usthesis 2012/02/22 v4.3 Stellenbosh Thesis class for use with Memoir 
 (DNJ ELS)
 Package usthesis Info: Stellenbosch thesis style for MEMOIR class on input line
@@ -1328,7 +1331,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip262
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 34.
+Package hyperref Info: Option `colorlinks' set `true' on input line 35.
 
 ("C:\Users\Zee\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\amssymb.sty
 "
@@ -1489,31 +1492,31 @@ Package: eso-pic 2018/04/12 v2.0h eso-pic (RN)
 )
 
 Class memoir Warning: As of 2018, \fixpdflayout\ is no longer used on input lin
-e 156.
+e 157.
 
 (Main_Zenabu.aux (frontmatter/Chap-Front.aux) (contents/chapter1.aux)
 (contents/chapter2.aux) (contents/chapter3.aux) (contents/chapter4.aux)
 (contents/chapter5.aux) (backmatter/appendix.aux))
 \openout1 = `Main_Zenabu.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 159.
+LaTeX Font Info:    ... okay on input line 159.
 LaTeX Font Info:    Trying to load font information for T1+ppl on input line 15
-8.
+9.
 
 ("C:\Users\Zee\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\t1ppl.fd"
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
@@ -1544,7 +1547,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box85
-Package hyperref Info: Link coloring ON on input line 158.
+Package hyperref Info: Link coloring ON on input line 159.
 
 ("C:\Users\Zee\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\nameref.sty
 "
@@ -1562,83 +1565,83 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 Redoing nameref's sectioning
 Redoing nameref's label
-LaTeX Info: Redefining \nameref on input line 158.
-LaTeX Info: Redefining \ref on input line 158.
-LaTeX Info: Redefining \pageref on input line 158.
-LaTeX Info: Redefining \nameref on input line 158.
+LaTeX Info: Redefining \nameref on input line 159.
+LaTeX Info: Redefining \ref on input line 159.
+LaTeX Info: Redefining \pageref on input line 159.
+LaTeX Info: Redefining \nameref on input line 159.
 (Main_Zenabu.out) (Main_Zenabu.out)
 \@outlinefile=\write7
 \openout7 = `Main_Zenabu.out'.
 
-LaTeX Font Info:    Redeclaring symbol font `AMSb' on input line 158.
+LaTeX Font Info:    Redeclaring symbol font `AMSb' on input line 159.
 LaTeX Font Info:    Overwriting symbol font `AMSb' in version `normal'
-(Font)                  U/msb/m/n --> U/msb/m/n on input line 158.
+(Font)                  U/msb/m/n --> U/msb/m/n on input line 159.
 LaTeX Font Info:    Overwriting symbol font `AMSb' in version `bold'
-(Font)                  U/msb/m/n --> U/msb/m/n on input line 158.
+(Font)                  U/msb/m/n --> U/msb/m/n on input line 159.
 LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 1
-66.
+67.
 
 ("C:\Users\Zee\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\ot1ppl.fd"
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
 LaTeX Font Info:    Trying to load font information for OML+zplm on input line 
-166.
+167.
 
 ("C:\Users\Zee\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\omlzplm.fd"
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 
-166.
+167.
 
 ("C:\Users\Zee\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\omszplm.fd"
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 
-166.
+167.
 
 ("C:\Users\Zee\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\omxzplm.fd"
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
 LaTeX Font Info:    Trying to load font information for U+lasy on input line 16
-6.
+7.
 
 ("C:\Users\Zee\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ulasy.fd"
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 18.00587pt on input line 166.
+(Font)              scaled to size 18.00587pt on input line 167.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 12.50409pt on input line 166.
+(Font)              scaled to size 12.50409pt on input line 167.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 166.
+(Font)              scaled to size 10.42007pt on input line 167.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 18.00587pt on input line 166.
+(Font)              scaled to size 18.00587pt on input line 167.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 12.50409pt on input line 166.
+(Font)              scaled to size 12.50409pt on input line 167.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 166.
+(Font)              scaled to size 10.42007pt on input line 167.
 LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 
-166.
+167.
 
 ("C:\Users\Zee\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\ot1zplm.fd"
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 166.
+(Font)              scaled to size 9.37807pt on input line 167.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 166.
+(Font)              scaled to size 7.29405pt on input line 167.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 166.
+(Font)              scaled to size 9.37807pt on input line 167.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 166.
+(Font)              scaled to size 7.29405pt on input line 167.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <9> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 166.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 167.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 166.
-<UScrest-WM.jpg, id=93, 49.8663pt x 69.3792pt>
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 167.
+<UScrest-WM.jpg, id=137, 49.8663pt x 69.3792pt>
 File: UScrest-WM.jpg Graphic file (type jpg)
 <use UScrest-WM.jpg>
-Package pdftex.def Info: UScrest-WM.jpg  used on input line 166.
+Package pdftex.def Info: UScrest-WM.jpg  used on input line 167.
 (pdftex.def)             Requested size: 119.61356pt x 166.44145pt.
 
 [1
@@ -1648,14 +1651,14 @@ Package pdftex.def Info: UScrest-WM.jpg  used on input line 166.
 {C:/Users/Zee/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/Zee/
 AppData/Local/Programs/MiKTeX 2.9/tex/latex/stellenbosch/logos/UScrest-WM.jpg>]
 LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 1
-71.
+72.
  ("C:\Users\Zee\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\ts1ppl.fd"
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 )pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.181 \include{frontmatter/Chap-Front}
+l.182 \include{frontmatter/Chap-Front}
                                        [1
 
 ]
@@ -1673,13 +1676,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 2--6
 
 ] [4
 
-]) (Main_Zenabu.toc) [5
+]) (Main_Zenabu.toc [5
 
 
-] (Main_Zenabu.lof) [6
+]) [6] (Main_Zenabu.lof) [7
 
 ] (Main_Zenabu.lot)
-[7
+[8
 
 ]
 \openout2 = `contents/chapter1.aux'.
@@ -1697,24 +1700,157 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--15
 ) [2]
 \openout2 = `contents/chapter2.aux'.
 
- (contents/chapter2.tex) [3
+ (contents/chapter2.tex
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 8.
+
+[3
 
 
 
 
 ]
+<rej.png, id=271, 804.00375pt x 390.45876pt>
+File: rej.png Graphic file (type png)
+<use rej.png>
+Package pdftex.def Info: rej.png  used on input line 11.
+(pdftex.def)             Requested size: 422.0pt x 204.94029pt.
+ [4 <./rej.png>]
+
+Package natbib Warning: Citation `lenormand' on page 5 undefined on input line 
+41.
+
+
+Package natbib Warning: Citation `Mckinley' on page 5 undefined on input line 4
+1.
+
+
+LaTeX Warning: Command \textellipsis invalid in math mode on input line 41.
+
+
+Package natbib Warning: Citation `lenormand' on page 5 undefined on input line 
+41.
+
+
+Package natbib Warning: Citation `Mckinley' on page 5 undefined on input line 4
+1.
+
+
+! Package inputenc Error: Unicode character 〖 (U+3016)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.41 ...})$ in the first step. A second sample 〖
+                                                  $(S^{(2)})$ of parameter v...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! Package inputenc Error: Unicode character 〖 (U+3016)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.41 ... retained. The final sample $(S^{(N)})$〖
+                                                  aproximates the posterior ...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+<seq.png, id=285, 324.558pt x 293.679pt>
+File: seq.png Graphic file (type png)
+<use seq.png>
+Package pdftex.def Info: seq.png  used on input line 44.
+(pdftex.def)             Requested size: 422.0pt x 381.87674pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[5] [6 <./seq.png>]
+<sir_model.png, id=299, 447.6725pt x 91.34125pt>
+File: sir_model.png Graphic file (type png)
+<use sir_model.png>
+Package pdftex.def Info: sir_model.png  used on input line 68.
+(pdftex.def)             Requested size: 422.0pt x 86.10468pt.
+
+
+Package natbib Warning: Citation `weiss' on page 7 undefined on input line 74.
+
+[7 <./sir_model.png>] [8]
+<raster.png, id=316, 396.19446pt x 343.92776pt>
+File: raster.png Graphic file (type png)
+<use raster.png>
+Package pdftex.def Info: raster.png  used on input line 113.
+(pdftex.def)             Requested size: 422.0pt x 366.33022pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+) [9] [10 <./raster.png (PNG copy)>]
 \openout2 = `contents/chapter3.aux'.
 
- (contents/chapter3.tex) [4
+ (contents/chapter3.tex
+Overfull \hbox (70.94862pt too wide) in paragraph at lines 12--50
+ [] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Overfull \hbox (70.94862pt too wide) in paragraph at lines 57--88
+ [] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<targets.png, id=330, 581.17125pt x 283.0575pt>
+File: targets.png Graphic file (type png)
+<use targets.png>
+Package pdftex.def Info: targets.png  used on input line 96.
+(pdftex.def)             Requested size: 422.0pt x 205.5375pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Package natbib Warning: Citation `siminf' on page 11 undefined on input line 10
+1.
+
+
+LaTeX Warning: Reference `targs1,targs2' on page 11 undefined on input line 101
+.
+
+<targ_dist_S1.png, id=331, 955.57pt x 500.87125pt>
+File: targ_dist_S1.png Graphic file (type png)
+<use targ_dist_S1.png>
+Package pdftex.def Info: targ_dist_S1.png  used on input line 105.
+(pdftex.def)             Requested size: 422.0pt x 221.19414pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<targ_dist_S2.png, id=332, 954.56625pt x 504.38437pt>
+File: targ_dist_S2.png Graphic file (type png)
+<use targ_dist_S2.png>
+Package pdftex.def Info: targ_dist_S2.png  used on input line 112.
+(pdftex.def)             Requested size: 422.0pt x 222.9765pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+) [11
 
 
 
 
-]
+] [12] [13 <./targets.png> <./targ_dist_S1.png>] [14 <./targ_dist_S2.png>]
 \openout2 = `contents/chapter4.aux'.
 
-
-(contents/chapter4.tex) [5
+(contents/chapter4.tex) [15
 
 
 
@@ -1722,7 +1858,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--15
 ]
 \openout2 = `contents/chapter5.aux'.
 
- (contents/chapter5.tex) [6
+ (contents/chapter5.tex) [16
 
 
 
@@ -1732,12 +1868,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--15
 
 
 (backmatter/appendix.tex) (Main_Zenabu.bbl
-Underfull \hbox (badness 1661) in paragraph at lines 14--20
+Underfull \hbox (badness 1077) in paragraph at lines 14--20
 []\T1/ppl/m/n/12 Anthony T Fojo, Emily A Kendall, Parastu Ka-saie, Sourya Shres
 tha,
  []
 
-[7
+[17
 
 
 
@@ -1745,7 +1881,17 @@ tha,
 
 
 
-]) [8]
+]
+Underfull \hbox (badness 1043) in paragraph at lines 59--63
+[]\T1/ppl/m/n/12 Mikael Sun-n�ker, Al-berto Gio-vanni Busetto, Elina Num-mi-nen
+, Jukka
+ []
+
+)
+
+Package natbib Warning: There were undefined citations.
+
+[18]
 \tf@toc=\write8
 \openout8 = `Main_Zenabu.toc'.
 
@@ -1755,33 +1901,42 @@ tha,
 \tf@lot=\write10
 \openout10 = `Main_Zenabu.lot'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 277.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 277.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 278.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 278.
  (Main_Zenabu.aux (frontmatter/Chap-Front.aux) (contents/chapter1.aux)
 (contents/chapter2.aux) (contents/chapter3.aux) (contents/chapter4.aux)
 (contents/chapter5.aux) (backmatter/appendix.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 277.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 277.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 278.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 278.
 Package rerunfilecheck Info: File `Main_Zenabu.out' has not changed.
-(rerunfilecheck)             Checksum: 4844609C6C97770C57F2BA77D76B6424;655.
+(rerunfilecheck)             Checksum: 147641C139185540ED6ED117F4183B43;1463.
+
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 33116 strings out of 481556
- 650640 string characters out of 2914805
- 1056617 words of memory out of 3000000
- 47589 multiletter control sequences out of 15000+200000
- 572151 words of font info for 112 fonts, out of 3000000 for 9000
+ 33264 strings out of 481556
+ 652462 string characters out of 2914805
+ 1066021 words of memory out of 3000000
+ 47673 multiletter control sequences out of 15000+200000
+ 578870 words of font info for 129 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 64i,16n,103p,1132b,491s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 64i,16n,103p,2112b,523s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Zee/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<
-C:/Users/Zee/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.
-pfb><C:/Users/Zee/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/up
-lr8a.pfb><C:/Users/Zee/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palati
-no/uplr8a.pfb><C:/Users/Zee/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/p
-alatino/uplri8a.pfb>
-Output written on Main_Zenabu.pdf (16 pages, 151843 bytes).
+C:/Users/Zee/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mmi10.pfb><C:/Users/Zee/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/am
+sfonts/cm/cmr10.pfb><C:/Users/Zee/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmsy10.pfb><C:/Users/Zee/AppData/Local/Programs/MiKTeX 2.9/
+fonts/type1/public/mathpazo/fplmr.pfb><C:/Users/Zee/AppData/Local/Programs/MiKT
+eX 2.9/fonts/type1/public/mathpazo/fplmri.pfb><C:/Users/Zee/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/Zee/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/Zee/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/Zee/AppD
+ata/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on Main_Zenabu.pdf (27 pages, 1013740 bytes).
 PDF statistics:
- 231 PDF objects out of 1000 (max. 8388607)
- 42 named destinations out of 1000 (max. 500000)
- 266 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 419 PDF objects out of 1000 (max. 8388607)
+ 84 named destinations out of 1000 (max. 500000)
+ 389 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{Dahabreh}
 Issa~J Dahabreh, Jeffrey~A Chan, Amy Earley, Denish Moorthy, Esther~E Avendano,
@@ -31,6 +31,13 @@ Marc~C Kennedy and Anthony O'Hagan.
 \newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
   Methodology)}, 63(3):425--464, 2001.
 
+\bibitem{lint}
+Jarno Lintusaari, Michael~U Gutmann, Ritabrata Dutta, Samuel Kaski, and Jukka
+  Corander.
+\newblock Fundamentals and recent developments in approximate bayesian
+  computation.
+\newblock {\em Systematic biology}, 66(1):e66--e82, 2017.
+
 \bibitem{Menzies}
 Nicolas~A Menzies, Dj{\o}ra~I Soeteman, Ankur Pandya, and Jane~J Kim.
 \newblock Bayesian methods for calibrating health policy models: a tutorial.
@@ -47,6 +54,12 @@ Natasha~K Stout, Amy~B Knudsen, Chung~Yin Kong, Pamela~M McMahon, and G~Scott
 \newblock Calibration methods used in cancer simulation models and suggested
   reporting guidelines.
 \newblock {\em Pharmacoeconomics}, 27(7):533--545, 2009.
+
+\bibitem{sun}
+Mikael Sunn{\aa}ker, Alberto~Giovanni Busetto, Elina Numminen, Jukka Corander,
+  Matthieu Foll, and Christophe Dessimoz.
+\newblock Approximate bayesian computation.
+\newblock {\em PLoS computational biology}, 9(1):e1002803, 2013.
 
 \bibitem{Elske}
 Elske van~der Vaart, Mark~A Beaumont, Alice~SA Johnston, and Richard~M Sibly.

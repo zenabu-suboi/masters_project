@@ -53,10 +53,11 @@ colnames(mydat_3targets_bmle) <- c("beta", "gamma")
  
 rej_ref2_plot <- ggplot(mydat_2targets_rej,
                         aes(x=beta, y=gamma)) +
-  geom_point(color="black", size = 0.5) +
+  
+  geom_point( size = 0.5, alpha = 0.1) +
   
   ggtitle("Rejection ABC") +
-  #theme_ipsum() +
+  
   theme(
     plot.title = element_text(size=11)
   ) +
@@ -67,23 +68,48 @@ rej_ref2_plot <- ggplot(mydat_2targets_rej,
   
   geom_point(aes(x=beta, y=gamma),
              data = mydat_2targets_ref,
-             color = "red",size = 0.5)
- # geom_density(alpha=0.1)
+             color = "red",size = 0.5,alpha = 0.02)+
+  
+  geom_hline(yintercept=0.02, alpha = 0.7,color = "gold")+
+  geom_vline(xintercept=0.2, alpha = 0.7,color = "gold")
 
-# rej_ref2_plot + theme(
-#   legend.position = c(.9, .1),
-#   legend.justification = c("right"),
-#   legend.title = element_text(color = "legend")
-#   #legend.box.just = "right",
-#   #legend.margin = margin(6, 6, 6, 6)
-# )
+  annotation_b <- data.frame(
+    x = c(0.17),
+    y = c(0.13),
+    label = "0.2"
+  )
 
+  rej_ref2_plot <- rej_ref2_plot + geom_text(data=annotation_b,
+                                             aes( x=x, y=y, label=label),                 , 
+                                color="brown", 
+              size=3, angle=90, fontface="bold")
+  
+  annotation_g <- data.frame(
+    x = c(0.005),
+    y = c(0.03),
+    label = "0.02"
+  )
+  
+  rej_ref2_plot <- rej_ref2_plot + geom_text(data=annotation_g,
+                                             aes( x=x, y=y, label=label),                 , 
+                                             color="brown", 
+                                             size=3, angle=0, fontface="bold")
+
+  # r2 <- rej_ref2_plot + theme(
+  #   # Hide panel borders and remove grid lines
+  #   panel.background = element_rect(fill = "white"),
+  #   panel.border = element_blank(),
+  #   panel.grid.major = element_blank(),
+  #   panel.grid.minor = element_blank(),
+  #   # Change axis line
+  #   axis.line = element_line(colour = "black")
+  # )
 ##############################
 # seq2
 
 seq_ref2_plot <- ggplot(mydat_2targets_seq,
                         aes(x=beta, y=gamma)) +
-  geom_point(color="black", size = 0.5) +
+  geom_point( size = 0.5, alpha = 0.1) +
   
   ggtitle("Sequential ABC") +
   #theme_ipsum() +
@@ -97,14 +123,47 @@ seq_ref2_plot <- ggplot(mydat_2targets_seq,
   
   geom_point(aes(x=beta, y=gamma),
              data = mydat_2targets_ref,
-             colour = "red", size = 0.5)
-
+             colour = "red", size = 0.5,alpha = 0.02)+
+    geom_hline(yintercept=0.02, alpha = 0.7,color = "gold")+
+    geom_vline(xintercept=0.2, alpha = 0.7,color = "gold")
+  
+  annotation_b <- data.frame(
+    x = c(0.17),
+    y = c(0.13),
+    label = "0.2"
+  )
+  
+  seq_ref2_plot <- seq_ref2_plot + geom_text(data=annotation_b,
+                                             aes( x=x, y=y, label=label),                 , 
+                                             color="brown", 
+                                             size=3, angle=90, fontface="bold")
+  
+  annotation_g <- data.frame(
+    x = c(0.005),
+    y = c(0.03),
+    label = "0.02"
+  )
+  
+  seq_ref2_plot <- seq_ref2_plot + geom_text(data=annotation_g,
+                                             aes( x=x, y=y, label=label),                 , 
+                                             color="brown", 
+                                             size=3, angle=0, fontface="bold")
+  
+  # s2 <- seq_ref2_plot + theme(
+  #   # Hide panel borders and remove grid lines
+  #   panel.background = element_rect(fill = "white"),
+  #   panel.border = element_blank(),
+  #   panel.grid.major = element_blank(),
+  #   panel.grid.minor = element_blank(),
+  #   # Change axis line
+  #   axis.line = element_line(colour = "black")
+  # )
 #######################
 # bmle2
 
 bmle_ref2_plot <- ggplot(mydat_2targets_bmle,
                         aes(x=beta, y=gamma)) +
-  geom_point(color="black", size = 0.5) +
+  geom_point(color="black", size = 0.5, alpha = 0.1) +
   
   ggtitle("BMLE") +
   #theme_ipsum() +
@@ -118,8 +177,41 @@ bmle_ref2_plot <- ggplot(mydat_2targets_bmle,
   
   geom_point(aes(x=beta, y=gamma),
              data = mydat_2targets_ref,
-             colour = "red", size = 0.5)
-
+             colour = "red", size = 0.5, alpha = 0.02)+
+    geom_hline(yintercept=0.02, alpha = 0.7,color = "gold")+
+    geom_vline(xintercept=0.2, alpha = 0.7,color = "gold")
+  
+  annotation_b <- data.frame(
+    x = c(0.17),
+    y = c(0.13),
+    label = "0.2"
+  )
+  
+  bmle_ref2_plot <- bmle_ref2_plot + geom_text(data=annotation_b,
+                                             aes( x=x, y=y, label=label),                 , 
+                                             color="brown", 
+                                             size=3, angle=90, fontface="bold")
+  
+  annotation_g <- data.frame(
+    x = c(0.005),
+    y = c(0.03),
+    label = " 0.02"
+  )
+  
+  bmle_ref2_plot <- bmle_ref2_plot + geom_text(data=annotation_g,
+                                             aes( x=x, y=y, label=label),                 , 
+                                             color="brown", 
+                                             size=3, angle=0, fontface="bold")
+  
+# b2 <- bmle_ref2_plot + theme(
+#     # Hide panel borders and remove grid lines
+#     panel.background = element_rect(fill = "white"),
+#     panel.border = element_blank(),
+#     panel.grid.major = element_blank(),
+#     panel.grid.minor = element_blank(),
+#     # Change axis line
+#     axis.line = element_line(colour = "black")
+#   )
 ###################################################
 # scenario 2
 
@@ -127,7 +219,7 @@ bmle_ref2_plot <- ggplot(mydat_2targets_bmle,
 
 rej_ref3_plot <- ggplot(mydat_3targets_rej,
                         aes(x=beta, y=gamma)) +
-  geom_point(color="black", size = 0.5) +
+  geom_point(color="black", size = 0.5, alpha = 0.1) +
   
   ggtitle("Rejection ABC") +
   #theme_ipsum() +
@@ -141,8 +233,41 @@ rej_ref3_plot <- ggplot(mydat_3targets_rej,
   
   geom_point(aes(x=beta, y=gamma),
              data = mydat_3targets_ref,
-             colour = "blue", size = 0.5)
-
+             colour = "blue", size = 0.5, alpha = 0.02)+
+    geom_hline(yintercept=0.02, alpha = 0.7,color = "gold")+
+    geom_vline(xintercept=0.2, alpha = 0.7,color = "gold")
+  
+  annotation_b <- data.frame(
+    x = c(0.17),
+    y = c(0.13),
+    label = "0.2"
+  )
+  
+  rej_ref3_plot <- rej_ref3_plot + geom_text(data=annotation_b,
+                                             aes( x=x, y=y, label=label),                 , 
+                                             color="brown", 
+                                             size=3, angle=90, fontface="bold")
+  
+  annotation_g <- data.frame(
+    x = c(0.005),
+    y = c(0.03),
+    label = "0.02"
+  )
+  
+  rej_ref3_plot <- rej_ref3_plot + geom_text(data=annotation_g,
+                                             aes( x=x, y=y, label=label),                 , 
+                                             color="brown", 
+                                             size=3, angle=0, fontface="bold")
+  
+# r3 <- rej_ref3_plot + theme(
+#   # Hide panel borders and remove grid lines
+#   panel.background = element_rect(fill = "white"),
+#   panel.border = element_blank(),
+#   panel.grid.major = element_blank(),
+#   panel.grid.minor = element_blank(),
+#   # Change axis line
+#   axis.line = element_line(colour = "black")
+# )
 
 ###################################
 
@@ -150,7 +275,7 @@ rej_ref3_plot <- ggplot(mydat_3targets_rej,
 
 seq_ref3_plot <- ggplot(mydat_3targets_seq,
                         aes(x=beta, y=gamma)) +
-  geom_point(color="black", size = 0.5) +
+  geom_point(color="black", size = 0.5, alpha = 0.1) +
   
   ggtitle("Sequential ABC") +
   #theme_ipsum() +
@@ -164,14 +289,47 @@ seq_ref3_plot <- ggplot(mydat_3targets_seq,
   
   geom_point(aes(x=beta, y=gamma),
              data = mydat_3targets_ref,
-             colour = "blue", size = 0.5)
-
+             colour = "blue", size = 0.5, alpha = 0.02)+
+    geom_hline(yintercept=0.02, alpha = 0.7,color = "gold")+
+    geom_vline(xintercept=0.2, alpha = 0.7,color = "gold")
+  
+  annotation_b <- data.frame(
+    x = c(0.17),
+    y = c(0.13),
+    label = "0.2"
+  )
+  
+  seq_ref3_plot <- seq_ref3_plot + geom_text(data=annotation_b,
+                                             aes( x=x, y=y, label=label),                 , 
+                                             color="brown", 
+                                             size=3, angle=90, fontface="bold")
+  
+  annotation_g <- data.frame(
+    x = c(0.005),
+    y = c(0.03),
+    label = "0.02"
+  )
+  
+  seq_ref3_plot <- seq_ref3_plot + geom_text(data=annotation_g,
+                                             aes( x=x, y=y, label=label),                 , 
+                                             color="brown", 
+                                             size=3, angle=0, fontface="bold")
+  
+# s3 <- seq_ref3_plot + theme(
+#   # Hide panel borders and remove grid lines
+#   panel.background = element_rect(fill = "white"),
+#   panel.border = element_blank(),
+#   panel.grid.major = element_blank(),
+#   panel.grid.minor = element_blank(),
+#   # Change axis line
+#   axis.line = element_line(colour = "black")
+# )
 ####################################
 # bmle3
 
 bmle_ref3_plot <- ggplot(mydat_3targets_bmle,
                         aes(x=beta, y=gamma)) +
-  geom_point(color="black", size = 0.5) +
+  geom_point(color="black", size = 0.5, alpha = 0.1) +
   
   ggtitle("BMLE") +
   #theme_ipsum() +
@@ -185,11 +343,45 @@ bmle_ref3_plot <- ggplot(mydat_3targets_bmle,
   
   geom_point(aes(x=beta, y=gamma),
              data = mydat_3targets_ref,
-             colour = "blue", size = 0.5)
-
+             colour = "blue", size = 0.5, alpha = 0.02)+
+    geom_hline(yintercept=0.02, alpha = 0.7,color = "gold")+
+    geom_vline(xintercept=0.2, alpha = 0.7,color = "gold")
+  
+  annotation_b <- data.frame(
+    x = c(0.17),
+    y = c(0.13),
+    label = "0.2"
+  )
+  
+  bmle_ref3_plot <- bmle_ref3_plot + geom_text(data=annotation_b,
+                                             aes( x=x, y=y, label=label),                 , 
+                                             color="brown", 
+                                             size=3, angle=90, fontface="bold")
+  
+  annotation_g <- data.frame(
+    x = c(0.005),
+    y = c(0.03),
+    label = "0.02"
+  )
+  
+  bmle_ref3_plot <- bmle_ref3_plot + geom_text(data=annotation_g,
+                                             aes( x=x, y=y, label=label),                 , 
+                                             color="brown", 
+                                             size=3, angle=0, fontface="bold")
+  
+# b3 <- bmle_ref3_plot + theme(
+#   # Hide panel borders and remove grid lines
+#   panel.background = element_rect(fill = "white"),
+#   panel.border = element_blank(),
+#   panel.grid.major = element_blank(),
+#   panel.grid.minor = element_blank(),
+#   # Change axis line
+#   axis.line = element_line(colour = "black")
+# )
 ####################################################
 
 # putting all plots together on the same page for scenarios 1
+#plot_grid(r2, s2, b2)
 
 plot_grid(rej_ref2_plot,
           seq_ref2_plot,
@@ -200,6 +392,7 @@ plot_grid(rej_ref2_plot,
 
 
 # putting all plots together on the same page for scenarios 2
+#plot_grid(r3, s3, b3)
 
 plot_grid(
   rej_ref3_plot,
@@ -215,9 +408,9 @@ plot_grid(
 # par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0),
 #     new = TRUE)
 # plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-legend("bottom", 
-       c("True posterior 1","True posterior 2"),
-       xpd = TRUE, horiz = TRUE, inset = c(0, 0), 
-       bty = "n", fill = c( "red" ,"blue"),
-       cex = 1.2)
+# legend("bottom", 
+#        c("True posterior 1","True posterior 2"),
+#        xpd = TRUE, horiz = TRUE, inset = c(0, 0), 
+#        bty = "n", fill = c( "red" ,"blue"),
+#        cex = 1.2)
 

@@ -1,7 +1,8 @@
 \documentclass[12pt,twoside,openany,a4paper,%..... Layout
                afrikaans, english,%.............. Global language selection
                ]{memoir}
-
+\DeclareUnicodeCharacter{00A0}{ }
+\DeclareUnicodeCharacter{00A0}{~}
  \usepackage[masters-t,%.......................... PhD thesis
           a5block,%........................ A5 type block (ora5block a5block or wide)
             ]{usthesis}%.......................... US thesis style with memoir
@@ -72,7 +73,7 @@
 %==== Ref's, Bib's and Nomencl ======================================
  \usepackage{usnomencl}%.......................... List of symbols (in usthesis pack)
  \usepackage{usbib}%.............................. Bibliography    (in usthesis pack)
- \usepackage{natbib}
+ %\usepackage{natbib}[sort]
  \usepackage{cite}
     %\bibliographystyle{unsrt}%
     %\renewcommand\bibfont{\small}
@@ -113,7 +114,7 @@
              \normalfont\small\itshape
              (\textsf{``}Bla Bla Bla \textsf{''})
             }{%-- English -------------------------------------------
-             {Calibrating Models to Data: A comparison of Methods}
+             {Calibrating Models to Data: A Comparison of Methods}
             }}
 
 \author{Zenabu Suboi}{Zenabu Suboi}

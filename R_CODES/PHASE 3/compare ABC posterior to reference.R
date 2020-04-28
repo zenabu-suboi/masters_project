@@ -1,24 +1,30 @@
 ### COMPARE ABC POSTERIOR TO reference POSTERIOR
 
+
+
+
 ### scenario 1
 
+dim(ras.rej1.mat)
+dim(ras2.ref1.mat)
+
+sum((ras.rej1.mat-ras2.ref1.mat)^2)
+
 ### percentage overlap:
-(1-(sum(abs(ras.rej2.mat-ras.ref2.mat)))/ (2*5000))*100 # 3.4
+(1-(sum(abs(ras.rej1.mat-ras2.ref1.mat)))/ (2*5000))*100 # scenario1rej
 
-(1-(sum(abs(ras.seq2.mat-ras.ref2.mat)))/ (2*5000))*100 # 24.3
-
-(1-(sum(abs(ras.bmle2.mat-ras.ref2.mat)))/ (2*5000))*100 # 32.3
+(1-(sum(abs(ras.seq1.mat-ras2.ref1.mat)))/ (2*5000))*100  # scenario1seq
 
 
 ###################################################################
 ### scenario 2
 
+sum((ras.rej1.mat-ras2.ref1.mat)^2)
+
 ### percentage overlap:
-(1-(sum(abs(ras.rej3.mat-ras.ref3.mat)))/ (2*5000))*100 # 2.1
+(1-(sum(abs(ras.rej2.mat-ras2.ref2.mat)))/ (2*5000))*100 # scenario2rej
 
-(1-(sum(abs(ras.seq3.mat-ras.ref3.mat)))/ (2*5000))*100 # 71.6
-
-(1-(sum(abs(ras.bmle3.mat-ras.ref3.mat)))/ (2*5000))*100 # 42.2
+(1-(sum(abs(ras.seq2.mat-ras2.ref2.mat)))/ (2*5000))*100  # scenario2seq
 
 
 
@@ -27,36 +33,23 @@
 
 #install.packages("ggpubr")
 library(ggpubr)
-library(ggplot2)
-library(cowplot)
 
 ############################################
 
-Rej <- c(3.4, 2.1) # percentage overlap for rej in both scenarios
-Seq <- c(24.3, 71.6) # percentage overlap for seq in both scenarios
-BMLE <- c(32.3, 42.2) # percentage overlap for bmle in both scenarios
-#tom <- c() # percentage overlap for tom in both scenarios
-
+rej <- c(7.48, 4.76) # percentage overlap for rej in both scenarios
+seq <- c(26.14,70.16) # percentage overlap for seq in both scenarios
 Scenario <- c(1, 2) # scenarios considered
 
-################################################################
-#######################################################
 
-toplot = data.frame(Scenario = rep(Scenario, 3),
-                    Percentage_overlap = c(Rej, Seq, BMLE),
-                    class = c(rep('Rejection ABC',2),
-                              rep('Sequential ABC',2),
-                              rep('BMLE',2)))
+toplot <- data.frame(rej, seq, Scenario) # dataframe from the abobe vectors 
 
-View(toplot)
-q = ggdotplot(toplot, x = 'Scenario',
-              y = 'Percentage_overlap',
-              color = "class",
-              palette = "jco",
-              binwidth = 2, fill = 'class') +
-  facet_wrap(~class,ncol = 3)
-q
+dp <- ggdotplot(toplot, x = "Scenario", # plot of the p_overlaps 
+                y = c("rej","seq"),
+                #color = c("green","red"),
+                add.params = list(shape = 25),
+                binwidth = 3,
+                title = "Plot of the percentage overlap",
+                merge = TRUE, ylim = c(0, 80))
+dp
 
-
-
-
+?ggdotplot

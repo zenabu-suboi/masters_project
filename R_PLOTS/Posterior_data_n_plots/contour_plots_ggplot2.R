@@ -6,6 +6,9 @@ setwd("C:/Users/Zee/Documents/GitHub/masters_project/R_PLOTS/
 #########################################################
 library(ggplot2)
 library(cowplot)
+library(reshape2)
+library(tidyverse)
+library(ks)
 
 ########################################################
 #read in the data required
@@ -40,10 +43,10 @@ mydat_3targets_tom
 rej2_cont <- ggplot(mydat_2targets_rej, aes(x=mydat_2targets_rej[,1], #rej2
                                             y=mydat_2targets_rej[,2]) ) +
                    stat_density_2d(aes(fill = ..level..),
-                  geom = "polygon", colour="white")+
+                  geom = "raster")+
   ggtitle("Rejection ABC") +
   
-  geom_point(aes(x=0.2, y=0.02),
+   geom_point(aes(x=0.2, y=0.02),
              color = "red",
              size = 2)+
   #theme_ipsum() +

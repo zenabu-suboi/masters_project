@@ -1,6 +1,13 @@
 \babel@toc {english}{}
 \addvspace {10pt}
 \addvspace {10pt}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Illustration of how the ABC Rejection algorithm works \cite {lint}.\relax }}{4}{figure.caption.10}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Illustration of how the ABC Sequential algorithm works \cite {lint}.\relax }}{6}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Structure of the simple SIR model.\relax }}{7}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces 4x4 raster applied to a posterior density.\relax }}{10}{figure.caption.13}%
 \addvspace {10pt}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces targets for scenarios 1 and 2. Scenario 1 considers only green points on the Infectious (I) curve while scenario 2 considers both red and green points on the (I) curve\relax }}{13}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Distribution of targets in Scenario 1 \relax }}{13}{figure.caption.17}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Distribution of targets in Scenario 2 \relax }}{14}{figure.caption.18}%
 \addvspace {10pt}
 \addvspace {10pt}

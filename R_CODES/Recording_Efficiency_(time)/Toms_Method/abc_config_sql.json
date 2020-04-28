@@ -1,0 +1,38 @@
+{
+    "smc_iterations" : 3,
+    "num_samples"    : 25000,
+    "predictive_prior_fraction" : 0.2,
+    "pls_training_fraction"     : 0.5,
+    "noise"                     : "MULTIVARIATE",
+
+    "database_filename"             : "sacema.sqlite",
+
+    "parameters" : [
+        {"name"       : "beta",
+         "dist_type"  : "UNIFORM",
+         "num_type"   : "FLOAT",
+         "par1"       : 0.0,
+         "par2"       : 1.0},
+
+        {"name"       : "gamma",
+         "dist_type"  : "UNIFORM",
+         "num_type"   : "FLOAT",
+         "par1"       : 0.0,
+         "par2"       : 0.5}
+    ],                
+
+    "metrics" : [     
+        {"name"       : "prev_50",
+         "num_type"   : "FLOAT",
+         "value"      : 0.655},
+
+        {"name"       : "prev_75",
+         "num_type"   : "FLOAT",
+         "value"      : 0.371},
+
+        {"name"       : "peak_prev",
+         "num_type"   : "FLOAT",
+         "value"      : 0.677}
+    ]
+}
+                                       

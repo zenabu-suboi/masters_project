@@ -6,7 +6,7 @@
 modelforABC = function(parameters, 
                       times=1:75, 
                       targetTimes=c(50,75),
-                      peakPrevalence = T){
+                      peakPrevalence = F){
 
   
   u0 = data.frame(S = c(990), # initial compartmental values
@@ -29,6 +29,11 @@ modelforABC = function(parameters,
   else(return(targs))
 }
 
+
+## Run model once to get new targets
+#modelforABC(c(0.2,0.02))
+# 2 Targets = c(0.644, 0.404)
+# 3 Targets = c(0.622, 0.371, 0.677)
 
 # modelforABCmcmc2_ArbitraryTargets(c(0.2,0.02),
 #                                   times=1:75,
